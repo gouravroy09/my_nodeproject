@@ -289,7 +289,7 @@
         //alert(searchEmpTyeById(value.emp_type_id));
         $('#all_reimbursements').append($('<tr><th scope="row">'+value.id+'</th><td>'+value.emp_type+
         '</td><td>'+value.description+'</td><td>'+value.amount+'</td><td>'+value.frequency+
-        '</td><td>'+'<a class="page-scroll" id="update" onclick="getUrl(value)" href="#contact">Update</a>'+'</td></tr>'));
+        '</td><td>'+'<a class="page-scroll" id="update" " href="#contact">Update</a>'+'</td></tr>'));
       });
     });
   };
@@ -305,9 +305,13 @@ $.ajax({
   //alert(empTypes);
 </script>
 <script type="text/javascript">
-  function getUrl(data) {
-  alert( data.description );
-};
+  /*function getUrl(data) {
+    alert(data);
+};*/
+$("#update").click(function () {
+//var row = $(this)..html();  
+alert("dsasad");          
+});
 </script>
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
