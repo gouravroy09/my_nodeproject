@@ -332,18 +332,20 @@ $.ajax({
   $(document).on('click','.btnSelect',function(){
      var currentRow=$(this).closest("tr");
      var reimbursement_type_id=currentRow.find("th:eq(0)").html();
-     var emp_type_id=currentRow.find("td:eq(0)").html();
+     var emp_type=currentRow.find("td:eq(0)").html();
+     //alert(emp_type_id);
      var reimbursement_description=currentRow.find("td:eq(1)").html();
      var amount=currentRow.find("td:eq(2)").html();
      var frequency=currentRow.find("td:eq(3)").html();
      //alert(col1);
      $('#update_reimbursement_type_id').val(reimbursement_type_id);
-     $('#update_Emp_Type').val(localStorage.getItem(emp_type_id));
+     $('#update_Emp_Type').val(localStorage.getItem(emp_type));
+     $('#update_Emp_Type').text(emp_type);
      $('#update_Reimbursement_description').val(reimbursement_description);
      $('#update_amount').val(amount);
      $('#update_frequency').val(frequency);
      //alert(localStorage.getItem(localStorage.getItem(2)));
-     //$('#update_Emp_Type').prop('disabled', true);
+     $('#update_Emp_Type').prop('disabled', true);
      //var data=col1+"\n"+col2+"\n"+col3;
     // alert(data);
   });
