@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
 
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,8 +24,9 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-
+        <style> td{padding:8px;}.btnSelect{background-color:#f44336;border:2px solid #f44336;border-radius:4px;color:white;cursor:pointer;}.btnSelect:hover{background-color:#c93326;border:2px solid #c93326;}</style>
       </head>
+      
 
       <!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
 
@@ -85,7 +87,7 @@
                 <div class="row">
                   <div class="col-lg-12">
                     <h1>All Reimbursements</h1>
-                    <table class="table table-striped">
+                    <table class="table table-striped" id ="testtable">
                       <thead>
                         <tr>
                           <th>#</th>
@@ -103,7 +105,7 @@
                           <td>Mark</td>
                           <td>Mark</td>
                           <td>Otto</td>
-                          <td>@mdo</td>
+                          <td ><a class="page-scroll btnSelect"  href="#myModal">Update</a></td>
                         </tr>
                       </tbody>
                     </table>
@@ -122,7 +124,9 @@
                 </div>
               </div>
             </section>
-
+            <div>
+            <% include update_reimbursement.ejs %>
+            </div>
             <!-- Contact Section -->
             <section id="contact" class="contact-section">
               <div class="container">
@@ -172,6 +176,7 @@
 <!-- Select Basic -->
 
 <div class="form-group">
+<input type="hidden" name="reimbursement_type_id" />
   <label class="col-md-4 control-label" for="Emp_Type">Emp_Type</label>
   <div class="col-md-4">
     <select id="Emp_Type" type="number" name="Emp_Type" class="form-control">
@@ -287,9 +292,11 @@
         '</td><td>@fat</td></tr>');*/
         //alert(table_row);
         //alert(searchEmpTyeById(value.emp_type_id));
-        $('#all_reimbursements').append($('<tr><th scope="row">'+value.id+'</th><td>'+value.emp_type+
+        /*var test ='<tr><th scope="row">1</th><td>Test</td><td>Test</td><td>Test</td><td>Otto</td><td ><a class="page-scroll btnSelect"  href="#contact">Update</a></td></tr>';
+        $('#all_reimbursements').append(test);*/
+        $('#all_reimbursements').append('<tr><th scope="row">'+value.id+'</th><td>'+value.emp_type+
         '</td><td>'+value.description+'</td><td>'+value.amount+'</td><td>'+value.frequency+
-        '</td><td>'+'<a class="page-scroll" id="update" " href="#contact">Update</a>'+'</td></tr>'));
+        '</td><td>'+'<a class="page-scroll btnSelect"  href="#myModal" data-toggle="modal">Update</a>'+'</td></tr>');
       });
     });
   };
@@ -308,10 +315,37 @@ $.ajax({
   /*function getUrl(data) {
     alert(data);
 };*/
-$("#update").click(function () {
-//var row = $(this)..html();  
-alert("dsasad");          
-});
+//$(document).ready(function(){
+  // code to read selected table row cell data (values).
+  /*$(".btnSelect").on('click',function(){
+     var currentRow=$(this).closest("tr");
+     var col1=currentRow.find("td:eq(0)").html();
+     var col2=currentRow.find("td:eq(1)").html();
+     var col3=currentRow.find("td:eq(2)").html();
+     var data=col1+"\n"+col2+"\n"+col3;
+     alert(data);
+  });*/
+
+//});
+</script>
+<script type="text/javascript">
+  $(document).on('click','.btnSelect',function(){
+     var currentRow=$(this).closest("tr");
+     var reimbursement_type_id=currentRow.find("th:eq(0)").html();
+     var emp_type_id=currentRow.find("td:eq(0)").html();
+     var reimbursement_description=currentRow.find("td:eq(1)").html();
+     var amount=currentRow.find("td:eq(2)").html();
+     var frequency=currentRow.find("td:eq(3)").html();
+     //alert(col1);
+     $('#update_reimbursement_type_id').val(reimbursement_type_id);
+     $('#update_Emp_Type').val(localStorage.getItem(emp_type_id));
+     $('#update_Emp_Type').prop('disabled', true);
+     //var data=col1+"\n"+col2+"\n"+col3;
+    // alert(data);
+  });
+  /*$('#contact').click(function() {
+  $('#Emp_Type').prop('disabled', false);
+});*/
 </script>
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
