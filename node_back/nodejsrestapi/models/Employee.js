@@ -19,6 +19,12 @@ var Employee = {
 		return db.query("Insert into reimbursement(emp_type_id,description,amount,frequency) values(?,?,?,?)",
 			[ReimburseType.Emp_Type,ReimburseType.Reimbursement_description,
 			ReimburseType.amount,ReimburseType.frequency],callback);
+	},
+	updateReimbursementType:function(id,ReimbursementType,callback){
+		console.log("inside service");
+		console.log(id);
+    return  db.query("update reimbursement set amount=?,frequency=? where id=?",[ReimbursementType.update_amount,
+    	ReimbursementType.update_frequency,id],callback);
 	}
 };
 

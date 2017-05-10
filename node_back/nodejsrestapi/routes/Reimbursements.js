@@ -23,7 +23,9 @@ router.get('/:id?',function(req,res,next){
 				}
 			});
 		}
-		router.post('/',function(req,res,next){
+	});
+//post new reimbursment type
+router.post('/',function(req,res,next){
 
 			Employee.addReimburseType(req.body,function(err,count){
 
@@ -37,5 +39,19 @@ router.get('/:id?',function(req,res,next){
                 }
             });
 		});
-	});
+//update reimbursement type
+router.post('/:id',function(req,res,next){
+
+    Employee.updateReimbursementType(req.params.id,req.body,function(err,rows){
+
+        if(err)
+        {
+            res.json(err);
+        }
+        else
+        {
+            res.redirect('http://localhost:5000');
+        }
+    });
+});
 module.exports = router

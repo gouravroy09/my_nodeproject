@@ -18,6 +18,8 @@
   <!-- Custom CSS -->
   <link href="css/scrolling-nav.css" rel="stylesheet">
 
+  <link href="css/table-fixedheader.css" rel="stylesheet">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -84,10 +86,10 @@
             <!-- About Section -->
             <section id="about" class="about-section">
               <div class="container">
-                <div class="row">
-                  <div class="col-lg-12">
+                <div class="row" >
+                  <div class="col-lg-12" style="overflow-y: scroll; height:400px;">
                     <h1>All Reimbursements</h1>
-                    <table class="table table-striped" id ="testtable">
+                    <table class="table table-striped" id ="testtable" >
                       <thead>
                         <tr>
                           <th>#</th>
@@ -338,17 +340,23 @@ $.ajax({
      var amount=currentRow.find("td:eq(2)").html();
      var frequency=currentRow.find("td:eq(3)").html();
      //alert(col1);
-     $('#update_reimbursement_type_id').val(reimbursement_type_id);
-     $('#update_Emp_Type').val(localStorage.getItem(emp_type));
-     $('#update_Emp_Type').text(emp_type);
+     //$('#update_Emp_Type').val(localStorage.getItem(emp_type));
+     $('#update_Emp_Type').val(emp_type);
      $('#update_Reimbursement_description').val(reimbursement_description);
      $('#update_amount').val(amount);
      $('#update_frequency').val(frequency);
      //alert(localStorage.getItem(localStorage.getItem(2)));
      $('#update_Emp_Type').prop('disabled', true);
+     $('#update_Reimbursement_description').prop('disabled',true);
+     var update_action = 'http://localhost:3000/Reimbursements/'+reimbursement_type_id;
+     $('#update_reimburse').attr('action', update_action);
      //var data=col1+"\n"+col2+"\n"+col3;
     // alert(data);
   });
+  $('#update_submit').click(function() {
+  alert( "Handler for .click() called." );
+  $('#update_reimburse').submit();
+});
   /*$('#contact').click(function() {
   $('#Emp_Type').prop('disabled', false);
 });*/
