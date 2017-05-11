@@ -54,4 +54,19 @@ router.post('/:id',function(req,res,next){
         }
     });
 });
+router.delete('/:id',function(req,res,next){
+
+        Employee.deleteReimbursement(req.params.id,function(err,count){
+
+            if(err)
+            {
+                res.json(err);
+            }
+            else
+            {
+                res.json(count);
+            }
+
+        });
+});
 module.exports = router
