@@ -50,7 +50,7 @@ router.post('/:id',function(req,res,next){
         }
         else
         {
-            res.redirect('http://localhost:5000');
+            res.redirect('http://localhost:5000/#about');
         }
     });
 });
@@ -64,7 +64,7 @@ router.delete('/:id',function(req,res,next){
             }
             else
             {
-                res.json(count);
+                res.redirect('http://localhost:5000/#about');
             }
 
         });

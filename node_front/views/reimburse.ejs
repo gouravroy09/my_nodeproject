@@ -107,6 +107,7 @@
               <div class="container">
                 <div class="row" >
                 <h1>All Reimbursements</h1>
+                <form id="delete_form"></form>
                     <table class="table table-striped">
                       <thead>
                         <tr>
@@ -189,36 +190,7 @@
       });
     });
 
-    $.getJSON( "http://localhost:3000/Reimbursements/",{
-      format: "json"
-    } ,
-    function( data ) {
-      var empType = localStorage.getItem("empType");
-      //var empTypeMap = new Map();
-      // /myMap.set("0","asdsa");
-       /*$.each(empType, function(value) {
-        //empTypeMap.set(value.id,value.description);
-      });*/
-      //alert(empTypeMap);
-      //empTypeMap = new object();
-      /*alert(empTypeMap);
-      $.each(empType, function(key,value) {
-        empTypeMap[value.id] = value.description;
-      });*/
-      //salert(empTypeMap);
-      $.each(data, function(key,value) {
-        /*var table_row = $('<tr><th scope="row">'+value.id+'</th><td>'+(value.emp_type_id)+
-        '</td><td>'+value.description+'</td><td>'+value.amount+'</td><td>'+value.frequency+
-        '</td><td>@fat</td></tr>');*/
-        //alert(table_row);
-        //alert(searchEmpTyeById(value.emp_type_id));
-        /*var test ='<tr><th scope="row">1</th><td>Test</td><td>Test</td><td>Test</td><td>Otto</td><td ><a class="page-scroll btnSelect"  href="#contact">Update</a></td></tr>';
-        $('#all_reimbursements').append(test);*/
-        $('#all_reimbursements').append('<tr><th scope="row">'+value.id+'</th><td>'+value.emp_type+
-        '</td><td>'+value.description+'</td><td>'+value.amount+'</td><td>'+value.frequency+
-        '</td><td>'+'<a class="page-scroll btnSelect"  href="#myModal" data-toggle="modal">Update</a>'+'</td></tr>');
-      });
-    });
+    updateTable();
   };
 
 /*var myvar;
@@ -259,6 +231,8 @@ $.ajax({
      var frequency=currentRow.find("td:eq(3)").html();
      //alert(col1);
      //$('#update_Emp_Type').val(localStorage.getItem(emp_type));
+     //alert($(this).text());
+     if($(this).text()==='Update'){
      $('#update_Emp_Type').val(emp_type);
      $('#update_Reimbursement_description').val(reimbursement_description);
      $('#update_amount').val(amount);
@@ -268,15 +242,73 @@ $.ajax({
      $('#update_Reimbursement_description').prop('disabled',true);
      var update_action = 'http://localhost:3000/Reimbursements/'+reimbursement_type_id;
      $('#update_reimburse').attr('action', update_action);
+     $('#update_submit').click(function() {
+  $('#update_reimburse').submit();
+  // /$('#all_reimbursements').remove();
+});
+     } else{
+      $.ajax({
+            type: "DELETE",
+            url: "http://localhost:3000/Reimbursements/"+reimbursement_type_id,
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            /*success: function () {
+                    alert("You will now be redirected.");
+               if (response.d == true) {
+                    window.location = "http://localhost:5000/";
+                }
+            },
+            failure: function () {
+                alert(response.d);
+            }*/
+        });
+     }
      //var data=col1+"\n"+col2+"\n"+col3;
     // alert(data);
   });
-  $('#update_submit').click(function() {
-  $('#update_reimburse').submit();
-});
+  
   /*$('#contact').click(function() {
   $('#Emp_Type').prop('disabled', false);
 });*/
+</script>
+<script type="text/javascript">
+  
+
+  function updateTable() {
+    $.getJSON( "http://localhost:3000/Reimbursements/",{
+      format: "json"
+    } ,
+    function( data ) {
+      var empType = localStorage.getItem("empType");
+      //var empTypeMap = new Map();
+      // /myMap.set("0","asdsa");
+       /*$.each(empType, function(value) {
+        //empTypeMap.set(value.id,value.description);
+      });*/
+      //alert(empTypeMap);
+      //empTypeMap = new object();
+      /*alert(empTypeMap);
+      $.each(empType, function(key,value) {
+        empTypeMap[value.id] = value.description;
+      });*/
+      //salert(empTypeMap);
+      $.each(data, function(key,value) {
+        /*var table_row = $('<tr><th scope="row">'+value.id+'</th><td>'+(value.emp_type_id)+
+        '</td><td>'+value.description+'</td><td>'+value.amount+'</td><td>'+value.frequency+
+        '</td><td>@fat</td></tr>');*/
+        //alert(table_row);
+        //alert(searchEmpTyeById(value.emp_type_id));
+        /*var test ='<tr><th scope="row">1</th><td>Test</td><td>Test</td><td>Test</td><td>Otto</td><td ><a class="page-scroll btnSelect"  href="#contact">Update</a></td></tr>';
+        $('#all_reimbursements').append(test);*/
+        $('#all_reimbursements').append('<tr><th scope="row">'+value.id+'</th><td>'+value.emp_type+
+        '</td><td>'+value.description+'</td><td>'+value.amount+'</td><td>'+value.frequency+
+        '</td><td>'+
+        '<a class="page-scroll btnSelect"  href="#myModal" data-toggle="modal" style="color:white;background-color:green;">Update</a>&nbsp;&nbsp;'+'<a class="page-scroll btnSelect"  >Delete</a>'+'</td></tr>');
+      });
+    });
+    // body...
+  }
 </script>
 <!-- jQuery -->
 <script src="js/jquery.js"></script>

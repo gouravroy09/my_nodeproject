@@ -27,7 +27,7 @@ var Employee = {
     	ReimbursementType.update_frequency,id],callback);
 	},
 	deleteReimbursement:function(id,callback){
-    return db.query("delete from reimbursement where Id=?",[id],callback);
+    return db.query("delete from reimbursement where id=?",[id],callback);
 	}
 };
 
