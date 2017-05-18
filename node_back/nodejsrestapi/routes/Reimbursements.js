@@ -35,7 +35,8 @@ router.post('/',function(req,res,next){
             	res.json(err);
             }
             else{
-                    res.redirect('http://localhost:5000');//or return count for 1 & 0
+                    //res.redirect('http://localhost:5000');//or return count for 1 & 0
+                    res.end('{"success" : "Updated Successfully", "status" : 200}');
                 }
             });
 		});
@@ -50,8 +51,8 @@ router.post('/:id',function(req,res,next){
         }
         else
         {
-            res.redirect('http://localhost:5000/#about');
-            //res.end('{"success" : "Updated Successfully", "status" : 200}');
+            //res.redirect('http://localhost:5000/#about');
+            res.end('{"success" : "Updated Successfully", "status" : 200}');
         }
     });
 });
