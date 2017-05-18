@@ -264,9 +264,10 @@
        data.Reimbursement_description = $('#Reimbursement_description').val();
       data.frequency = $('#frequency').val();
       data.amount = $('#amount').val();
+      var action = "http://localhost:3000/Employees/";
       $.ajax({
             type: "POST",
-            url: update_action,
+            url: action,
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
