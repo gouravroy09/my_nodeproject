@@ -24,9 +24,9 @@ var Storage = multer.diskStorage({
 
 var upload = multer({ storage: Storage }).array("imgUploader", 3); //Field name and max count
 
-app.get("/", function (req, res) {
+/*app.get("/", function (req, res) {
     res.sendFile(__dirname + "/employeeClaims.ejs");
-});
+});*/
 
 app.post("/api/Upload", function (req, res) {
     upload(req, res, function (err) {

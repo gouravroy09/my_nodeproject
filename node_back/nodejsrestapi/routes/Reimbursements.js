@@ -35,8 +35,12 @@ router.post('/',function(req,res,next){
             	res.json(err);
             }
             else{
-                    //res.redirect('http://localhost:5000');//or return count for 1 & 0
-                    res.end('{"success" : "Updated Successfully", "status" : 200}');
+                console.log(req.headers.referer);
+                //res.redirect()
+                    res.redirect(req.headers.referer);//or return count for 1 & 0
+                    //res.end('{"success" : "Updated Successfully", "status" : 200}');
+                    //res.redirect(req.get('origin'));
+                    //res.redirect(req.headers.host);
                 }
             });
 		});
