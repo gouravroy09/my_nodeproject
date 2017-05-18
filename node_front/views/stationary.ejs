@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Stationary Form</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    .btn-xl {
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+  </style>
+  
+</head>
+<body>
+<img src="eesl.jpg" class="img-rounded" >
+<h1 style="text-align:center;margin:40px 40px 40px 40px;">Energy Efficiency Services Limited</h1>
+
+<div class="container">
+<form class="form-horizontal" action="/action_page_post.php" method="post">
+  <div class="form-group">
+    <label class="control-label col-sm-4"  for="usr">Name:</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="usr" placeholder="Enter your name" required="">
+     </div>
+     </div>
+      <div class="form-group">
+    <label class="control-label col-sm-4"  for="usr">Designation:</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="usr" placeholder="Enter your designation" required="">
+     </div>
+     </div>
+     <div class="form-group">
+    <label class="control-label col-sm-4"  for="usr">Department:</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="usr" placeholder="Enter your department" required="">
+     </div>
+     </div>
+     <div class="form-group">
+    <label class="control-label col-sm-4"  for="usr">Reporting_Officer:</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="usr" placeholder="Enter your Reporting_Officer" required="">
+     </div>
+     </div>
+     <div class="form-group">
+    <label class="control-label col-sm-4"  for="usr">Date:</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="usr" placeholder="Enter date" required="">
+     </div>
+     </div>
+     <h4 style="margin:40px 40px 40px 40px;text-align:center;" ><b>Please issue the following stationary items for official use:</b></h4>
+     <table  class="table" id ="reimbursement_declare">
+    <thead>
+      <tr>
+        <th>S.no.</th>
+        <th>Item</th>
+        <th>Quantity_Required</th>
+      </tr>  
+    </thead>
+    <tbody>
+      <tr>
+        <td><label class="control-label" for="grd">1.</label></td>
+        <td>
+        <div class="checkbox">
+        <label><input type="checkbox" value="">Pen</label>
+        </div>
+        </td>
+        <td>
+        <div class="col-xs-2">
+        <input type="number" class="form-control" id="type"  required="">
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td><label class="control-label" for="grd">2.</label></td>
+        <td>
+        <div class="checkbox">
+        <label><input type="checkbox" value="">Pencil</label>
+        </div>
+        </td>
+        <td>
+        <div class="col-xs-2">
+        <input type="number" class="form-control" id="type"  required="">
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td><label class="control-label" for="grd">3.</label></td>
+        <td>
+        <div class="checkbox">
+        <label><input type="checkbox" value="">Eraser</label>
+        </div>
+        </td>
+        <td>
+        <div class="col-xs-2">
+        <input type="number" class="form-control" id="type"  required="">
+        </div>
+        </td>
+      </tr>
+     <tr>
+        <td><label class="control-label" for="grd">4.</label></td>
+        <td>
+        <div class="checkbox">
+        <label><input type="checkbox" value="">Notepad</label>
+        </div>
+        </td>
+        <td>
+        <div class="col-xs-2">
+        <input type="number" class="form-control" id="type"  required="">
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td><label class="control-label" for="grd">5.</label></td>
+        <td>
+        <div class="checkbox">
+        <label><input type="checkbox" value="">Stapler</label>
+        </div>
+        </td>
+        <td>
+        <div class="col-xs-2">
+        <input type="number" class="form-control" id="type"  required="">
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td><label class="control-label" for="grd">6.</label></td>
+        <td>
+        <div class="checkbox">
+        <label><input type="checkbox" value="">Stapler Pins</label>
+        </div>
+        </td>
+        <td>
+        <div class="col-xs-2">
+        <input type="number" class="form-control" id="type"  required="">
+        </div>
+        </td>
+      </tr>
+     </tbody>
+  </table>
+  <button  class="btn btn-primary btn-xl center-block" type="button" align="center">Submit</button>
+     </form>
+</div>
+</body>
+</html>

@@ -34,6 +34,15 @@ app.get('/users', user.list);
 var about = require('./routes/about');
 app.get('/about', about.about);
 
+var stationary = require('./routes/stationary');
+app.get('/stationary', stationary.stationary);
+
+var claims = require('./routes/claims');
+app.get('/claims', claims.claims);
+
+
+
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

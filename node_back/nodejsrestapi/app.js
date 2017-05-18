@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors=require('cors');
+var multer = require('multer');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var Tasks=require('./routes/Tasks');
@@ -12,6 +13,30 @@ var Students=require('./routes/Students');
 var Employees = require('./routes/Employees');
 var Reimbursements = require('./routes/Reimbursements');
 var app = express();
+var Storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, "./Images");
+    },
+    filename: function (req, file, callback) {
+        callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
+    }
+});
+
+var upload = multer({ storage: Storage }).array("imgUploader", 3); //Field name and max count
+
+app.get("/", function (req, res) {
+    res.sendFile(__dirname + "/employeeClaims.ejs");
+});
+
+app.post("/api/Upload", function (req, res) {
+    upload(req, res, function (err) {
+        if (err) {
+            return res.end("Something went wrong!");
+        }
+        return res.end("File uploaded sucessfully!.");
+    });
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
