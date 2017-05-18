@@ -51,6 +51,7 @@ router.post('/:id',function(req,res,next){
         else
         {
             res.redirect('http://localhost:5000/#about');
+            //res.end('{"success" : "Updated Successfully", "status" : 200}');
         }
     });
 });
@@ -64,7 +65,8 @@ router.delete('/:id',function(req,res,next){
             }
             else
             {
-                res.redirect('http://localhost:5000/#about');
+                //res.redirect('http://localhost:5000/#about');
+                res.end('{"success" : "Updated Successfully", "status" : 200}');
             }
 
         });

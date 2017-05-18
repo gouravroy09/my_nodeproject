@@ -195,7 +195,15 @@
      var update_action = 'http://localhost:3000/Reimbursements/'+reimbursement_type_id;
      $('#update_reimburse').attr('action', update_action);
      $('#update_submit').click(function() {
-  $('#update_reimburse').submit();
+    $('#update_reimburse').submit();
+  /*$.ajax({
+            type: "POST",
+            url: update_action,
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+        });*/
+
 });
      } else{
       $.ajax({
@@ -204,6 +212,16 @@
             data: '{}',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
+            success: function (result) {
+        console.log(result);
+        if(result.status == 200){
+            //self.isEditMode(!self.isEditMode());
+            location.reload();
+        }
+    },
+    error: function(result){
+        console.log(result);
+    }
         });
      }
   });

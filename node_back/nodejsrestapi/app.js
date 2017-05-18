@@ -31,9 +31,11 @@ app.get("/", function (req, res) {
 app.post("/api/Upload", function (req, res) {
     upload(req, res, function (err) {
         if (err) {
-            return res.end("Something went wrong!");
+          return res.end("Something went wrong!");
+            //return res.end("Something went wrong!");
         }
-        return res.end("File uploaded sucessfully!.");
+        return res.end("Something went wrong!");
+        //return res.end("File uploaded sucessfully!.");
     });
 });
 
