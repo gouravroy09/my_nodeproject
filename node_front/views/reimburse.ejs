@@ -163,7 +163,7 @@
 
   window.onload = function() {
 
-    $.getJSON( "http://localhost:3000/Employees/",{
+    $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/Employees/',{
       format: "json"
     } ,
     function( data ) {
@@ -192,7 +192,7 @@
      $('#update_frequency').val(frequency);
      $('#update_Emp_Type').prop('disabled', true);
      $('#update_Reimbursement_description').prop('disabled',true);
-     var update_action = /*'http://localhost:3000/Reimbursements/'*/ location.hostname +':3000/'+reimbursement_type_id;
+     var update_action = /*'http://localhost:3000/Reimbursements/'*/ 'http://'+location.hostname +':3000/Reimbursements/'+reimbursement_type_id;
      $('#update_reimburse').attr('action', update_action);
      $('#update_submit').click(function() {
       var data = {};
@@ -220,7 +220,7 @@
      } else{
       $.ajax({
             type: "DELETE",
-            url: /*"http://localhost:3000/Reimbursements/"*/+reimbursement_type_id,
+            url: /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/Reimbursements/'+reimbursement_type_id,
             data: '{}',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -243,7 +243,7 @@
   
 
   function updateTable() {
-    $.getJSON( "http://localhost:3000/Reimbursements/",{
+    $.getJSON( /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/Reimbursements/',{
       format: "json"
     } ,
     function( data ) {
@@ -294,7 +294,7 @@
 
 </script> -->
 <script type="text/javascript">
-   var new_action = 'http://localhost:3000/Reimbursements';
+   var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/Reimbursements';
      $('#new_reimburse').attr('action', new_action);
      //$('#host-origin').val(location.origin);
 </script>
