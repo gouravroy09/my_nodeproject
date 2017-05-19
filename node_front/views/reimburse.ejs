@@ -192,7 +192,7 @@
      $('#update_frequency').val(frequency);
      $('#update_Emp_Type').prop('disabled', true);
      $('#update_Reimbursement_description').prop('disabled',true);
-     var update_action = 'http://localhost:3000/Reimbursements/'+reimbursement_type_id;
+     var update_action = /*'http://localhost:3000/Reimbursements/'*/ location.hostname +':3000/'+reimbursement_type_id;
      $('#update_reimburse').attr('action', update_action);
      $('#update_submit').click(function() {
       var data = {};
@@ -220,7 +220,7 @@
      } else{
       $.ajax({
             type: "DELETE",
-            url: "http://localhost:3000/Reimbursements/"+reimbursement_type_id,
+            url: /*"http://localhost:3000/Reimbursements/"*/+reimbursement_type_id,
             data: '{}',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
