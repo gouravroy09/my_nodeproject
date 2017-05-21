@@ -7,7 +7,7 @@ var Employee = {
 	},
 	getAllReimbursementTypes:function(callback){
 
-		return db.query("select r.id,e.description emp_type,r.description,r.amount,r.frequency from reimbursement r left join employee_type e on r.emp_type_id =e.id;",callback);
+		return db.query("select r.id,e.description emp_type,r.description,r.amount,r.frequency,r.emp_grade_code from reimbursement r left join employee_type e on r.emp_type_id =e.id order by id;",callback);
 
 	},
 	getEmpTypeById:function(id,callback){
@@ -16,9 +16,9 @@ var Employee = {
 	addReimburseType:function(ReimburseType,callback){
 		console.log("inside service");
 		console.log(ReimburseType.Emp_Type);
-		return db.query("Insert into reimbursement(emp_type_id,description,amount,frequency) values(?,?,?,?)",
+		return db.query("Insert into reimbursement(emp_type_id,description,amount,frequency,emp_grade_code) values(?,?,?,?,?)",
 			[ReimburseType.Emp_Type,ReimburseType.Reimbursement_description,
-			ReimburseType.amount,ReimburseType.frequency],callback);
+			ReimburseType.amount,ReimburseType.frequency,ReimburseType.Emp_Grade],callback);
 	},
 	updateReimbursementType:function(id,ReimbursementType,callback){
 		console.log("inside service");

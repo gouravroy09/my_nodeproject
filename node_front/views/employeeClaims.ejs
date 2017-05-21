@@ -4,129 +4,222 @@
   <title>Employee Page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- Bootstrap Core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="css/scrolling-nav.css" rel="stylesheet">
+
+  <link href="css/table-fixedheader.css" rel="stylesheet">
+ <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
   <script>
-  $(document).ready(function () {
-            var options = {
+    $(document).ready(function () {
+      var options = {
                 beforeSubmit: showRequest,  // pre-submit callback
                 success: showResponse  // post-submit callback
-            };
+              };
 
             // bind to the form's submit event
             $('#frmUploader').submit(function () {
-                $(this).ajaxSubmit(options);
+              $(this).ajaxSubmit(options);
                 // always return false to prevent standard browser submit and page navigation
                 return false;
-            });
-        });
+              });
+          });
 
         // pre-submit callback
         function showRequest(formData, jqForm, options) {
-            alert('Uploading is starting.');
-            return true;
+          alert('Uploading is starting.');
+          return true;
         }
 
         // post-submit callback
         function showResponse(responseText, statusText, xhr, $form) {
-            alert('status: ' + statusText + '\n\nresponseText: \n' + responseText );
+          alert('status: ' + statusText + '\n\nresponseText: \n' + responseText );
         }
-  </script>
+      </script>
+
+    </head>
+    <body>
+    <!-- <form id="frmUploader2" enctype="multipart/form-data"  method="post">
+        <input type="file" name="imgUploader" multiple />
+        <input type="submit" name="submit" id="btnSubmit" value="Upload" />
+    </form> -->
+
+      <div class="container">
+        <div class="text-center">
+          <h2 style="margin:30px 30px 30px 30px;">Employee Page</h2>
+        </div>
+        <!-- <form class="form-horizontal" id="frmUploader"> -->
+          <div class="form-group">
+            <label class="control-label col-sm-1"  for="Name">Name:</label>
+            <div class="col-sm-11">
+              <input type="text" class="form-control" id="Name" name="Name" placeholder="Enter Name" disabled="true">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-1" for="Emp_Type">Emp_Type:</label>
+            <div class="col-sm-5">
+              <input id="Emp_Type" name="Emp_Type" class="form-control" disabled="true" />
+                
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-1 " for="Grade">Grade:</label>
+              <div class="col-sm-5">
+                <input id="Grade" name="Grade" class="form-control" disabled="true" />
+              </div>
+            </div>
   
-</head>
-<body>
+  <div class="col-lg-12" >
+    <table class ="table table-hover">
+      <thead>
+        <tr>
+          <th>Reimbursement Type</th>
+          <th>Maximum Amount</th>
+          <th>Maximum Frequency</th>
+          <th>Claimed Amount</th>
+          <th>New Claim</th>
+        </tr>  
+      </thead>
 
-<div class="container">
-<div class="text-center">
-  <h2 style="margin:30px 30px 30px 30px;">Employee Page</h2>
+    </table>
+  </div>
+  <div class="col-lg-12" >
+    <table id="claim_reimbursement" class ="table table-striped">
+      <tbody ></tbody>
+    </table></div>
+
+
+    <!-- <button  class="btn btn-primary" type="button" align="center">Submit</button> -->
+
+  <!-- </form> -->
 </div>
-<form class="form-horizontal" id="frmUploader">
-  <div class="form-group">
-    <label class="control-label col-sm-1"  for="usr">Name:</label>
-    <div class="col-sm-11">
-      <input type="text" class="form-control" id="usr" placeholder="Enter Name">
-     </div>
-     </div>
-
-  <div class="form-group">
-    <label class="control-label col-sm-1" for="Emp_Type">Emp_Type:</label>
-    <div class="col-sm-5">
-    <select id="Emp_Type" name="Emp_Type" class="form-control">
-      <option value="-1">Select</option>
-      <option value="1">Regular</option>
-      <option value="2">FT</option>
-      <option value="3">UPL</option>
-    </select>
-  </div>
-    <div class="form-group">
-    <label class="control-label col-sm-1 " for="grd">Grade:</label>
-    <div class="col-sm-5">
-    <select id="grd" name="grade" class="form-control">
-      <option value="-1">Select</option>
-      <option value="1">E1</option>
-      <option value="2">E2</option>
-      <option value="3">E3</option>
-    </select>
-  </div>
-  </div>
-  <table  class="table" id ="reimbursement_declare">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Reimbursement_Type1</th>
-        <th>Reimbursement_Type2</th>
-        <th>Reimbursement_Type3</th>
-      </tr>  
-    </thead>
-    <tbody>
-      <tr>
-        <td><label class="control-label" for="grd">Amount:</label></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type1"></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type2"></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type3"></td>
-      </tr>
-      <tr>
-        <td><label class="control-label" for="grd">Frequency:</label></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type1"></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type2"></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type3"></td>
-      </tr>
-      <tr>
-        <td><label class="control-label" for="grd">Claimed Amount:</label></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type1"></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type2"></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type3"></td>
-      </tr>
-      <tr>
-        <td><label class="control-label" for="grd">Remaining Amount:</label></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type1"></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type2"></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type3"></td>
-      </tr>
-      <tr>
-        <td><label class="control-label" for="grd">New Claim:</label></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type1"></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type2"></td>
-        <td><input type="text" class="form-control" id="type" placeholder="Type3"></td>
-      </tr>
-      <tr>
-        <td><label class="control-label" for="grd" id="frmUploader" enctype="multipart/form-data" action="api/Upload/" method="post">Bill Upload:</label></td>
-        <td><input type="file" name="imgUploader" multiple />
-        <input style="margin:10px 10px 10px 10px;" type="submit" name="submit" id="btnSubmit" value="Upload" />
-        </td>
-        <td><input type="file" name="imgUploader" multiple />
-        <input style="margin:10px 10px 10px 10px;" type="submit" name="submit" id="btnSubmit" value="Upload" />
-        </td>
-        <td><input type="file" name="imgUploader" multiple />
-        <input style="margin:10px 10px 10px 10px;" type="submit" name="submit" id="btnSubmit" value="Upload" />
-        </td>
-      </tr>
-    </tbody>
-  </table>
-   <button  class="btn btn-primary" type="button" align="center">Submit</button>
-
-  </form>
-</div>
+<input id="Emp_Id" name="Emp_Id" type="hidden" />
 </body>
+<script type="text/javascript">
+function getUserById(id){
+  $.getJSON( 'http://'+location.hostname + ':3000/custom/user/' + id,{
+      format: "json"
+    } ,
+    function( data ) {
+      $('#Name').val(data[0].fullname);
+      $('#Emp_Type').val(data[0].description);
+      $('#Grade').val(data[0].emp_grade_code);
+      $('#Emp_Id').val(data[0].id);
+      //alert(data[0].emp_no);
+
+    });
+}
+
+function empReimburseHistory(){
+  $.getJSON( 'http://'+location.hostname + ':3000/custom/reimbursehistory/1',{
+      format: "json"
+    } ,
+    function( data ) {
+      
+$.each(data, function(key,value) {
+  /*var map;
+  if(localStorage.getItem(value.reimbursement_type)===null){
+      localStorage.setItem(value.reimbursement_amount + localStorage.getItem(value.reimbursement_type));
+      alert("asdasdasdas");
+  }else{
+    localStorage.setItem(value.reimbursement_type,value.reimbursement_amount);
+    alert("esle");
+  }*/
+        });
+    });
+}
+
+function reimbursementClaimed(result){
+var map = new Map();
+//alert(map);
+if(result.length!=undefined){
+  for(i=0;i<result.length;i++){
+if(map.has(result[i].reimbursement_type)){
+  var key =result[i].reimbursement_type;
+  var oldvalue = map.get(result[i].reimbursement_type);
+  var newvalue = oldvalue + result[i].reimbursement_amount;
+  map.set(key,newvalue);
+//alert(map.get(result[i].reimbursement_type)+result[i].reimbursement_amount);
+  //alert(map.size);
+}else{
+  map.set(result[i].reimbursement_type,result[i].reimbursement_amount);
+}
+  }
+}
+updateTable(map);
+}
+
+function getReimbursementHistory(){
+  $.ajax({
+            type: "GET",
+            url: /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/custom/reimbursehistory/1',
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+        reimbursementClaimed(result);
+    },
+    error: function(result){
+        console.log(result);
+    }
+        });
+}
+
+  function updateTable(map){
+ $.getJSON( /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/custom/userreimburse/1/E1',{
+      format: "json"
+    } ,
+    function( data ) {
+      
+$.each(data, function(key,value) {
+  //var used = map.get(value.id);
+    //alert(used);
+      $('#claim_reimbursement').append('<tr><th scope="row">'+value.description+'</th><td>'+value.amount+
+        '</td><td>'+value.frequency+'</td><td>'+'</td><td>'+ (map.has(value.id)?map.get(value.id):0)+'</td>'+
+        '<input type="text" class="form-control" id="type" placeholder="Type">'+
+        
+        /*'<td><input type="file" name="imgUploader" multiple /><input style="margin:10px 10px 10px 10px;" type="submit" name="submit" id="btnSubmit" value="Upload" /></td>' +'</tr>'*/
+        /*'<a class="page-scroll btnSelect"  href="#myModal" data-toggle="modal" style="color:white;background-color:green;">Update</a>&nbsp;&nbsp;'+'<a class="page-scroll btnSelect"  >Delete</a>'+'</td></tr>'*/
+
+        '<td><form id="frmUploader" enctype="multipart/form-data"  method="post">'+
+        '<input type="file" name="imgUploader" multiple  required/>'+
+        '<input type="text" placeholder="Claim" name="amount" required />'+
+        '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" >Submit</button>'+
+    '</form></td>'
+    /*<form id="frmUploader2" enctype="multipart/form-data"  method="post">
+        <input type="file" name="imgUploader" multiple />
+        <input type="submit" name="submit" id="btnSubmit" value="Upload" />
+    </form>
+*/
+
+    +'</tr>'
+
+        ); 
+      $('#frmUploader').attr('action' , 'http://' + location.hostname + ':3000/api/Upload');
+      $('#frmUploader').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value',$('#Emp_Id').val()));
+        $('#frmUploader').append($('<input />').attr('type', 'hidden').attr('name', 'reimbursement_type').attr('value',value.id));
+      //$('#frmUploader').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value', "something");
+        });
+    });
+
+  }
+window.onload = function() {
+  //updateTable();
+  getUserById('10000167');
+getReimbursementHistory();
+//test();
+};
+</script>
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Scrolling Nav JavaScript -->
+<script src="js/jquery.easing.min.js"></script>
+<script src="js/scrolling-nav.js"></script>
 </html>

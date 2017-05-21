@@ -19,9 +19,9 @@
 10 error You can get their info via:
 10 error     npm owner ls rkdemo
 10 error There is likely additional logging output above.
-11 error System Windows_NT 10.0.14393
+11 error System Windows_NT 6.1.7601
 12 error command "C:\\Program Files\\nodejs\\node.exe" "C:\\ProgramData\\chocolatey\\lib\\npm\\tools\\node_modules\\npm\\bin\\npm-cli.js" "start"
-13 error cwd C:\till_now\node_back\nodejsrestapi
+13 error cwd C:\my_nodeproject\node_back\nodejsrestapi
 14 error node -v v6.10.2
 15 error npm -v 1.4.9
 16 error code ELIFECYCLE

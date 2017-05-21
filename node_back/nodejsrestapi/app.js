@@ -12,6 +12,8 @@ var Tasks=require('./routes/Tasks');
 var Students=require('./routes/Students');
 var Employees = require('./routes/Employees');
 var Reimbursements = require('./routes/Reimbursements');
+var Customs = require('./routes/Customs');
+var Custom=require('./models/Custom');
 var app = express();
 var Storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -29,14 +31,25 @@ var upload = multer({ storage: Storage }).array("imgUploader", 3); //Field name 
 });*/
 
 app.post("/api/Upload", function (req, res) {
+  //console.log(req.body);
     upload(req, res, function (err) {
         if (err) {
-          return res.status;
-            //return res.end("Something went wrong!");
+            return res.end("Something went wrong!");
         }
-        return res.end("Something went wrong!");
-        //return res.end("File uploaded sucessfully!.");
+        return res.end("File uploaded sucessfully!.");
     });
+
+    Custom.addReimbursementHistory(req.body,function(err,count){
+
+            //console.log(req.body);
+            if(err)
+            {
+                res.json(err);
+            }
+            else{
+                    res.json(req.body);//or return count for 1 & 0
+            }
+        });
 });
 
 // view engine setup
@@ -62,6 +75,7 @@ app.use('/Tasks',Tasks);
 app.use('/Students',Students);
 app.use('/Employees',Employees);
 app.use('/Reimbursements',Reimbursements);
+app.use('/custom',Customs);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

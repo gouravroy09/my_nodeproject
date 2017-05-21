@@ -179,3 +179,10 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-05-09 16:46:13
+
+
+alter table reimbursement add column emp_grade_code varchar(250);
+alter table reimbursement add constraint table_constraint unique(emp_type_id,emp_grade_code);
+alter table users add column emp_grade_code varchar(250);
+alter table users add column emp_type_id int;
+alter table reimbursement drop index table_constraint;
