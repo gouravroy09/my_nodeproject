@@ -47,10 +47,10 @@ var Custom2 = {
 
 	return db.query("select * from users u left join employee_type e on u.emp_type_id = e.id where emp_no=?",[id],callback);
 	},
-	addReimbursementHistory:function(History,callback){
+	addReimbursementHistory:function(History,filepath,callback){
 		console.log(JSON.stringify(History));
 
-	return db.query("insert into employee_reimbursement_history(emp_id,reimbursement_type,reimbursement_amount,time) values(?,?,?,now());",[History.emp_id,History.reimbursement_type,History.reimbursement_amount],callback);
+	return db.query("insert into employee_reimbursement_history(emp_id,reimbursement_type,reimbursement_amount,time,filepath) values(?,?,?,now(),?);",[History.emp_id,History.reimbursement_type,History.reimbursement_amount,filepath],callback);
 	},
 };
 

@@ -24,22 +24,42 @@ var Storage = multer.diskStorage({
     }
 });
 
-var upload = multer({ storage: Storage }).array("imgUploader", 3); //Field name and max count
+var upload = multer({ storage: Storage }).any(); //Field name and max count
 
 /*app.get("/", function (req, res) {
     res.sendFile(__dirname + "/employeeClaims.ejs");
 });*/
 
 app.post("/api/Upload", function (req, res) {
-  //console.log(req.body);
     upload(req, res, function (err) {
         if (err) {
             return res.end("Something went wrong!");
         }
-        return res.end("File uploaded sucessfully!.");
+  console.log(req.files.length!==null);
+  console.log(req.body);
+  var filepathString ='';
+  if(req.files.length!==null && req.files.length>0){
+        for(i=0;i< req.files.length;i++){
+          filepathString = filepathString + req.files[i].path +',';
+        }
+        filepathString = filepathString.slice(0,-1);
+        Custom.addReimbursementHistory(req.body,filepathString,function(err,count){
+
+            //console.log(req.body);
+            if(err)
+            {
+                res.json(err);
+            }
+            else{
+                    //res.json(req.body);//or return count for 1 & 0
+                    //return res.end("File uploaded sucessfully!.");
+                    return res.redirect(req.headers.referer);
+            }
+        });
+  }
     });
 
-    Custom.addReimbursementHistory(req.body,function(err,count){
+    /*Custom.addReimbursementHistory(req.body,function(err,count){
 
             //console.log(req.body);
             if(err)
@@ -49,8 +69,13 @@ app.post("/api/Upload", function (req, res) {
             else{
                     res.json(req.body);//or return count for 1 & 0
             }
-        });
+        });*/
 });
+
+/*app.post("/api/Upload", function (req, res) {
+
+
+});*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

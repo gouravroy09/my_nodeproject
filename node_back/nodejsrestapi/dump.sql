@@ -186,3 +186,5 @@ alter table reimbursement add constraint table_constraint unique(emp_type_id,emp
 alter table users add column emp_grade_code varchar(250);
 alter table users add column emp_type_id int;
 alter table reimbursement drop index table_constraint;
+
+alter table employee_reimbursement_history add column filepath varchar(2000);
