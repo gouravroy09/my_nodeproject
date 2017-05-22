@@ -234,7 +234,7 @@ function getReimbursementHistory(){
       $.each(result, function(key,value) {
       //alert(key+1);
         $('#history_table').append(
-          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time + '</td></tr>' 
+          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +'</td><td>' + value.status  + '</td></tr>' 
           );
 
       });
@@ -275,7 +275,7 @@ function( data ) {
       '<input type="text" placeholder="Claim" name="reimbursement_amount" required />'+
       '</td>'+
       '<td>'+
-      '<input type="file" name="imgUploader" multiple  required/>'+
+      '<input type="file" name="imgUploader"  required/>'+
       '</td>'+
       '<td>'+
       '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" >Submit</button>'+

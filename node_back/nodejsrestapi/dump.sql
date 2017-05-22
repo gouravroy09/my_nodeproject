@@ -187,4 +187,7 @@ alter table users add column emp_grade_code varchar(250);
 alter table users add column emp_type_id int;
 alter table reimbursement drop index table_constraint;
 
+/*22nd May'17 at Office*/
 alter table employee_reimbursement_history add column filepath varchar(2000);
+
+alter table employee_reimbursement_history add column status enum('pending','hr-approved','fin-approved','processed') default 'pending';

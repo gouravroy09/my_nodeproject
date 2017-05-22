@@ -37,12 +37,12 @@ app.post("/api/Upload", function (req, res) {
         }
   console.log(req.files.length!==null);
   console.log(req.body);
-  var filepathString ='';
-  if(req.files.length!==null && req.files.length>0){
-        for(i=0;i< req.files.length;i++){
+  var filepathString = req.files[0].path;
+  //if(req.files.length!==null && req.files.length>0){
+        /*for(i=0;i< req.files.length;i++){
           filepathString = filepathString + req.files[i].path +',';
-        }
-        filepathString = filepathString.slice(0,-1);
+        }*/
+       // filepathString = filepathString.slice(0,-1);
         Custom.addReimbursementHistory(req.body,filepathString,function(err,count){
 
             //console.log(req.body);
@@ -56,7 +56,7 @@ app.post("/api/Upload", function (req, res) {
                     return res.redirect(req.headers.referer);
             }
         });
-  }
+  //}
     });
 
     /*Custom.addReimbursementHistory(req.body,function(err,count){
@@ -78,6 +78,10 @@ app.post("/api/Upload", function (req, res) {
 });*/
 
 // view engine setup
+app.get("/downloadFile",function (req,res) {
+        console.log(req.body);
+        //res.download(re);
+});
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 //app.set('port', process.env.PORT || 8080);

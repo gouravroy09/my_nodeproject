@@ -93,11 +93,36 @@
         <section id="intro" class="intro-section">
           <div class="container">
             <div class="row">
-              <div class="col-lg-12">
+              <h1>Claims Tray</h1>
+              <div class="col-lg-12" >
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th> Reimbursement Type</th>
+                          <th>Amount Claimed</th>
+                          <th>Time</th>
+                          <th>Action</th>
+                          <!-- <th>Amount</th>
+                          <th>Frequency</th>
+                          <th>Action</th> -->
+                        </tr>
+                      </thead>
+                    </table>
+                    </div>
+
+<div class="col-lg-12" style="overflow-y: scroll; height:300px;">
+
+  <table class="table table-hover" >
+
+  <tbody id="history_table">
+    </tbody>
+  </table>
+</div>
+
                     <!--<h1>Scrolling Nav</h1>
                     <p><strong>Usage Instructions:</strong> Make sure to include the <code>scrolling-nav.js</code>, <code>jquery.easing.min.js</code>, and <code>scrolling-nav.css</code> files. To make a link smooth scroll to another section on the page, give the link the <code>.page-scroll</code> class and set the link target to a corresponding ID on the page.</p>
                     <a class="btn btn-default page-scroll" href="#about">Click Me to Scroll Down!</a>-->
-                  </div>
                 </div>
               </div>
             </section>
@@ -165,6 +190,22 @@
 <script type="text/javascript">
 
   window.onload = function() {
+
+    $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/reimbursehistory/1',{
+      format: "json"
+    } ,
+    function( data ) {
+      localStorage.setItem("empType", data);
+      $.each(data, function(key,value) {
+        $('#history_table').append(
+          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +'</td><td><form id= "downloadFileForm'+key+'" method="get">' +
+           '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.filepath+'">Download</button>'  
+           + '</form></td></tr>' 
+          );
+
+        $('#frmUploader'+key+'').attr('action' , 'http://' + location.hostname + ':3000/downloadFile');
+      });
+    });
 
     $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/Employees/',{
       format: "json"
