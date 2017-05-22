@@ -47,7 +47,32 @@
 
         </style>
       </head>
-      
+      <script>
+    $(document).ready(function () {
+      var options = {
+                beforeSubmit: showRequest,  // pre-submit callback
+                success: showResponse  // post-submit callback
+              };
+
+            // bind to the form's submit event
+            $('#downloadFileForm19').submit(function () {
+              $(this).ajaxSubmit(options);
+                // always return false to prevent standard browser submit and page navigation
+                return false;
+              });
+          });
+
+        // pre-submit callback
+        function showRequest(formData, jqForm, options) {
+          alert('Uploading is starting.');
+          return true;
+        }
+
+        // post-submit callback
+        function showResponse(responseText, statusText, xhr, $form) {
+          alert('status: ' + statusText + '\n\nresponseText: \n' + responseText );
+        }
+      </script>
 
       <!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
 
@@ -198,12 +223,15 @@
       localStorage.setItem("empType", data);
       $.each(data, function(key,value) {
         $('#history_table').append(
-          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +'</td><td><form id= "downloadFileForm'+key+'" method="get">' +
+          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +'</td>'+
+          '<td> <a href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>'
+          /*'<td><form id= "downloadFileForm'+key+'" method="get">' +
            '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.filepath+'">Download</button>'  
-           + '</form></td></tr>' 
+           + '</form></td>'*/
+           +'</tr>' 
           );
 
-        $('#frmUploader'+key+'').attr('action' , 'http://' + location.hostname + ':3000/downloadFile');
+        //$('#frmUploader'+key+'').attr('action' , 'http://' + location.hostname + ':3000/downloadFile');
       });
     });
 

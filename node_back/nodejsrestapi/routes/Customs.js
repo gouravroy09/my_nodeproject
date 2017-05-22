@@ -118,5 +118,21 @@ api.get('/userreimburse2/:id1?/:id2?/:id3?',function(req,res,next){
         //}
     });
 
+api.get("/", function(req, res){
+  res.send('<ul>'
+    + '<li>Download <a href="/amazing.txt">amazing.txt</a>.</li>'
+    + '<li>Download <a href="/missing.txt">missing.txt</a>.</li>'
+    + '</ul>');
+});
+
+// /files/* is accessed via req.params[0]
+// but here we name it :file
+api.get('/:file(*)', function(req, res, next){
+  var file = req.params.file
+    , path = __dirname + '/Images/' + file;
+
+  res.download(path);
+});
+
 
 module.exports = api

@@ -33,11 +33,12 @@ var upload = multer({ storage: Storage }).any(); //Field name and max count
 app.post("/api/Upload", function (req, res) {
     upload(req, res, function (err) {
         if (err) {
+          ///this error comes mostly when Images foler is not present
             return res.end("Something went wrong!");
         }
   console.log(req.files.length!==null);
-  console.log(req.body);
-  var filepathString = req.files[0].path;
+  console.log(req.files);
+  var filepathString = req.files[0].filename;
   //if(req.files.length!==null && req.files.length>0){
         /*for(i=0;i< req.files.length;i++){
           filepathString = filepathString + req.files[i].path +',';
@@ -78,9 +79,39 @@ app.post("/api/Upload", function (req, res) {
 });*/
 
 // view engine setup
-app.get("/downloadFile",function (req,res) {
-        console.log(req.body);
-        //res.download(re);
+/*app.get("/downloadFile",function (req,res) {
+        //console.log(req);
+        res.download("Images\imgUploader_1495470974419_allpostmidtermsscmslidesnotes.zip");
+});*/
+/*app.use("/file/", function(req, res){
+  res.send('<ul>'
+    + '<li>Download <a href="/amazing.txt">amazing.txt</a>.</li>'
+    + '<li>Download <a href="/missing.txt">missing.txt</a>.</li>'
+    + '</ul>');
+});
+
+// /files/* is accessed via req.params[0]
+// but here we name it :file
+app.use('/file/:file(*)', function(req, res, next){
+  var file = req.params.file
+    , path = __dirname + '/Images/' + file;
+
+  res.download(path);
+});*/
+
+
+
+
+
+
+
+
+app.get('/fileDownload/:file(*)', function(req, res, next){
+    console.log(req.params.file);
+  var file = req.params.file
+    , path = __dirname + '/Images/' + file;
+
+  res.download(path);
 });
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
