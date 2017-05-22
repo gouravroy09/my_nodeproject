@@ -37,7 +37,7 @@ var Custom2 = {
 	},
 	getReimbursementHistoryByUserId:function(id,callback){
 
-	return db.query("select * from employee_reimbursement_history where emp_id=?",[id],callback);
+	return db.query("select er.*,r.description from employee_reimbursement_history er left join reimbursement r on er.reimbursement_type=r.id where emp_id=? order by time",[id],callback);
 	},
 	test:function(){
 		console.log("inside service");
