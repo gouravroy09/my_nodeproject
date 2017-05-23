@@ -52,6 +52,16 @@ var Custom2 = {
 
 	return db.query("insert into employee_reimbursement_history(emp_id,reimbursement_type,reimbursement_amount,time,filepath) values(?,?,?,now(),?);",[History.emp_id,History.reimbursement_type,History.reimbursement_amount,filepath],callback);
 	},
+	approvedByHrReimbursementHistoryRow:function(id,callback){
+		//console.log(JSON.stringify(History));
+
+	return db.query("update employee_reimbursement_history set status='hr-approved' where id=?;",[id],callback);
+	},
+	finApprovedByHrReimbursementHistoryRow:function(id,callback){
+		//console.log(JSON.stringify(History));
+
+	return db.query("update employee_reimbursement_history set status='fin-approved' where id=?;",[id],callback);
+	},
 };
 
 module.exports = Custom2;

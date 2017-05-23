@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Employee Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap Core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="css/scrolling-nav.css" rel="stylesheet">
+
+  <link href="css/table-fixedheader.css" rel="stylesheet">
+ <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <script>
+    $(document).ready(function () {
+      var options = {
+                beforeSubmit: showRequest,  // pre-submit callback
+                success: showResponse  // post-submit callback
+              };
+
+            // bind to the form's submit event
+            $('form').submit(function () {
+              $(this).ajaxSubmit(options);
+                // always return false to prevent standard browser submit and page navigation
+                return false;
+              });
+          });
+
+        // pre-submit callback
+        function showRequest(formData, jqForm, options) {
+          alert('Uploading is starting.');
+          return true;
+        }
+
+        // post-submit callback
+        function showResponse(responseText, statusText, xhr, $form) {
+          alert('status: ' + statusText + '\n\nresponseText: \n' + responseText );
+        }
+      </script>
+
+    </head>
+    <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <!-- <form id="frmUploader2" enctype="multipart/form-data"  method="post">
+        <input type="file" name="imgUploader" multiple />
+        <input type="submit" name="submit" id="btnSubmit" value="Upload" />
+      </form> -->
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header page-scroll">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand page-scroll" href="#page-top">Reimburse Panel</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul class="nav navbar-nav">
+                <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                <li class="hidden">
+                  <a class="page-scroll" href="#page-top"></a>
+                </li>
+                <!-- <li>
+                  <a class="page-scroll" href="#about">Employee Details</a>
+                </li> -->
+                <li>
+                  <a class="page-scroll" href="#services">Claims History</a>
+                </li>
+                <!-- <li>
+                  <a class="page-scroll" href="#contact">New Claim</a>
+                </li> -->
+              </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+          </div>
+          <!-- /.container -->
+        </nav>
+
+      <section id="intro" class="intro-section">
+          <div class="container">
+            <div class="row">
+              <h1>Claims Tray</h1>
+              <div class="col-lg-12" >
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th> Reimbursement Type</th>
+                          <th>Amount Claimed</th>
+                          <th>Time</th>
+                          <th>Action</th>
+                          <!-- <th>Amount</th>
+                          <th>Frequency</th>
+                          <th>Action</th> -->
+                        </tr>
+                      </thead>
+                    </table>
+                    </div>
+
+<div class="col-lg-12" style="overflow-y: scroll; height:300px;">
+
+  <table class="table table-hover" >
+
+  <tbody id="history_table">
+    </tbody>
+  </table>
+</div>
+
+
+
+              </div></div></section>
+
+            <!-- <section id="about" class="about-section">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+
+              
+              </div></div></div></section> -->
+
+
+              <section id="services" class="services-section">
+          <div class="container">
+            <div class="row">
+              <h1>Under Process Claims</h1>
+              <div class="col-lg-12" >
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th> Reimbursement Type</th>
+                          <th>Amount Claimed</th>
+                          <th>Time</th>
+                          <th>Action</th>
+                          <!-- <th>Amount</th>
+                          <th>Frequency</th>
+                          <th>Action</th> -->
+                        </tr>
+                      </thead>
+                    </table>
+                    </div>
+
+<div class="col-lg-12" style="overflow-y: scroll; height:300px;">
+
+  <table class="table table-hover" >
+
+  <tbody id="onProcess_table">
+    </tbody>
+  </table>
+</div>
+              </div></div></section>
+
+
+              <!-- <section id="contact" class="contact-section">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+
+              <div class="text-center">
+          <h2 style="margin:30px 30px 30px 30px;">Claims Form</h2>
+        </div>
+        <!-- <form class="form-horizontal" id="frmUploader"> -->
+        
+
+          <div class="col-lg-12" >
+            <table class ="table table-hover">
+              <thead>
+                <tr>
+                  <th>Reimbursement Type</th>
+                  <th>Maximum Amount</th>
+                  <th>Maximum Frequency</th>
+                  <th>Claimed Amount</th>
+                  <th>New Claim</th>
+                  <th>Attachments</th>
+                </tr>  
+              </thead>
+
+            </table>
+          </div>
+          <div class="col-lg-12" >
+            <table id="claim_reimbursement" class ="table table-striped">
+              <tbody ></tbody>
+            </table></div>
+              </div>
+              </div></div></section> -->
+
+
+            <!-- <button  class="btn btn-primary" type="button" align="center">Submit</button> -->
+
+            <!-- </form> -->
+          
+          <input id="Emp_Id" name="Emp_Id" type="hidden" />
+        </body>
+
+       
+
+
+
+        <script type="text/javascript">
+        window.onload = function() {
+
+    $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/reimbursehistory/1',{
+      format: "json"
+    } ,
+    function( data ) {
+      localStorage.setItem("empType", data);
+        onProcessClaims(data); 
+      $.each(data, function(key,value) {
+        //if(value.s){}
+        //alert(value.status);
+        if(value.status==='pending'){
+        $('#history_table').append(
+          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +'</td>'+
+          /*'<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +*/
+          '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/finApproveReimburse/'+value.id+'">Approve</a></td>' +
+          /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
+           '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
+           + '</form></td>'*/
+           +'</tr>' 
+          );
+        }
+        //$('#frmUploader'+key+'').attr('action' , 'http://' + location.hostname + ':3000/downloadFile');
+      });
+    });
+
+    function onProcessClaims(data){
+      $.each(data, function(key,value) {
+        //if(value.s){}
+        //alert(value.status);
+        if(value.status==='fin-approved'){
+        $('#onProcess_table').append(
+          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +'</td>'+
+          '</td><td class="btn btn-info" width="50%">' + value.status  + '</td></tr>'
+          /*'<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
+          '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.id+'">Approve</a></td>' +*/
+          /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
+           '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
+           + '</form></td>'*/
+           +'</tr>' 
+          );
+        }
+        //$('#frmUploader'+key+'').attr('action' , 'http://' + location.hostname + ':3000/downloadFile');
+      });
+
+    }
+
+    
+  };
+          
+        </script>
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Scrolling Nav JavaScript -->
+<script src="js/jquery.easing.min.js"></script>
+<script src="js/scrolling-nav.js"></script>
+</html>

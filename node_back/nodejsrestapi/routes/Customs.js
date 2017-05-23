@@ -118,7 +118,7 @@ api.get('/userreimburse2/:id1?/:id2?/:id3?',function(req,res,next){
         //}
     });
 
-api.get("/", function(req, res){
+/*api.get("/", function(req, res){
   res.send('<ul>'
     + '<li>Download <a href="/amazing.txt">amazing.txt</a>.</li>'
     + '<li>Download <a href="/missing.txt">missing.txt</a>.</li>'
@@ -132,6 +132,32 @@ api.get('/:file(*)', function(req, res, next){
     , path = __dirname + '/Images/' + file;
 
   res.download(path);
+});*/
+
+api.get('/hrapproveReimburse/:id',function(req,res,next){
+  Custom2.approvedByHrReimbursementHistoryRow(req.params.id,function(err,count){
+    if(err)
+    {
+      res.json(err);
+    }
+    else
+    {
+      res.redirect(req.headers.referer);
+    }
+  });
+});
+
+api.get('/finApproveReimburse/:id',function(req,res,next){
+  Custom2.finApprovedByHrReimbursementHistoryRow(req.params.id,function(err,count){
+    if(err)
+    {
+      res.json(err);
+    }
+    else
+    {
+      res.redirect(req.headers.referer);
+    }
+  });
 });
 
 

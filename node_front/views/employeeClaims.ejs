@@ -232,9 +232,29 @@ function getReimbursementHistory(){
     success: function (result) {
       reimbursementClaimed(result);
       $.each(result, function(key,value) {
+        var statusCell = '</td><td class="btn btn-danger" width="50%">' + value.status  + '</td></tr>' ;
+
+        if(value.status==='hr-approved'){
+          statusCell = '</td><td class="btn btn-warning" width="50%">' + value.status  + '</td></tr>' ;
+          }
+          if(value.status==='fin-approved'){
+          statusCell = '</td><td class="btn btn-info" width="50%">' + value.status  + '</td></tr>' ;
+          }
+          if(value.status==='processed'){
+          statusCell = '</td><td class="btn btn-success" width="50%">' + value.status  + '</td></tr>' ;
+          }
+          /*else if(value.status=='hr-approved'){
+
+          }else if(value.status=='hr-approved'){
+
+          }else (value.status=='hr-approved'){
+
+          }*/
       //alert(key+1);
         $('#history_table').append(
-          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +'</td><td>' + value.status  + '</td></tr>' 
+          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +
+            statusCell
+          /*'</td><td class="btn btn-success" >' + value.status  + '</td></tr>' */
           );
 
       });

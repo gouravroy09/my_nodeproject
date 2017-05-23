@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Reimbursement Admin</title>
+  <title>Reimbursement - HR Admin</title>
 
   <!-- Bootstrap Core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -88,7 +88,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand page-scroll" href="#page-top">Reimbursement Admin</a>
+              <a class="navbar-brand page-scroll" href="#page-top">Pending Claims</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -99,13 +99,13 @@
                   <a class="page-scroll" href="#page-top"></a>
                 </li>
                 <li>
-                  <a class="page-scroll" href="#about">All Reimbursements</a>
+                  <a class="page-scroll" href="#about">All Reimbursement Types</a>
                 </li>
                 <li>
-                  <a class="page-scroll" href="#services">Update Reimbursement</a>
+                  <a class="page-scroll" href="#services">Add Reimbursement Components</a>
                 </li>
                 <li>
-                  <a class="page-scroll" href="#contact">New Reimbursement</a>
+                  <a class="page-scroll" href="#contact">New Reimbursement Type</a>
                 </li>
               </ul>
             </div>
@@ -222,15 +222,19 @@
     function( data ) {
       localStorage.setItem("empType", data);
       $.each(data, function(key,value) {
+        //if(value.s){}
+        //alert(value.status);
+        if(value.status==='pending'){
         $('#history_table').append(
           '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +'</td>'+
-          '<td> <a href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>'
-          /*'<td><form id= "downloadFileForm'+key+'" method="get">' +
-           '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.filepath+'">Download</button>'  
+          '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
+          '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.id+'">Approve</a></td>' +
+          /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
+           '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
            + '</form></td>'*/
            +'</tr>' 
           );
-
+        }
         //$('#frmUploader'+key+'').attr('action' , 'http://' + location.hostname + ':3000/downloadFile');
       });
     });
