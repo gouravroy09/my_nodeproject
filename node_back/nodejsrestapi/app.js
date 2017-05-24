@@ -99,7 +99,32 @@ app.use('/file/:file(*)', function(req, res, next){
   res.download(path);
 });*/
 
+app.get('/testTwoQueries', function(req,res,next){
+  var result = {};
+    Custom.getAllEmpTypes(function(err,rows1){
+      if(err){
+        res.json(err);
+      }else{
+        result.table1 = rows1;
 
+        Custom.getAllReimbursementTypes(function(err,rows2){
+      if(err){
+        res.json(err);
+      }else{
+        result.table2 = rows2;
+    //console.log(result);
+    res.send(result);
+      }
+    });
+
+      }
+    });
+
+    
+    
+
+
+});
 
 
 
