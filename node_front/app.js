@@ -38,6 +38,9 @@ var stationary = require('./routes/stationary');
 app.get('/stationary', stationary.stationary);
 
 var claims = require('./routes/claims');
+app.get('/claims', claims.claims);
+
+var claims = require('./routes/claims');
 app.get('/finReimburse', claims.finReimburse);
 
 

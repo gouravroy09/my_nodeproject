@@ -62,6 +62,9 @@ var Custom2 = {
 
 	return db.query("update employee_reimbursement_history set status='fin-approved' where id=?;",[id],callback);
 	},
+	getReimbursementHistoyWithUserDetalsByStatus:function(status,callback){
+		return db.query("select * from employee_reimbursement_history rh left join reimbursement r on rh.reimbursement_type =r.id left join users u on u.emp_grade_code = r.emp_grade_code where rh.status ='pending'",[status],callback);
+	}
 };
 
 module.exports = Custom2;
