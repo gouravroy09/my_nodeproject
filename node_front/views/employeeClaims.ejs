@@ -252,7 +252,7 @@ function getReimbursementHistory(){
           }*/
       //alert(key+1);
         $('#history_table').append(
-          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +
+          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +
             statusCell
           /*'</td><td class="btn btn-success" >' + value.status  + '</td></tr>' */
           );

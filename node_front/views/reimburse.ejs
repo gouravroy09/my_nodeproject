@@ -226,7 +226,7 @@
         //alert(value.status);
         if(value.status==='pending'){
         $('#history_table').append(
-          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +'</td>'+
+          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +'</td>'+
           '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
           '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.id+'">Approve</a></td>' +
           '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch/'+value.id+'">Reject-Doc MisMatch</a></td>' +
