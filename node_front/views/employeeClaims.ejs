@@ -146,8 +146,8 @@
                 <tr>
                   <th>Reimbursement Type</th>
                   <th>Maximum Amount</th>
-                  <th>Maximum Frequency</th>
-                  <th>Claimed</th>
+                  <th>Remaining Frequency</th>
+                  <th>Claimed Amount</th>
                   <th>Remaining Claim Amount</th>
                   <th>New Claim</th>
                   <th>Attachments</th>
@@ -210,10 +210,12 @@
 */
           function reimbursementClaimed(result){
             var map = new Map();
+            var map2 = new Map();
 //alert(map);
 if(result.length!=undefined){
   for(i=0;i<result.length;i++){
     if(map.has(result[i].reimbursement_type)){
+      map2.set(result[i].reimbursement_type,map2.get(result[i].reimbursement_type) +1);
       var key =result[i].reimbursement_type;
       var oldvalue = map.get(result[i].reimbursement_type);
       var newvalue = oldvalue + result[i].reimbursement_amount;
@@ -222,10 +224,11 @@ if(result.length!=undefined){
   //alert(map.size);
 }else{
   map.set(result[i].reimbursement_type,result[i].reimbursement_amount);
+  map2.set(result[i].reimbursement_type,1);
 }
 }
 }
-updateTable(map);
+updateTable(map,map2);
 }
 
 function getReimbursementHistory(){
@@ -273,7 +276,7 @@ function getReimbursementHistory(){
   });
 }
 
-function updateTable(map){
+function updateTable(map,map2){
  $.getJSON( /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/custom/userreimburse/1/E1',{
   format: "json"
 } ,
@@ -285,8 +288,15 @@ function( data ) {
     var max = value.amount;
     var claimed = (map.has(value.id)?map.get(value.id):0);
     var remaining = max -claimed;
+    var remainingFreqeuncy = value.frequency /*- map2.get(value.id)*/;
+    if(map2.has(value.id)){
+      remainingFreqeuncy = remainingFreqeuncy - map2.get(value.id);
+    }
+
+    if(remainingFreqeuncy>0){
+
     $('#claim_reimbursement').append('<tr><th scope="row">'+value.description+'</th><td>'+value.amount+
-      '</td><td>'+value.frequency+'</td><td>'+'</td><td>'+ (map.has(value.id)?map.get(value.id):0)+'</td>'+
+      '</td><td>'+remainingFreqeuncy+'</td><td>'+'</td><td>'+ (map.has(value.id)?map.get(value.id):0)+'</td>'+
        '<td>'+remaining+'</td>'+
       '<input type="text" class="form-control" id="type" placeholder="Type">'+
 
@@ -320,7 +330,10 @@ function( data ) {
     $('#frmUploader'+key+'').attr('action' , 'http://' + location.hostname + ':3000/api/Upload');
     $('#frmUploader'+key+'').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value',$('#Emp_Id').val()));
     $('#frmUploader'+key+'').append($('<input />').attr('type', 'hidden').attr('name', 'reimbursement_type').attr('value',value.id));
+    }
+
       //$('#frmUploader').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value', "something");
+    
     });
 //alert($(value.id);
 });

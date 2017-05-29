@@ -265,9 +265,10 @@
      var currentRow=$(this).closest("tr");
      var reimbursement_type_id=currentRow.find("th:eq(0)").html();
      var emp_type=currentRow.find("td:eq(0)").html();
-     var reimbursement_description=currentRow.find("td:eq(1)").html();
-     var amount=currentRow.find("td:eq(2)").html();
-     var frequency=currentRow.find("td:eq(3)").html();
+     var reimbursement_description=currentRow.find("td:eq(2)").html();
+     //alert(reimbursement_description);
+     var amount=currentRow.find("td:eq(3)").html();
+     var frequency=currentRow.find("td:eq(4)").html();
      if($(this).text()==='Update'){
      $('#update_Emp_Type').val(emp_type);
      $('#update_Reimbursement_description').val(reimbursement_description);
