@@ -147,7 +147,8 @@
                   <th>Reimbursement Type</th>
                   <th>Maximum Amount</th>
                   <th>Maximum Frequency</th>
-                  <th>Claimed Amount</th>
+                  <th>Claimed</th>
+                  <th>Remaining Claim Amount</th>
                   <th>New Claim</th>
                   <th>Attachments</th>
                 </tr>  
@@ -297,7 +298,7 @@ function( data ) {
       '<tr>'+
       
       '<td>'+
-      '<input type="text" placeholder="Claim" name="reimbursement_amount" required />'+
+      '<input type="number" placeholder="Claim" max="'+remaining+'" name="reimbursement_amount" required />'+
       '</td>'+
       '<td>'+
       '<input type="file" name="imgUploader"  required/>'+
