@@ -16,9 +16,9 @@ var Employee = {
 	addReimburseType:function(ReimburseType,callback){
 		console.log("inside service");
 		console.log(ReimburseType.Emp_Type);
-		return db.query("Insert into reimbursement(emp_type_id,description,amount,frequency,emp_grade_code) values(?,?,?,?,?)",
+		return db.query("Insert into reimbursement(emp_type_id,description,amount,frequency,emp_grade_code,gl_account_number) values(?,?,?,?,?,?)",
 			[ReimburseType.Emp_Type,ReimburseType.Reimbursement_description,
-			ReimburseType.amount,ReimburseType.frequency,ReimburseType.Emp_Grade],callback);
+			ReimburseType.amount,ReimburseType.frequency,ReimburseType.Emp_Grade,ReimburseType.gl_account_number],callback);
 	},
 	updateReimbursementType:function(id,ReimbursementType,callback){
 		console.log("inside service");

@@ -191,3 +191,9 @@ alter table reimbursement drop index table_constraint;
 alter table employee_reimbursement_history add column filepath varchar(2000);
 
 alter table employee_reimbursement_history add column status enum('pending','hr-approved','fin-approved','processed') default 'pending';
+
+/*29th May'17 at Office*/
+alter table reimbursement add column gl_account_number varchar(255);
+
+
+alter table employee_reimbursement_history change column status status enum('pending','hr-approved','fin-approved','processed','hr-reject-amnt/freq-exceed','hr-reject-doc-nomatch') default 'pending';

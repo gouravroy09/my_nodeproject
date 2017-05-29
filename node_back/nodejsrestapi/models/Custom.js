@@ -57,6 +57,16 @@ var Custom2 = {
 
 	return db.query("update employee_reimbursement_history set status='hr-approved' where id=?;",[id],callback);
 	},
+	rejectedByHrDocMismatch:function(id,callback){
+		//console.log(JSON.stringify(History));
+
+	return db.query("update employee_reimbursement_history set status='hr-reject-doc-nomatch' where id=?;",[id],callback);
+	},
+	rejectedByHrAmtFreqMismatch:function(id,callback){
+		//console.log(JSON.stringify(History));
+
+	return db.query("update employee_reimbursement_history set status='hr-reject-amnt/freq-exceed' where id=?;",[id],callback);
+	},
 	finApprovedByHrReimbursementHistoryRow:function(id,callback){
 		//console.log(JSON.stringify(History));
 

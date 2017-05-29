@@ -229,6 +229,8 @@
           '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +'</td>'+
           '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
           '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.id+'">Approve</a></td>' +
+          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch/'+value.id+'">Reject-Doc MisMatch</a></td>' +
+          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch/'+value.id+'">Reject-Amt/Freq MisMatch</a></td>' +
           /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
            '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
            + '</form></td>'*/
@@ -336,6 +338,12 @@
 <script type="text/javascript">
    var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/Reimbursements';
      $('#new_reimburse').attr('action', new_action);
+     $('#new_reimburse').submit(function(){
+      /*if($('#gl_account_number').val()==='NULL'){
+        alert('321321');
+      }*/
+     });
+
      //$('#host-origin').val(location.origin);
 </script>
 <script src="js/jquery.js"></script>

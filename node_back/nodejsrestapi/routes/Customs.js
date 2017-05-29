@@ -2,6 +2,8 @@ var express = require('express');
 var api = express();
 var Custom2=require('../models/Custom');
 var db=require('../dbconnection');
+var xlsx = require('node-xlsx');
+    var fs  = require('fs');
 
 api.get('/rest/:id?',function(req,res,next){
     if(req.params.id){
@@ -147,6 +149,31 @@ api.get('/hrapproveReimburse/:id',function(req,res,next){
   });
 });
 
+api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id',function(req,res,next){
+  Custom2.rejectedByHrAmtFreqMismatch(req.params.id,function(err,count){
+    if(err)
+    {
+      res.json(err);
+    }
+    else
+    {
+      res.redirect(req.headers.referer);
+    }
+  });
+});
+api.get('/hrrejectReimburse/docMismatch/:id',function(req,res,next){
+  Custom2.rejectedByHrDocMismatch(req.params.id,function(err,count){
+    if(err)
+    {
+      res.json(err);
+    }
+    else
+    {
+      res.redirect(req.headers.referer);
+    }
+  });
+});
+
 api.get('/finApproveReimburse/:id',function(req,res,next){
   Custom2.finApprovedByHrReimbursementHistoryRow(req.params.id,function(err,count){
     if(err)
@@ -192,9 +219,218 @@ api.get('/Excel', function(req, res){
     var conf ={};
     //conf.stylesXmlFile = "styles.xml";
     conf.name = "mysheet";
-    conf.cols = [{
-        caption:'string',
+    conf.cols = [
+    {
+        caption:'Business Transactions',
         type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Vendor',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Document Date',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'2345',
+        type:'number',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Posting Date',
+        type:'date',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Amount',
+        type:'number',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Currency',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Tax Code',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Tax Applicable',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Business Place',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Section Code',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Test',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'GL Accoun NO',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Amount',
+        type:'number',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Tax Code',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Tax Applicable',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Busness Place',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Sectio Code',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Test',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'GL Accoun NO',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Amount',
+        type:'number',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Tax Code',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Assignment No',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Value Date',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Narration',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    {
+        caption:'Cost Center',
+        type:'string',
+        beforeCellWrite:function(row, cellData){
+             return cellData.toUpperCase();
+        },
+        width:28.7109375
+    },
+    /*{
+        caption:'string',
+        type:'date',
         beforeCellWrite:function(row, cellData){
              return cellData.toUpperCase();
         },
@@ -224,20 +460,40 @@ api.get('/Excel', function(req, res){
     },{
         caption:'number',
          type:'number'              
-    }];
-    conf.rows = [
+    }*/];
+
+
+
+    /*conf.rows = [
         ['pi', new Date(Date.UTC(2013, 4, 1)), true, 3.14],
         ["e", new Date(2012, 4, 1), false, 2.7182],
         ["M&M<>'", new Date(Date.UTC(2013, 6, 9)), false, 1.61803],
         ["null date", null, true, 1.414]  
     ];
+    */
+    conf.rows = [];
     var result = nodeExcel.execute(conf);
     res.setHeader('Content-Type', 'application/vnd.openxmlformats');
     res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
     res.end(result, 'binary');
 });
+    
 api.get('/xyz',function(req,res,next){
-    var status ='pending';
+    //import xlsx from 'node-xlsx';
+// Or var xlsx = require('node-xlsx').default; 
+
+// Parse a buffer
+const data = [[1, 2, 3], [true, false, null, 'sheetjs'], ['foo', 'bar', new Date('2014-02-19T14:30Z'), '0.3'], ['baz', null, 'qux']];
+var buffer = xlsx.build([{name: "mySheetName", data: data}]);
+res.send(buffer);
+
+/*excelParser.worksheets({
+  inFile: './Report.xlsx'
+}, function(err, worksheets){
+  if(err) console.error(err);
+  console.log(worksheets);
+});*/
+    /*var status ='pending';
   Custom2.approvedByHrReimbursementHistoryRow(status,function(err,rows){
     if(err)
     {
@@ -248,7 +504,51 @@ api.get('/xyz',function(req,res,next){
         console.log(rows);
       res.send(rows);
     }
-  });
+  });*/
+});
+var Employee=require('../models/Employee');
+
+api.get('/testNew/:id?',function(req,res,next){
+    if(req.params.id){
+        //Employee.getEmpTypeById(req.params.id){
+            Employee.getEmpTypeById(req.params.id,function(err,rows){
+                if(err){
+                    res.json(err);
+                }else{
+                    res.json(rows);
+                }
+            });
+            //}
+        }
+        else{
+            Employee.getAllReimbursementTypes(function(err,rows){
+                if(err){
+                    res.json(err);
+                }else{
+                    res.json(rows);
+                }
+            });
+        }
+    });
+
+
+api.post('/delete/:id',function(req,res,next){
+        //console.log(req.body);
+
+        Employee.deleteReimbursement(req.params.id,function(err,count){
+
+            if(err)
+            {
+                res.json(err);
+            }
+            else
+            {
+                //res.redirect('http://localhost:5000/#about');
+                res.end('{"success" : "Updated Successfully", "status" : 200}');
+                //res.redirect(req.headers.referer);
+            }
+
+        });
 });
 
 module.exports = api
