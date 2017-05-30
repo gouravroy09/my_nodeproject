@@ -60,12 +60,12 @@
               };
 
             // bind to the form's submit event
-            $('#downloadFileForm19').submit(function () {
+            /*$('#downloadFileForm19').submit(function () {
               $(this).ajaxSubmit(options);
                 // always return false to prevent standard browser submit and page navigation
                 return false;
               });
-          });
+          });*/
 
         // pre-submit callback
         function showRequest(formData, jqForm, options) {
@@ -124,7 +124,7 @@
           <div class="container">
             <div class="row">
               <h1>Claims Tray</h1>
-              <div class="col-lg-12" >
+              <div class="col-lg-10" >
                     <table class="table table-hover">
                       <thead>
                         <tr>
@@ -133,6 +133,9 @@
                           <th>Amount Claimed</th>
                           <th>Time</th>
                           <th>Action</th>
+                          <th>Action</th>
+                          <th></th>
+                          <th></th>
                           <!-- <th>Amount</th>
                           <th>Frequency</th>
                           <th>Action</th> -->
@@ -141,14 +144,14 @@
                     </table>
                     </div>
 
-<div class="col-lg-12" style="overflow-y: scroll; height:300px;">
+              <div class="col-lg-12" style="overflow-y: scroll; height:300px;">
 
-  <table class="table table-hover" >
+                <table class="table table-hover" >
 
-  <tbody id="history_table">
-    </tbody>
-  </table>
-</div>
+                <tbody id="history_table">
+                  </tbody>
+                </table>
+              </div>
 
                     <!--<h1>Scrolling Nav</h1>
                     <p><strong>Usage Instructions:</strong> Make sure to include the <code>scrolling-nav.js</code>, <code>jquery.easing.min.js</code>, and <code>scrolling-nav.css</code> files. To make a link smooth scroll to another section on the page, give the link the <code>.page-scroll</code> class and set the link target to a corresponding ID on the page.</p>
@@ -231,7 +234,7 @@
         //alert(value.status);
         if(value.status==='pending'){
         $('#history_table').append(
-          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +'</td>'+
+          '<tr><th scope="row"> ' + (key+1) + '</th><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +'</td>'+
           '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
           '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.id+'">Approve</a></td>' +
           '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch/'+value.id+'">Reject-Doc MisMatch</a></td>' +

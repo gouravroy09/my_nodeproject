@@ -99,9 +99,10 @@
                         <tr>
                           <th>#</th>
                           <th> Reimbursement Type</th>
+                          <!-- <th></th> -->
                           <th>Amount Claimed</th>
                           <th>Time</th>
-                          <th>Action</th>
+                          <th></th>
                           <!-- <th>Amount</th>
                           <th>Frequency</th>
                           <th>Action</th> -->
@@ -136,8 +137,8 @@
           <div class="container">
             <div class="row">
               <h1>Under Process Claims</h1>
-              <div class="col-lg-12" >
                     <div id ="downloadExcel"></div>
+              <div class="col-lg-12" >
                     <table class="table table-hover">
                       <thead>
                         <tr>
@@ -173,7 +174,6 @@
               <div class="text-center">
           <h2 style="margin:30px 30px 30px 30px;">Claims Form</h2>
         </div>
-        <!-- <form class="form-horizontal" id="frmUploader"> -->
         
 
           <div class="col-lg-12" >
@@ -225,7 +225,7 @@
         //alert(value.status);
         if(value.status==='hr-approved'){
         $('#history_table').append(
-          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +'</td>'+
+          '<tr><th scope="row">' + (key+1) + '</th><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +'</td>'+
           /*'<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +*/
           '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/finApproveReimburse/'+value.id+'">Approve</a></td>' +
           /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
@@ -244,8 +244,8 @@
         //alert(value.status);
         if(value.status==='fin-approved'){
         $('#onProcess_table').append(
-          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +'</td>'+
-          '</td><td class="btn btn-info" width="50%">' + value.status  + '</td></tr>'
+          '<tr><th scope="row">' + (key+1) + '</th><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +'</td>'+
+          '</td><td><a class="btn btn-info">' + value.status  + '</a></td></tr>'
           /*'<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
           '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.id+'">Approve</a></td>' +*/
           /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
