@@ -107,7 +107,7 @@
                   <a class="page-scroll" href="#about">All Reimbursement Types</a>
                 </li>
                 <li>
-                  <a class="page-scroll" href="#services">Add Reimbursement Components</a>
+                  <a class="page-scroll" href="#services"> Bill Generation</a>
                 </li>
                 <li>
                   <a class="page-scroll" href="#contact">New Reimbursement Type</a>
@@ -198,11 +198,37 @@
               <div class="container">
                 <div class="row">
                   <div class="col-lg-12">
-                    <h1>Update Reimbursement</h1>
+                  <a id = "generateBillTag" class="btn btn-warning" >Genrate Bill</a>
+                  <script type="text/javascript">
+                  var link = 'http://'+location.hostname +':3000/custom/unBilledReimburseHistoy';
+                    $('#generateBillTag').attr('href',link);
+                    $('#generateBillTag').attr('target','_blank');
+                  </script>
+                    <!-- <h1>Update Reimbursement</h1>
+                    <div id="printableArea">
+                      <h1>Print me</h1>
+                    </div>
+                      <script type="text/javascript">
+                        function printDiv(divName) {
+     var printContents = document.getElementById(divName).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+}
+                      </script>
+                      <input type="button" onclick="printDiv('printableArea')" value="print a div!" /> -->
                   </div>
                 </div>
               </div>
             </section>
+
+
+
+
             <div>
             <% include update_reimbursement.ejs %>
             </div>

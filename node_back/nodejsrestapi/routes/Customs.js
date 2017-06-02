@@ -3,7 +3,7 @@ var api = express();
 var Custom2=require('../models/Custom');
 var db=require('../dbconnection');
 var xlsx = require('node-xlsx');
-    var fs  = require('fs');
+var fs  = require('fs');
 
 api.get('/rest/:id?',function(req,res,next){
     if(req.params.id){
@@ -82,14 +82,14 @@ api.get('/userreimburse2/:id1?/:id2?/:id3?',function(req,res,next){
     //if(req.params.id1 && req.params.id2){
         //Employee.getEmpTypeById(req.params.id){
         	console.log("Request handler random was called.");
-  res.writeHead(200, {"Content-Type": "application/json"});
+          res.writeHead(200, {"Content-Type": "application/json"});
  // var data = new Map();
-  var xyz=[];
+ var xyz=[];
   //console.log(data);
-            Custom2.getReimburesmenTypeByEmpTypeAndGrade(req.params.id1,req.params.id2,function(err,rows){
-                if(err){
-                    res.json(err);
-                }else{
+  Custom2.getReimburesmenTypeByEmpTypeAndGrade(req.params.id1,req.params.id2,function(err,rows){
+    if(err){
+        res.json(err);
+    }else{
                 	//xyz.push(rows);
                 	res.locals.row1 = rows;
                     //res.write(rows);
@@ -101,16 +101,16 @@ api.get('/userreimburse2/:id1?/:id2?/:id3?',function(req,res,next){
       //  }
        // else{
        	//var rows2;
-            Custom2.getReimbursementHistoryByUserId(req.params.id3,function(err,rows){
-                if(err){
-                    res.json(err);
-                }else{
+        Custom2.getReimbursementHistoryByUserId(req.params.id3,function(err,rows){
+            if(err){
+                res.json(err);
+            }else{
                     //res.write(rows);
                    //res.write(rows);
                    //xyz.push(rows);
                    res.locals.row2 = rows;
-                }
-            });
+               }
+           });
             //console.log(res.local.rows1);
             /*var json = JSON.stringify({
             	result : data
@@ -141,12 +141,12 @@ api.get('/hrapproveReimburse/:id',function(req,res,next){
     if(err)
     {
       res.json(err);
-    }
-    else
-    {
+  }
+  else
+  {
       res.redirect(req.headers.referer);
-    }
-  });
+  }
+});
 });
 
 api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id',function(req,res,next){
@@ -154,24 +154,24 @@ api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id',function(req,res,next){
     if(err)
     {
       res.json(err);
-    }
-    else
-    {
+  }
+  else
+  {
       res.redirect(req.headers.referer);
-    }
-  });
+  }
+});
 });
 api.get('/hrrejectReimburse/docMismatch/:id',function(req,res,next){
   Custom2.rejectedByHrDocMismatch(req.params.id,function(err,count){
     if(err)
     {
       res.json(err);
-    }
-    else
-    {
+  }
+  else
+  {
       res.redirect(req.headers.referer);
-    }
-  });
+  }
+});
 });
 
 api.get('/finApproveReimburse/:id',function(req,res,next){
@@ -179,12 +179,12 @@ api.get('/finApproveReimburse/:id',function(req,res,next){
     if(err)
     {
       res.json(err);
-    }
-    else
-    {
+  }
+  else
+  {
       res.redirect(req.headers.referer);
-    }
-  });
+  }
+});
 });
 
 api.get('/getReimburesmenTypeByEmpTypeAndGrade/:id?',function(req,res,next){
@@ -224,210 +224,210 @@ api.get('/Excel', function(req, res){
         caption:'Business Transactions',
         type:'string',
         beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Vendor',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Document Date',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'2345',
-        type:'number',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Posting Date',
-        type:'date',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Amount',
-        type:'number',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Currency',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Tax Code',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Tax Applicable',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Business Place',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Section Code',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Test',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'GL Accoun NO',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Amount',
-        type:'number',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Tax Code',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Tax Applicable',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Busness Place',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Sectio Code',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Test',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'GL Accoun NO',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Amount',
-        type:'number',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Tax Code',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Assignment No',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Value Date',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Narration',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
-    {
-        caption:'Cost Center',
-        type:'string',
-        beforeCellWrite:function(row, cellData){
-             return cellData.toUpperCase();
-        },
-        width:28.7109375
-    },
+           return cellData.toUpperCase();
+       },
+       width:28.7109375
+   },
+   {
+    caption:'Vendor',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Document Date',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'2345',
+    type:'number',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Posting Date',
+    type:'date',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Amount',
+    type:'number',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Currency',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Tax Code',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Tax Applicable',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Business Place',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Section Code',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Test',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'GL Accoun NO',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Amount',
+    type:'number',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Tax Code',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Tax Applicable',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Busness Place',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Sectio Code',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Test',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'GL Accoun NO',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Amount',
+    type:'number',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Tax Code',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Assignment No',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Value Date',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Narration',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
+{
+    caption:'Cost Center',
+    type:'string',
+    beforeCellWrite:function(row, cellData){
+       return cellData.toUpperCase();
+   },
+   width:28.7109375
+},
     /*{
         caption:'string',
         type:'date',
@@ -460,7 +460,7 @@ api.get('/Excel', function(req, res){
     },{
         caption:'number',
          type:'number'              
-    }*/];
+     }*/];
 
 
 
@@ -477,7 +477,7 @@ api.get('/Excel', function(req, res){
     res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
     res.end(result, 'binary');
 });
-    
+
 api.get('/xyz',function(req,res,next){
     //import xlsx from 'node-xlsx';
 // Or var xlsx = require('node-xlsx').default; 
@@ -504,7 +504,7 @@ res.send(buffer);
         console.log(rows);
       res.send(rows);
     }
-  });*/
+});*/
 });
 var Employee=require('../models/Employee');
 
@@ -549,6 +549,55 @@ api.post('/delete/:id',function(req,res,next){
             }
 
         });
-});
+    });
+var jsreport = require('jsreport');
+
+api.get('/unBilledReimburseHistoy',function(req,res,next){
+        //console.log(req.body);
+
+        Custom2.getReimbursementHistoryForBilling(function(err,rows){
+
+            if(err)
+            {
+                res.json(err);
+            }
+            else
+            {
+                //var html = fs.readFile('./views/index.jade');
+                var html = '<h1>Invoice</h1>';
+                if(rows.length>0){
+                    var date=(new Date()).toLocaleDateString();
+                html +='Date :' + (new Date()).toLocaleDateString();    
+                html+='<table><tr><th>Claim Type</th><th>Claim Amount</th><th>Count</th></tr>';
+                for(i=0;i<rows.length;i++){
+                    html+='<tr><td>'+rows[i].description+'</td><td>'+
+                        rows[i].reimbursement_amount+'</td><td>'+rows[i].count+'</td></tr>';
+                }
+
+                jsreport.render({ template: { content: html/*fs.readFileSync('./views/index.html' ,'utf8')*/, engine: 'jsrender', recipe: 'phantom-pdf' } }).then(function(out) {
+                    //out.stream.pipe(res);
+                     out.result.pipe(fs.createWriteStream('invoice.pdf'));
+                     res.redirect(req.headers.referer);
+                }).catch(function(e) {    
+                    res.end(e.message);
+                });
+                }
+
+                /*require("jsreport").render("<h1>Hi there!</h1>").then(function(out) {
+  out.result.pipe(fs.createWriteStream('helloworld.pdf'));
+});*/
+
+
+
+
+
+                //res.redirect('http://localhost:5000/#about');
+                //res.end('{"success" : "Updated Successfully", "status" : 200}');
+                //res.redirect(req.headers.referer);
+                //res.json(rows);
+            }
+
+        });
+    });
 
 module.exports = api

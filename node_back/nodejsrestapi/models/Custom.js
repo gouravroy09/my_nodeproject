@@ -74,6 +74,12 @@ var Custom2 = {
 	},
 	getReimbursementHistoyWithUserDetalsByStatus:function(status,callback){
 		return db.query("select * from employee_reimbursement_history rh left join reimbursement r on rh.reimbursement_type =r.id left join users u on u.emp_grade_code = r.emp_grade_code where rh.status ='pending'",[status],callback);
+	},
+	getCurrentMonthReimbursementHistoryForBilling:function(callback){
+		return db.query("select * from employee_reimbursement_history eh left join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' and month(time)=month(current_date()) and year(time)=year(current_date())",callback);
+	},
+	getReimbursementHistoryForBilling:function(callback){
+		return db.query("select eh.reimbursement_type,r.description,count(*) as count, sum(eh.reimbursement_amount) as reimbursement_amount,min(time) as time from employee_reimbursement_history eh left join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' group by eh.reimbursement_type order by time",callback);
 	}
 };
 
