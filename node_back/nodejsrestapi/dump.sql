@@ -198,6 +198,12 @@ alter table reimbursement add column gl_account_number varchar(255);
 
 alter table employee_reimbursement_history change column status status enum('pending','hr-approved','fin-approved','processed','hr-reject-amnt/freq-exceed','hr-reject-doc-nomatch') default 'pending';
 
+/*1st June 2017*/
 alter table employee_reimbursement_history add column bill_generated enum('yes','no');
 
 alter table employee_reimbursement_history change column bill_generated bill_generated enum('yes','no') default 'no';
+
+create table miscellaneous (
+param varchar(2000),
+value varchar(2000)
+);

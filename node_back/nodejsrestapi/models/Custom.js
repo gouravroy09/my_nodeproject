@@ -80,6 +80,9 @@ var Custom2 = {
 	},
 	getReimbursementHistoryForBilling:function(callback){
 		return db.query("select eh.reimbursement_type,r.description,count(*) as count, sum(eh.reimbursement_amount) as reimbursement_amount,min(time) as time from employee_reimbursement_history eh left join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' group by eh.reimbursement_type order by time",callback);
+	},
+	getInvoices:function(callback){
+		return db.query("select * from miscellaneous",callback);
 	}
 };
 
