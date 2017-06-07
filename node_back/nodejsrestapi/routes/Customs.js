@@ -566,9 +566,9 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
             {
                 //var html = fs.readFile('./views/index.jade');
                 var html = '<h1>Invoice</h1>';
+                    var date=new Date();
                 if(rows.length>0){
-                    var date=(new Date()).toLocaleDateString();
-                html +='Date :' + (new Date()).toLocaleDateString();    
+                html +='Date :' + date.toLocaleDateString();    
                 html+='<table><tr><th>Claim Type</th><th>Claim Amount</th><th>Count</th></tr>';
                 for(i=0;i<rows.length;i++){
                     html+='<tr><td>'+rows[i].description+'</td><td>'+
@@ -577,7 +577,7 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
 
                 jsreport.render({ template: { content: html/*fs.readFileSync('./views/index.html' ,'utf8')*/, engine: 'jsrender', recipe: 'phantom-pdf' } }).then(function(out) {
                     //out.stream.pipe(res);
-                    var pdfname = 'invoice.pdf';
+                    var pdfname = "Date-"+date.getDate() +"-"+date.getMonth()+"-"+date.getFullYear()+"-Time-"+date.getHours()+":"+date.getSeconds()+'.pdf';
                      out.result.pipe(fs.createWriteStream('./Images/'+pdfname));
                      saveInvoice(pdfname,function(err,count){
                         if(err){
