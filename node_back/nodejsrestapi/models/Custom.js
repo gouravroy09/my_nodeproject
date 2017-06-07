@@ -83,7 +83,10 @@ var Custom2 = {
 	},
 	getProjectCodes:function(callback){
 		return db.query("select * from project_code_employee_mapping",callback);
-	}
+	},
+	getInvoices:function(callback){
+		return db.query("select * from miscellaneous",callback);
+}
 };
 
 module.exports = Custom2;

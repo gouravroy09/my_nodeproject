@@ -550,6 +550,7 @@ api.post('/delete/:id',function(req,res,next){
 
         });
     });
+
 var jsreport = require('jsreport');
 
 api.get('/unBilledReimburseHistoy',function(req,res,next){
@@ -576,8 +577,16 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
 
                 jsreport.render({ template: { content: html/*fs.readFileSync('./views/index.html' ,'utf8')*/, engine: 'jsrender', recipe: 'phantom-pdf' } }).then(function(out) {
                     //out.stream.pipe(res);
-                     out.result.pipe(fs.createWriteStream('invoice.pdf'));
-                     res.redirect(req.headers.referer);
+                    var pdfname = 'invoice.pdf';
+                     out.result.pipe(fs.createWriteStream('./Images/'+pdfname));
+                     saveInvoice(pdfname,function(err,count){
+                        if(err){
+                            res.end(err);
+                        }else{
+                            res.redirect(req.headers.referer+'#services');
+                        }
+                     })
+                     //res.redirect(req.headers.referer);
                 }).catch(function(e) {    
                     res.end(e.message);
                 });
@@ -594,12 +603,30 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
                 //res.redirect('http://localhost:5000/#about');
                 //res.end('{"success" : "Updated Successfully", "status" : 200}');
                 //res.redirect(req.headers.referer);
-                //res.json(rows); n 
+                //res.json(rows);
             }
 
         });
     });
 
+function saveInvoice(link,callback){
+
+    //function(link,callback){
+    return db.query("insert into miscellaneous(param,value) values('invoice',?)",[link],callback);
+    //}
+}
+
+api.get('/invoice',function(req,res,next){
+        //Employee.getEmpTypeById(req.params.id){
+            Custom2.getInvoices(function(err,rows){
+                if(err){
+                    res.json(err);
+                }else{
+                    res.json(rows);
+                }
+            });
+            //}
+});
 
 
 api.get('/projectCodes',function(req,res,next){
@@ -615,5 +642,7 @@ api.get('/projectCodes',function(req,res,next){
             //}
         //}
     });
+
+
 
 module.exports = api

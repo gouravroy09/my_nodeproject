@@ -201,11 +201,13 @@
               <div class="container">
                 <div class="row">
                   <div class="col-lg-12">
-                  <a id = "generateBillTag" class="btn btn-warning" >Genrate Bill</a>
+                  <a id = "generateBillTag" class="btn btn-warning" >Generate Bill</a>
+                  <table><tr><th>Invoice</th><th>Action</th></tr></table>
+                  <table id="invoice_table"></table>
                   <script type="text/javascript">
                   var link = 'http://'+location.hostname +':3000/custom/unBilledReimburseHistoy';
                     $('#generateBillTag').attr('href',link);
-                    $('#generateBillTag').attr('target','_blank');
+                    //$('#generateBillTag').attr('target','_blank');
                   </script>
                     <!-- <h1>Update Reimbursement</h1>
                     <div id="printableArea">
@@ -273,6 +275,16 @@
 <script type="text/javascript">
 
   window.onload = function() {
+    $.getJSON('http://'+location.hostname+':3000/custom/invoice',{format:"json"},
+      function(data){
+        $.each(data,function(key,value1){
+          $('#invoice_table').append(
+            '<tr><td>'+value1.value+'</td><td><a class="btn btn-warning" href="http://'+location.hostname+':3000/fileDownload/'+value1.value+'">Download</a></td></tr>'
+            );
+        });
+      });
+
+   // $('#invoice_table').app
 
     $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/reimbursehistory/1',{
       format: "json"
