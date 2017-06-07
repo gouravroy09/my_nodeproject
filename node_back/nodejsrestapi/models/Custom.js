@@ -79,7 +79,7 @@ var Custom2 = {
 		return db.query("select * from employee_reimbursement_history eh left join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' and month(time)=month(current_date()) and year(time)=year(current_date())",callback);
 	},
 	getReimbursementHistoryForBilling:function(callback){
-		return db.query("select eh.reimbursement_type,r.description,count(*) as count, sum(eh.reimbursement_amount) as reimbursement_amount,min(time) as time from employee_reimbursement_history eh left join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' group by eh.reimbursement_type order by time",callback);
+		return db.query("select eh.project_code,eh.reimbursement_type,r.description,count(*) as count, sum(eh.reimbursement_amount) as reimbursement_amount,min(time) as time from employee_reimbursement_history eh left join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' group by eh.reimbursement_type,eh.project_code order by time",callback);
 	},
 	getProjectCodes:function(callback){
 		return db.query("select * from project_code_employee_mapping",callback);

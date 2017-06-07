@@ -569,15 +569,15 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
                     var date=new Date();
                 if(rows.length>0){
                 html +='Date :' + date.toLocaleDateString();    
-                html+='<table><tr><th>Claim Type</th><th>Claim Amount</th><th>Count</th></tr>';
+                html+='<table><tr><th>Project Code</th><th>Claim Type</th><th>Claim Amount</th><th>Count</th></tr>';
                 for(i=0;i<rows.length;i++){
-                    html+='<tr><td>'+rows[i].description+'</td><td>'+
+                    html+='<tr><td>'+rows[i].project_code+'</td><td>'+rows[i].description+'</td><td>'+
                         rows[i].reimbursement_amount+'</td><td>'+rows[i].count+'</td></tr>';
                 }
 
                 jsreport.render({ template: { content: html/*fs.readFileSync('./views/index.html' ,'utf8')*/, engine: 'jsrender', recipe: 'phantom-pdf' } }).then(function(out) {
                     //out.stream.pipe(res);
-                    var pdfname = "Date-"+date.getDate() +"-"+date.getMonth()+"-"+date.getFullYear()+"-Time-"+date.getHours()+":"+date.getSeconds()+'.pdf';
+                    var pdfname = "Date-"+date.getDate() +"-"+date.getMonth()+"-"+date.getFullYear()+"-Time-"+date.getHours()+":"+date.getMinutes()+'.pdf';
                      out.result.pipe(fs.createWriteStream('./Images/'+pdfname));
                      saveInvoice(pdfname,function(err,count){
                         if(err){
