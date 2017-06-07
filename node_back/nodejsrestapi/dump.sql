@@ -201,3 +201,14 @@ alter table employee_reimbursement_history change column status status enum('pen
 alter table employee_reimbursement_history add column bill_generated enum('yes','no');
 
 alter table employee_reimbursement_history change column bill_generated bill_generated enum('yes','no') default 'no';
+
+
+/* 6th June 2-17 */
+create table project_code_employee_mapping(project_code varchar(200), employee_id varchar(200));
+
+  drop table  project_code_employee_mapping;
+
+/* 7th June 2-17 */
+create table project_code_employee_mapping(project_code varchar(200));
+
+  alter  table employee_reimbursement_history add column project_code varchar(200);

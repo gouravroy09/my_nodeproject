@@ -14,6 +14,7 @@ var Employees = require('./routes/Employees');
 var Reimbursements = require('./routes/Reimbursements');
 var Customs = require('./routes/Customs');
 var Custom=require('./models/Custom');
+var db=require('./dbconnection');
 var app = express();
 var Storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -59,19 +60,41 @@ app.post("/api/Upload", function (req, res) {
         });
   //}
     });
-
-    /*Custom.addReimbursementHistory(req.body,function(err,count){
-
-            //console.log(req.body);
-            if(err)
-            {
-                res.json(err);
-            }
-            else{
-                    res.json(req.body);//or return count for 1 & 0
-            }
-        });*/
 });
+
+var xlsx = require('node-xlsx');
+app.post("/excel/Upload", function (req, res) {
+    upload(req, res, function (err) {
+        if (err) {
+          ///this error comes mostly when Images foler is not present
+            return res.end("Something went wrong!");
+        }
+  var filepathString = req.files[0].filename;
+  var excelData = xlsx.parse('./Images/'+filepathString);
+//console.log(excelData[0].data[0]);
+var queryString ={};
+ queryString.fillers = '';
+ //queryString.values =[];
+for(i = 0; i<excelData[0].data.length ;i++){
+  queryString.fillers = queryString.fillers + "('"+excelData[0].data[i]+"'),";
+  //queryString.values.push(excelData[0].data[i]);
+  //console.log(excelData[i][0]);
+   // excelUploadTODB(excelData[i].[0],excelData[i])
+}
+ queryString.fillers = queryString.fillers.slice(0, -1);
+//queryString.fillers = queryString.fillers + ")";
+ excelUploadTODB(queryString,function(err){
+if(err) return res.json(err);
+return res.redirect(req.headers.referer);
+ });
+    });
+});
+function excelUploadTODB(data,callback){
+//console.log(data.values);
+var query = "insert into project_code_employee_mapping(project_code) values "+data.fillers;
+console.log(query);
+db.query(query,callback);
+}
 
 /*app.post("/api/Upload", function (req, res) {
 

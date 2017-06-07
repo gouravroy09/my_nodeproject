@@ -110,6 +110,9 @@
                   <a class="page-scroll" href="#services"> Bill Generation</a>
                 </li>
                 <li>
+                  <a class="page-scroll" href="#uploadExcel"> Upload Employee Project Info</a>
+                </li>
+                <li>
                   <a class="page-scroll" href="#contact">New Reimbursement Type</a>
                 </li>
               </ul>
@@ -221,6 +224,27 @@
 }
                       </script>
                       <input type="button" onclick="printDiv('printableArea')" value="print a div!" /> -->
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="uploadExcel" class="services-section">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                  <form id ="uploadExcelForm" enctype="multipart/form-data"  method="post">
+                    <input type="file" name="imgUploader"  required />
+                    <button id="uploadExcelButton" name="uploadExcelButton" class="btn btn-success" aria-hidden="true">Submit</button>
+                  </form>
+                 <!--  <a id = "generateBillTag" class="btn btn-warning" >Uplos</a> -->
+                  <script type="text/javascript">
+                  var link = 'http://'+location.hostname +':3000/excel/Upload';
+                    $('#uploadExcelForm').attr('action',link);
+                    $('#uploadExcelButton').click(function(){
+                      $('#uploadExcelForm').submit();
+                    });
+                    //$('#generateBillTag').attr('target','_blank');
+                  </script>
                   </div>
                 </div>
               </div>

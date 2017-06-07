@@ -147,11 +147,11 @@
                   <th>Type</th>
                   <th>Maximum Amount</th>
                   <th>Remaining Frequency</th>
-                  <th></th>
+                  
                   <th>Claimed Amount</th>
                   <th>Remaining Claim Amount</th>
                   <th>New Claim</th>
-                  <th></th>
+                  <th>Project Code</th>
                   <th>Attachments</th>
                   <th></th>
                 </tr>  
@@ -298,9 +298,9 @@ function( data ) {
 
     if(remainingFreqeuncy>0){
 
-    $('#claim_reimbursement').append('<tr><th scope="row">'+value.description+'</th><td>'+value.amount+
-      '</td><td>'+remainingFreqeuncy+'</td><td>'+'</td><td>'+ (map.has(value.id)?map.get(value.id):0)+'</td>'+
-       '<td>'+remaining+'</td>'+
+    $('#claim_reimbursement').append('<tr><th scope="row">'+value.description+'</th><td></td><td></td><td>'+value.amount+
+      '</td><td></td><td></td><td>'+remainingFreqeuncy+'</td><td>'+'</td><td>'+ (map.has(value.id)?map.get(value.id):0)+'</td>'+
+       '<td></td><td>'+remaining+'</td>'+
       '<input type="text" class="form-control" id="type" placeholder="Type">'+
 
       /*'<td><input type="file" name="imgUploader" multiple /><input style="margin:10px 10px 10px 10px;" type="submit" name="submit" id="btnSubmit" value="Upload" /></td>' +'</tr>'*/
@@ -311,7 +311,10 @@ function( data ) {
       '<tr>'+
       
       '<td>'+
-      '<input type="number" placeholder="Claim" max="'+remaining+'" name="reimbursement_amount" required />'+
+      '<input style="width: 120px;" type="number" placeholder="Claim" max="'+remaining+'" name="reimbursement_amount" required />'+
+      '</td>'+
+      '<td>'+
+      '<select id="selectProject'+key+'" type="text" name="Project_Code"  required><option value="">Select</option></select>'+
       '</td>'+
       '<td>'+
       '<input type="file" name="imgUploader"  required/>'+
@@ -330,6 +333,7 @@ function( data ) {
     +'</tr>'
 
     ); 
+    addProjectCodes('selectProject'+key);
     $('#frmUploader'+key+'').attr('action' , 'http://' + location.hostname + ':3000/api/Upload');
     $('#frmUploader'+key+'').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value',$('#Emp_Id').val()));
     $('#frmUploader'+key+'').append($('<input />').attr('type', 'hidden').attr('name', 'reimbursement_type').attr('value',value.id));
@@ -341,6 +345,19 @@ function( data ) {
 //alert($(value.id);
 });
 
+}
+
+function addProjectCodes(selectElementId){
+  $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/projectCodes',{
+      format: "json"
+    } ,
+    function( data ) {
+      //localStorage.setItem("empType", data);
+      $.each(data, function(key,value) {
+        $('#'+selectElementId+'').append($("<option />").val(value.project_code).text(value.project_code));
+        //localStorage.setItem(value.description,value.id);
+      });
+    });
 }
 window.onload = function() {
   //updateTable();

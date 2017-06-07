@@ -50,7 +50,7 @@ var Custom2 = {
 	addReimbursementHistory:function(History,filepath,callback){
 		console.log(JSON.stringify(History));
 
-	return db.query("insert into employee_reimbursement_history(emp_id,reimbursement_type,reimbursement_amount,time,filepath) values(?,?,?,now(),?);",[History.emp_id,History.reimbursement_type,History.reimbursement_amount,filepath],callback);
+	return db.query("insert into employee_reimbursement_history(emp_id,reimbursement_type,reimbursement_amount,time,filepath,project_code) values(?,?,?,now(),?,?);",[History.emp_id,History.reimbursement_type,History.reimbursement_amount,filepath,History.Project_Code],callback);
 	},
 	approvedByHrReimbursementHistoryRow:function(id,callback){
 		//console.log(JSON.stringify(History));
@@ -80,6 +80,9 @@ var Custom2 = {
 	},
 	getReimbursementHistoryForBilling:function(callback){
 		return db.query("select eh.reimbursement_type,r.description,count(*) as count, sum(eh.reimbursement_amount) as reimbursement_amount,min(time) as time from employee_reimbursement_history eh left join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' group by eh.reimbursement_type order by time",callback);
+	},
+	getProjectCodes:function(callback){
+		return db.query("select * from project_code_employee_mapping",callback);
 	}
 };
 

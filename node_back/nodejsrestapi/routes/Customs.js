@@ -594,10 +594,26 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
                 //res.redirect('http://localhost:5000/#about');
                 //res.end('{"success" : "Updated Successfully", "status" : 200}');
                 //res.redirect(req.headers.referer);
-                //res.json(rows);
+                //res.json(rows); n 
             }
 
         });
+    });
+
+
+
+api.get('/projectCodes',function(req,res,next){
+    //if(req.params.id){
+        //Employee.getEmpTypeById(req.params.id){
+            Custom2.getProjectCodes(function(err,rows){
+                if(err){
+                    res.json(err);
+                }else{
+                    res.json(rows);
+                }
+            });
+            //}
+        //}
     });
 
 module.exports = api
