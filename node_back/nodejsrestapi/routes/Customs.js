@@ -552,6 +552,37 @@ api.post('/delete/:id',function(req,res,next){
     });
 
 var jsreport = require('jsreport');
+api.get('/viewUnbilledRimburseHistory',function(req,res,next){
+    Custom2.getReimbursementHistoryForBilling(function(err,rows){
+
+            if(err)
+            {
+                res.json(err);
+            }
+            else
+            {
+                //var html = fs.readFile('./views/index.jade');
+                var html = invoiceHTML(rows);
+                res.end(html);
+            }
+        });
+});
+
+function invoiceHTML(rows){
+     var html = '';
+                    var date=new Date();
+                if(rows.length>0){
+                    html +='<h1>Invoice</h1>';
+                html +='Date :' + date.toLocaleDateString();    
+                html+='<table><tr><th>Project Code</th><th>Claim Type</th><th>Claim Amount</th><th>Count</th></tr>';
+                for(i=0;i<rows.length;i++){
+                    html+='<tr><td>'+rows[i].project_code+'</td><td>'+rows[i].description+'</td><td>'+
+                        rows[i].reimbursement_amount+'</td><td>'+rows[i].count+'</td></tr>';
+                }}
+                return html;
+
+
+}
 
 api.get('/unBilledReimburseHistoy',function(req,res,next){
         //console.log(req.body);
@@ -564,16 +595,9 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
             }
             else
             {
+                var date=new Date();
                 //var html = fs.readFile('./views/index.jade');
-                var html = '<h1>Invoice</h1>';
-                    var date=new Date();
-                if(rows.length>0){
-                html +='Date :' + date.toLocaleDateString();    
-                html+='<table><tr><th>Project Code</th><th>Claim Type</th><th>Claim Amount</th><th>Count</th></tr>';
-                for(i=0;i<rows.length;i++){
-                    html+='<tr><td>'+rows[i].project_code+'</td><td>'+rows[i].description+'</td><td>'+
-                        rows[i].reimbursement_amount+'</td><td>'+rows[i].count+'</td></tr>';
-                }
+                var html = invoiceHTML(rows);
 
                 jsreport.render({ template: { content: html/*fs.readFileSync('./views/index.html' ,'utf8')*/, engine: 'jsrender', recipe: 'phantom-pdf' } }).then(function(out) {
                     //out.stream.pipe(res);
@@ -590,7 +614,7 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
                 }).catch(function(e) {    
                     res.end(e.message);
                 });
-                }
+                //}
 
                 /*require("jsreport").render("<h1>Hi there!</h1>").then(function(out) {
   out.result.pipe(fs.createWriteStream('helloworld.pdf'));
