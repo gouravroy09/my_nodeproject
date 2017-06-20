@@ -4,6 +4,37 @@ var Custom2=require('../models/Custom');
 var db=require('../dbconnection');
 var xlsx = require('node-xlsx');
 var fs  = require('fs');
+const sql = require('mssql');
+
+var config = {
+        user: 'sa',
+        password: '',
+        server: 'DESKTOP-A9UOILA', 
+        database: 'TestServerDB' 
+    };
+
+api.get('/users',function(req,res,next){
+    // connect to your database
+    sql.connect(config, function (err) {
+    
+        if (err) console.log(err);
+
+        // create Request object
+        var request = new sql.Request();
+           
+        // query to the database and get the records
+        request.query('select * from Users', function (err, recordset) {
+            
+            if (err) console.log(err)
+
+            // send records as a response
+            res.send(recordset);
+            
+        });
+    });
+
+    sql.close();
+    });
 
 api.get('/rest/:id?',function(req,res,next){
     if(req.params.id){
