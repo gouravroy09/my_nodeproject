@@ -1,4 +1,5 @@
 var db=require('../dbconnection');
+
 var Custom2 = {
 	getAllEmpTypes:function(callback){
 
@@ -19,6 +20,9 @@ var Custom2 = {
 		return db.query("Insert into reimbursement(emp_type_id,description,amount,frequency,emp_grade_code) values(?,?,?,?,?)",
 			[ReimburseType.Emp_Type,ReimburseType.Reimbursement_description,
 			ReimburseType.amount,ReimburseType.frequency,ReimburseType.Emp_Grade],callback);
+	},
+	addUser:function(string,callback){
+		return db.query(string,[],callback);
 	},
 	updateReimbursementType:function(id,ReimbursementType,callback){
 		console.log("inside service");

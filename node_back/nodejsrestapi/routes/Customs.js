@@ -6,14 +6,48 @@ var xlsx = require('node-xlsx');
 var fs  = require('fs');
 const sql = require('mssql');
 
-var config = {
-        user: 'sa',
-        password: '',
-        server: 'DESKTOP-A9UOILA', 
+
+api.get('/users2', function (req, res) {
+   
+    var sql = require("mssql");
+
+    // config for your database
+    var config = {
+        user: 'emp_portal',
+        password: 'P0rt@l',
+        server: '115.124.113.186', 
         database: 'TestServerDB' 
     };
 
+    // connect to your database
+    sql.connect(config, function (err) {
+    
+        if (err) console.log(err);
+
+        // create Request object
+        var request = new sql.Request();
+           
+        // query to the database and get the records
+        request.query('select * from Users limit 1', function (err, recordset) {
+            
+            if (err) console.log(err)
+
+            // send records as a response
+            res.send(recordset);
+            
+        });
+    });
+});
+
+
+
 api.get('/users',function(req,res,next){
+    var config = {
+            user: 'emp_portal',
+            password: 'P0rt@l',
+            server: '115.124.113.186', 
+            database: 'TestServerDB' 
+        };
     // connect to your database
     sql.connect(config, function (err) {
     
@@ -25,16 +59,60 @@ api.get('/users',function(req,res,next){
         // query to the database and get the records
         request.query('select * from Users', function (err, recordset) {
             
-            if (err) console.log(err)
+            if (err) console.log(err);
 
             // send records as a response
-            res.send(recordset);
+            //var i=0;
+            addUser(sql,res,recordset);
+            //for(i=0;i<recordset.length;i++){
+                /*if(i<recordset.length){
+
+                Custom2.addUser(recordset[i],function(err,count){
+
+                });
+                }*/
+            //}
+            //res.send(recordset);
             
         });
     });
 
-    sql.close();
+    //sql.close();
     });
+
+function addUser(sql,res,recordset){
+    var query_string = "insert into users(username,fullname,email_id,emp_no,doj,emp_grade_code,emp_type_id) values";
+
+    //if(i<recordset.recordset.length){
+       // console.log(recordset.recordset.length);
+        for(var i =0;i < recordset.recordset.length;i++){
+            var User = recordset.recordset[i];
+            query_string = query_string + "("+
+            stringify(User.UserName)+","+stringify(User.FullName)+","+
+            stringify(User.EmailID)+","+stringify(User.EmpNo)+","+
+            stringify(User.Doj)+","+stringify(User.GradeCode)+",5),";
+        }
+        query_string = query_string.slice(0,-1);
+       // query_string =query_string ;
+        console.log(query_string);
+    Custom2.addUser(query_string,function(err,count){
+        if (err) console.log(err);
+        res.send(recordset);
+        sql.close();
+        //addUser(res,i+1,recordset);
+    });
+    //}
+    //else {
+    //}
+}
+
+function stringify(object){
+    if(object==null){
+        return "'its null'";
+    }else{
+        return "'"+object.toString()+"'";
+    }
+}
 
 api.get('/rest/:id?',function(req,res,next){
     if(req.params.id){
