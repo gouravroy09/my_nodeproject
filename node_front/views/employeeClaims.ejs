@@ -171,6 +171,7 @@
             <!-- </form> -->
           
           <input id="Emp_Id" name="Emp_Id" type="hidden" />
+          <input id="Emp_Type_Id" name="Emp_Type_Id" type="hidden" />
         </body>
 
        
@@ -185,6 +186,7 @@
             function( data ) {
               $('#Name').val(data[0].fullname);
               $('#Emp_Type').val(data[0].description);
+              $('#Emp_Type_Id').val(data[0].emp_type_id);
               $('#Grade').val(data[0].emp_grade_code);
               $('#Emp_Id').val(data[0].id);
       //alert(data[0].emp_no);
@@ -237,7 +239,7 @@ updateTable(map,map2);
 function getReimbursementHistory(){
   $.ajax({
     type: "GET",
-    url: /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/custom/reimbursehistory/1',
+    url: /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/custom/reimbursehistory/'+$('#Emp_Id').val(),
     data: '{}',
     contentType: "application/json; charset=utf-8",
     dataType: "json",
@@ -278,9 +280,14 @@ function getReimbursementHistory(){
     }
   });
 }
+//alert($('#Emp_Type').val());
 
 function updateTable(map,map2){
- $.getJSON( /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/custom/userreimburse/1/E1',{
+//alert('http://'+location.hostname + ':3000/custom/userreimburse/'+$('#Emp_Type_Id').val()+ '/' +$('#Grade').val());
+  //alert($('#Grade').val());
+  //$('#Emp_Id').val();
+ $.getJSON( /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/custom/userreimburse/'
+  +$('#Emp_Type_Id').val()+ '/' +$('#Grade').val(),{
   format: "json"
 } ,
 function( data ) {
@@ -361,7 +368,8 @@ function addProjectCodes(selectElementId){
 }
 window.onload = function() {
   //updateTable();
-  getUserById('10000167');
+  //alert(document.URL.split('?')[1].split('=')[1]);
+  getUserById(document.URL.split('?')[1].split('=')[1]);
   getReimbursementHistory();
 //test();
 };
