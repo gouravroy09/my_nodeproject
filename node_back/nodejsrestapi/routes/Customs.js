@@ -45,7 +45,7 @@ api.get('/users',function(req,res,next){
     var config = {
             user: 'emp_portal',
             password: 'P0rt@l',
-            server: '115.124.113.186', 
+            server: 'localhost', 
             database: 'TestServerDB' 
         };
     // connect to your database
