@@ -173,6 +173,19 @@ api.get('/reimbursehistory/:id?',function(req,res,next){
             //}
         }
     });
+api.get('/pendingReimburseHistory',function(req,res,next){
+    //if(req.params.id){
+        //Employee.getEmpTypeById(req.params.id){
+            Custom2.getReimbursementHistoyWithUserDetalsByStatus('pending',function(err,rows){
+                if(err){
+                    res.json(err);
+                }else{
+                    res.json(rows);
+                }
+            });
+            //}
+        //}
+    });
 api.get('/user/:id?',function(req,res,next){
     if(req.params.id){
         //Employee.getEmpTypeById(req.params.id){

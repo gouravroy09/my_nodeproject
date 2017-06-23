@@ -43,6 +43,10 @@ var Custom2 = {
 
 	return db.query("select er.*,r.description from employee_reimbursement_history er left join reimbursement r on er.reimbursement_type=r.id where emp_id=? order by time",[id],callback);
 	},
+	/*getPendingReimbursementHistory:function(callback){
+
+	return db.query("select er.*,r.description from employee_reimbursement_history er left join reimbursement r on er.reimbursement_type=r.id left join users u on eh.emp_id=u.id where er.status='pending' order by time",callback);
+	},*/
 	test:function(){
 		console.log("inside service");
 		return db.query("Insert into reimbursement(emp_type_id,description,amount,frequency,emp_grade_code) values(1,'asdxa',3,3,'E1')");
@@ -77,7 +81,7 @@ var Custom2 = {
 	return db.query("update employee_reimbursement_history set status='fin-approved' where id=?;",[id],callback);
 	},
 	getReimbursementHistoyWithUserDetalsByStatus:function(status,callback){
-		return db.query("select * from employee_reimbursement_history rh left join reimbursement r on rh.reimbursement_type =r.id left join users u on u.emp_grade_code = r.emp_grade_code where rh.status ='pending'",[status],callback);
+		return db.query("select *,et.description as emp_type_description,r.description as reimbursement_description from employee_reimbursement_history rh left join reimbursement r on rh.reimbursement_type =r.id left join users u on u.emp_grade_code = r.emp_grade_code left join employee_type et on et.id=u.emp_type_id where rh.status =?",[status],callback);
 	},
 	getCurrentMonthReimbursementHistoryForBilling:function(callback){
 		return db.query("select * from employee_reimbursement_history eh left join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' and month(time)=month(current_date()) and year(time)=year(current_date())",callback);
