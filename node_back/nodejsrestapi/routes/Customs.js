@@ -717,48 +717,69 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
             }
             else
             {
-                var date=new Date();
-                //var html = fs.readFile('./views/index.jade');
-                var html = invoiceHTML(rows);
+                var invoice_rows =rows;
+                Custom2.getReimbursementHistoryIdsForBilling(function(err,rows){
+                    if(err)
+                    {
+                        res.json(err);
+                    }
+                    else{
+                        var update_rows = rows;
+                        var date=new Date();
+                        //var html = fs.readFile('./views/index.jade');
+                        var html = invoiceHTML(invoice_rows);
 
-                jsreport.render({ template: { content: html/*fs.readFileSync('./views/index.html' ,'utf8')*/, engine: 'jsrender', recipe: 'phantom-pdf' } }).then(function(out) {
-                    //out.stream.pipe(res);
-                    var pdfname = "Date-"+date.getDate() +"-"+date.getMonth()+"-"+date.getFullYear()+"-Time-"+date.getHours()+":"+date.getMinutes()+'.pdf';
-                     out.result.pipe(fs.createWriteStream('./Images/'+pdfname));
-                     saveInvoice(pdfname,function(err,count){
-                        if(err){
-                            res.end(err);
-                        }else{
-                            res.redirect(req.headers.referer+'#services');
-                        }
-                     })
-                     //res.redirect(req.headers.referer);
-                }).catch(function(e) {    
-                    res.end(e.message);
+                        jsreport.render({ template: { content: html/*fs.readFileSync('./views/index.html' ,'utf8')*/, engine: 'jsrender', recipe: 'phantom-pdf' } }).then(function(out) {
+                            //out.stream.pipe(res);
+                            var pdfname = "Date-"+date.getDate() +"-"+date.getMonth()+"-"+date.getFullYear()+"-Time-"+date.getHours()+":"+date.getMinutes()+'.pdf';
+                             out.result.pipe(fs.createWriteStream('./Images/'+pdfname));
+                             saveInvoice(update_rows,pdfname,function(err,count){
+                                if(err){
+                                    res.end(err);
+                                }else{
+                                    res.redirect(req.headers.referer+'#services');
+                                }
+                             })
+                             //res.redirect(req.headers.referer);
+                        }).catch(function(e) {    
+                            res.end(e.message);
+                        });
+                        //}
+
+                        /*require("jsreport").render("<h1>Hi there!</h1>").then(function(out) {
+          out.result.pipe(fs.createWriteStream('helloworld.pdf'));
+        });*/
+
+
+
+
+
+                        //res.redirect('http://localhost:5000/#about');
+                        //res.end('{"success" : "Updated Successfully", "status" : 200}');
+                        //res.redirect(req.headers.referer);
+                        //res.json(rows);
+                    }
+                    
                 });
-                //}
-
-                /*require("jsreport").render("<h1>Hi there!</h1>").then(function(out) {
-  out.result.pipe(fs.createWriteStream('helloworld.pdf'));
-});*/
-
-
-
-
-
-                //res.redirect('http://localhost:5000/#about');
-                //res.end('{"success" : "Updated Successfully", "status" : 200}');
-                //res.redirect(req.headers.referer);
-                //res.json(rows);
             }
 
         });
     });
 
-function saveInvoice(link,callback){
+function saveInvoice(update_rows,link,callback){
+    var update_query='update employee_reimbursement_history set bill_generated="yes" where id in (';
+    for(var i=0;i<update_rows.length;i++){
+        update_query=update_query + update_rows[i].id +',';
 
+    }
+    update_query = update_query.slice(0,-1);
+    update_query=update_query +');';
+    update_query = update_query +'insert into miscellaneous(param,value) values("invoice","'+link+'");';
+    //update_query = update_query + 'commit;';
+    console.log(update_query);
+    return db.query(update_query,callback);
     //function(link,callback){
-    return db.query("insert into miscellaneous(param,value) values('invoice',?)",[link],callback);
+    //return db.query("insert into miscellaneous(param,value) values('invoice',?)",[link],callback);
     //}
 }
 

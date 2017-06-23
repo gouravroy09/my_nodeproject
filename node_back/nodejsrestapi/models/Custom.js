@@ -30,6 +30,12 @@ var Custom2 = {
     return  db.query("update reimbursement set amount=?,frequency=? where id=?",[ReimbursementType.update_amount,
     	ReimbursementType.update_frequency,id],callback);
 	},
+	updateForBillGeneratedReimbursementHistory:function(id,ReimbursementType,callback){
+		console.log("inside service");
+		console.log(id);
+    return  db.query("update reimbursement set amount=?,frequency=? where id=?",[ReimbursementType.update_amount,
+    	ReimbursementType.update_frequency,id],callback);
+	},
 	deleteReimbursement:function(id,callback){
     return db.query("delete from reimbursement where id=?",[id],callback);
 	},
@@ -87,7 +93,10 @@ var Custom2 = {
 		return db.query("select * from employee_reimbursement_history eh left join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' and month(time)=month(current_date()) and year(time)=year(current_date())",callback);
 	},
 	getReimbursementHistoryForBilling:function(callback){
-		return db.query("select eh.project_code,eh.reimbursement_type,r.description,count(*) as count, sum(eh.reimbursement_amount) as reimbursement_amount,min(time) as time from employee_reimbursement_history eh left join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' group by eh.reimbursement_type,eh.project_code order by time",callback);
+		return db.query("select eh.project_code,eh.reimbursement_type,r.description,count(*) as count, sum(eh.reimbursement_amount) as reimbursement_amount,min(time) as time from employee_reimbursement_history eh left join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' and eh.status='hr-approved' group by eh.reimbursement_type,eh.project_code order by time",callback);
+	},
+	getReimbursementHistoryIdsForBilling:function(callback){
+		return db.query("select eh.id from employee_reimbursement_history eh left join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' and eh.status='hr-approved'",callback);
 	},
 	getProjectCodes:function(callback){
 		return db.query("select * from project_code_employee_mapping",callback);
