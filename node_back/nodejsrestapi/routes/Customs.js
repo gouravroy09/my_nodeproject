@@ -161,7 +161,7 @@ api.get('/userreimburse/:id1?/:id2?',function(req,res,next){
         }
     });
 api.get('/reimbursehistory/:id?',function(req,res,next){
-    if(req.params.id){
+    //if(req.params.id){
         //Employee.getEmpTypeById(req.params.id){
             Custom2.getReimbursementHistoryByUserId(req.params.id,function(err,rows){
                 if(err){
@@ -171,7 +171,7 @@ api.get('/reimbursehistory/:id?',function(req,res,next){
                 }
             });
             //}
-        }
+        //}
     });
 api.get('/pendingReimburseHistory',function(req,res,next){
     //if(req.params.id){
@@ -187,7 +187,7 @@ api.get('/pendingReimburseHistory',function(req,res,next){
         //}
     });
 api.get('/user/:id?',function(req,res,next){
-    if(req.params.id){
+    //if(req.params.id){
         //Employee.getEmpTypeById(req.params.id){
             Custom2.getUserById(req.params.id,function(err,rows){
                 if(err){
@@ -197,7 +197,7 @@ api.get('/user/:id?',function(req,res,next){
                 }
             });
             //}
-        }
+        //}
     });
 
 api.get('/userreimburse2/:id1?/:id2?/:id3?',function(req,res,next){
