@@ -425,10 +425,15 @@
 <script type="text/javascript">
    var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/Reimbursements';
      $('#new_reimburse').attr('action', new_action);
+     //alert($('#Reimbursement_description').val());
+     $('#new_submit').click(function(){
+     $('#Reimbursement_description').val($('#Reimbursement_description').val() + $('#Process_Type').val());
+
      $('#new_reimburse').submit(function(){
       /*if($('#gl_account_number').val()==='NULL'){
         alert('321321');
       }*/
+     });
      });
 
      //$('#host-origin').val(location.origin);
