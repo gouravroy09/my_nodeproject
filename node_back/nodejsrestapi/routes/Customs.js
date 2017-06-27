@@ -310,7 +310,7 @@ api.get('/finApproveReimburse/:id',function(req,res,next){
 });
 
 api.get('/getReimburesmenTypeByEmpTypeAndGrade/:id?',function(req,res,next){
-    if(req.params.id){
+    //if(req.params.id){
         //Employee.getEmpTypeById(req.params.id){
             Custom2.getReimburesmenTypeByEmpTypeAndGrade(req.params.id,function(err,rows){
                 if(err){
@@ -320,7 +320,7 @@ api.get('/getReimburesmenTypeByEmpTypeAndGrade/:id?',function(req,res,next){
                 }
             });
             //}
-        }
+        //}
     });
 
 
