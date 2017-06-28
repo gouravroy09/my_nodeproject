@@ -80,6 +80,9 @@
                 <li>
                   <a class="page-scroll" href="#contact">New Claim</a>
                 </li>
+                <li>
+                  <a class="page-scroll" href="#travel">Travel Claim</a>
+                </li>
               </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -159,11 +162,16 @@
 
             </table>
           </div>
-          <div class="col-lg-12" >
+          <div class="col-lg-12" style="overflow-y: scroll;overflow-x: scroll; width:1200px; height:300px;">
             <table id="claim_reimbursement" class ="table table-striped">
               <tbody ></tbody>
             </table></div>
               </div></div></div></section>
+              <section id="travel" class="services-section">
+          <div class="container">
+            <div class="row">
+              <% include travel_claim.ejs %>
+              </div></div></section>
 
 
             <!-- <button  class="btn btn-primary" type="button" align="center">Submit</button> -->
@@ -172,6 +180,8 @@
           
           <input id="Emp_Id" name="Emp_Id" type="hidden" />
           <input id="Emp_Type_Id" name="Emp_Type_Id" type="hidden" />
+          <input id="Project_Codes" name="Project_Codes" type="hidden" />
+          <input id="User_Claim_Types" name="User_Claim_Types" type="hidden" />
         </body>
 
        
@@ -237,6 +247,7 @@ updateTable(map,map2);
 }
 
 function getReimbursementHistory(){
+  //alert($('#Emp_Id').val());
   $.ajax({
     type: "GET",
     url: /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/custom/reimbursehistory/'+$('#Emp_Id').val(),
@@ -291,7 +302,15 @@ function updateTable(map,map2){
   format: "json"
 } ,
 function( data ) {
+  $.each(data, function(key,value) {
+            var string = value.description;
+            if(string.substring(string.length-5,string.length)!='Travel'){
+              $('#travel_type').append($("<option />").val(value.id).text(value.description));
+              //$('#travel_type').append($("<option />").val(value.id).text(value);
+            }
+           });
 
+  $('#User_Claim_Types').val(data);
   $.each(data, function(key,value) {
   //var used = map.get(value.id);
     //alert(key);
@@ -330,6 +349,7 @@ function( data ) {
       '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" >Submit</button>'+
       '</td>'+
       '</tr>'+
+
       '</form></td>'
     /*<form id="frmUploader2" enctype="multipart/form-data"  method="post">
         <input type="file" name="imgUploader" multiple />
@@ -359,6 +379,11 @@ function addProjectCodes(selectElementId){
       format: "json"
     } ,
     function( data ) {
+      $('#Project_Codes').val(data);
+      //localStorage.setItem('testObject', data);
+      $.each(data, function(key,value) {
+            $('#project_code').append($("<option />").val(value.project_code).text(value.project_code));
+           });
       //localStorage.setItem("empType", data);
       $.each(data, function(key,value) {
         $('#'+selectElementId+'').append($("<option />").val(value.project_code).text(value.project_code));
@@ -369,6 +394,8 @@ function addProjectCodes(selectElementId){
 window.onload = function() {
   //updateTable();
   //alert(document.URL.split('?')[1].split('=')[1]);
+  loadTravelClaimTypes();
+  loadProjectCodes();
   getUserById(document.URL.split('?')[1].split('=')[1]);
   getReimbursementHistory();
 //test();
