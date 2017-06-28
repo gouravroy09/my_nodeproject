@@ -5,8 +5,8 @@
 </head>
 <body>
 <div class="panel panel-default">
-  <div class="panel-heading">Dynamic Form Fields - Add & Remove Multiple fields</div>
-  <div class="panel-heading">Education Experience</div>
+  <!-- <div class="panel-heading">Dynamic Form Fields - Add & Remove Multiple fields</div> -->
+  <div class="panel-heading">Travel Claims</div>
   <div class="panel-body">
   <form>
   <div id="education_fields">
@@ -32,7 +32,7 @@
     </div>
   </div>
 </div>
-<div class="col-sm-2 nopadding">
+<div class="col-sm-3 nopadding">
   <div class="form-group">
     <div class="input-group">
       <select class="form-control" id="travel_type" name="travel_type[]">
@@ -55,7 +55,7 @@
     </div>
   </div>
 </div>
-       <div class="col-sm-2 nopadding">
+       <div class="col-sm-3 nopadding">
   <div class="form-group">
     <input type="text" class="form-control" id="travel_claim_amount" name="travel_claim_amount[]" value="" placeholder="Enter Amount">
   </div>
@@ -68,7 +68,7 @@
 <div class="col-sm-2 nopadding">
   <div class="form-group">
     <div class="input-group-btn">
-        <button class="btn btn-success" type="button"  onclick="education_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+        <button id="add_travel_claim_button" class="btn btn-success" type="button"  onclick="education_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
       </div>
   </div>
 </div>
@@ -97,7 +97,7 @@ function education_fields() {
     divtest.innerHTML = '<div class="col-sm-2 nopadding">'+
   '<div class="form-group">'+
     '<div class="input-group">'+
-      '<select class="form-control" id="project_code" name="project_code[]">'+
+      '<select class="form-control" id="project_code'+room+'" name="project_code[]">'+
       
         '<option value="">Select</option>'+
         
@@ -107,10 +107,10 @@ function education_fields() {
     '</div>'+
   '</div>'+
 '</div>'+
-'<div class="col-sm-2 nopadding">'+
+'<div class="col-sm-3 nopadding">'+
   '<div class="form-group">'+
     '<div class="input-group">'+
-      '<select class="form-control" id="travel_type" name="travel_type[]">'+
+      '<select class="form-control" id="travel_type'+room+'" name="travel_type[]">'+
       
         '<option value="">Select</option>'+
         
@@ -120,7 +120,7 @@ function education_fields() {
     '</div>'+
   '</div>'+
 '</div>'+
-       '<div class="col-sm-2 nopadding">'+
+       '<div class="col-sm-3 nopadding">'+
   '<div class="form-group">'+
     '<input type="text" class="form-control" id="travel_claim_amount" name="travel_claim_amount[]" value="" placeholder="Enter Amount">'+
   '</div>'+
@@ -133,36 +133,46 @@ function education_fields() {
 '<div class="col-sm-2 nopadding">'+
   '<div class="form-group">'+
     '<div class="input-group-btn">'+
-        '<button class="btn btn-success" type="button"  onclick="education_fields('+ room +');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>'+
-      '</div>'+
-  '</div>'+
-'</div><div class="clear"></div>';
-
+        '<button class="btn btn-success" type="button"  onclick="remove_education_fields('+ room +');">'+
+        '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';
+//         ' <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>'+
+//       '</div>'+
+//   '</div>'+
+// '</div><div class="clear"></div>';
+    
 
     
-    objTo.appendChild(divtest)
+    objTo.appendChild(divtest);
+    $('#project_code'+room+'').append($('#project_code').html());
+    $('#travel_type'+room+'').append($('#travel_type').html());
 }
    function remove_education_fields(rid) {
 	   $('.removeclass'+rid).remove();
+     
    }
 
 </script>
 </html>
 
+<!-- <script type="text/javascript">
+  $('#add_travel_claim_button').click(function(){
+      loadProjectCodes();
+      loadTravelClaimTypes();
+  });
+</script> -->
 
 
 
-
-
-<script type="text/javascript">
-        	function loadProjectCodes(){
+<!-- <script type="text/javascript">
+        	function loadProjectCodes123(id){
+            alert($('#Project_Codes').val());
         	 $.each($('#Project_Codes').val(), function(key,value) {
-        	 	$('#project_code').append($("<option />").val(value.project_code).text(value.project_code));
+        	 	$('#project_code'+id+'').append($("<option />").val(value.project_code).text(value.project_code));
         	 });
         	}
-        </script>
+        </script> -->
 
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
         	function loadTravelClaimTypes(){
 
         	 $.each($('#User_Claim_Types').val(), function(key,value) {
@@ -172,7 +182,7 @@ function education_fields() {
         	 	}
         	 });
         	}
-        </script>
+        </script> -->
 
 
 <script type="text/javascript">
