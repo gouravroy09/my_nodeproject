@@ -8,14 +8,14 @@
   <!-- <div class="panel-heading">Dynamic Form Fields - Add & Remove Multiple fields</div> -->
   <div class="panel-heading">Travel Claims</div>
   <div class="panel-body">
-  <form id="travel_claim_form" method="POST">
+  <form id="travel_claim_form" method="post" onsubmit="travel_claim_form(this);">
   <div id="education_fields">
           
         </div>
 <div class="col-sm-2 nopadding">
   <div class="form-group">
     <div class="input-group">
-      <select class="form-control" id="project_code" name="project_code[]">
+      <select class="form-control" type="text" id="project_code" name="project_code[]" required>
       
         <option value="">Select</option>
         <script type="text/javascript">
@@ -35,7 +35,7 @@
 <div class="col-sm-3 nopadding">
   <div class="form-group">
     <div class="input-group">
-      <select class="form-control" id="travel_type" name="travel_type[]">
+      <select class="form-control" id="travel_type" name="travel_type[]" required>
       
         <option value="">Select</option>
         <script type="text/javascript">
@@ -57,12 +57,12 @@
 </div>
        <div class="col-sm-3 nopadding">
   <div class="form-group">
-    <input type="text" class="form-control" id="travel_claim_amount" name="travel_claim_amount[]" value="" placeholder="Enter Amount">
+    <input type="number" class="form-control" id="travel_claim_amount" name="travel_claim_amount[]" value="" placeholder="Enter Amount" required>
   </div>
 </div>
 <div class="col-sm-2 nopadding">
   <div class="form-group">
-    <input type="file" class="form-control" id="file_upload" name="file_upload[]" value="" placeholder="file_upload">
+    <input type="file" class="form-control" id="file_upload" name="file_upload[]" value="" placeholder="file_upload" required>
   </div>
 </div>
 <div class="col-sm-2 nopadding">
@@ -80,7 +80,8 @@
   <div class="col-sm-12 nopadding">
   <div class="form-group">
     <div class="input-group-btn">
-        <button id="travel_claim_submit_button" class="btn btn-success" type="button"  > SUBMIT</button>
+        <input class="btn btn-success" id="travel_claim_submit_button" type="submit" name="travel_claim_submit_button" value="Submit" /> 
+        <!-- <button id="travel_claim_submit_button" class="btn btn-success" type="button"  onclick="travel_claim_form();"> SUBMIT</button> -->
       </div>
   </div>
 </div>
@@ -91,18 +92,25 @@
 </div>
 </body>
 <script type="text/javascript">
-   var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/custom/travel_claim';
-     $('#travel_claim_form').attr('action', new_action);
+//var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/custom/travel_claim';
+     //$('#travel_claim_form').attr('action', new_action);
+function travel_claim_form(form){
+  var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/custom/travel_claim';
+     //$('#travel_claim_form').attr('action', new_action);
+     form.action = new_action;
      //alert($('#Reimbursement_description').val());
-     $('#travel_claim_submit_button').click(function(){
+     //$('#travel_claim_submit_button').click(function(){
      //$('#Reimbursement_description').val($('#Reimbursement_description').val() + $('#Process_Type').val());
-
-     $('#travel_claim_form').submit(function(){
+      //alert('asdas');
+     this.submit(function(){
       /*if($('#gl_account_number').val()==='NULL'){
         alert('321321');
       }*/
+     //});
      });
-     });
+
+}
+   
 
      //$('#host-origin').val(location.origin);
 </script>
@@ -121,7 +129,7 @@ function education_fields() {
     divtest.innerHTML = '<div class="col-sm-2 nopadding">'+
   '<div class="form-group">'+
     '<div class="input-group">'+
-      '<select class="form-control" id="project_code'+room+'" name="project_code[]">'+
+      '<select class="form-control" id="project_code'+room+'" name="project_code[]" required> '+
       
         '<option value="">Select</option>'+
         
@@ -134,7 +142,7 @@ function education_fields() {
 '<div class="col-sm-3 nopadding">'+
   '<div class="form-group">'+
     '<div class="input-group">'+
-      '<select class="form-control" id="travel_type'+room+'" name="travel_type[]">'+
+      '<select class="form-control" id="travel_type'+room+'" name="travel_type[]" required>'+
       
         '<option value="">Select</option>'+
         
@@ -146,12 +154,12 @@ function education_fields() {
 '</div>'+
        '<div class="col-sm-3 nopadding">'+
   '<div class="form-group">'+
-    '<input type="text" class="form-control" id="travel_claim_amount" name="travel_claim_amount[]" value="" placeholder="Enter Amount">'+
+    '<input type="text" class="form-control" id="travel_claim_amount" name="travel_claim_amount[]" value="" placeholder="Enter Amount" required>'+
   '</div>'+
 '</div>'+
 '<div class="col-sm-2 nopadding">'+
   '<div class="form-group">'+
-    '<input type="file" class="form-control" id="file_upload" name="file_upload[]" value="" placeholder="file_upload">'+
+    '<input type="file" class="form-control" id="file_upload" name="file_upload[]" value="" placeholder="file_upload" required>'+
   '</div>'+
 '</div>'+
 '<div class="col-sm-2 nopadding">'+
