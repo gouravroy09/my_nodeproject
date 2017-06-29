@@ -95,9 +95,10 @@
 //var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/custom/travel_claim';
      //$('#travel_claim_form').attr('action', new_action);
 function travel_claim_form(form){
-  var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/custom/travel_claim';
+  var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/travel_claim';
      //$('#travel_claim_form').attr('action', new_action);
      form.action = new_action;
+     $('#travel_claim_form').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value',$('#Emp_Id').val()));
      //alert($('#Reimbursement_description').val());
      //$('#travel_claim_submit_button').click(function(){
      //$('#Reimbursement_description').val($('#Reimbursement_description').val() + $('#Process_Type').val());
