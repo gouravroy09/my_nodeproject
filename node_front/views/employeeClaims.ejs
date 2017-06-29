@@ -306,8 +306,9 @@ function updateTable(map,map2){
 function( data ) {
   $.each(data, function(key,value) {
             var string = value.description;
-            if(string.substring(string.length-5,string.length)!='Travel'){
-              $('#travel_type').append($("<option />").val(value.id).text(value.description));
+            //alert(string.substring(0,5));
+            if(string.substring(0,6)=='Travel'){
+              $('#travel_type').append($("<option />").val(value.id).text(string));
               //$('#travel_type').append($("<option />").val(value.id).text(value);
             }
            });

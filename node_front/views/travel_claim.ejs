@@ -8,16 +8,16 @@
   <!-- <div class="panel-heading">Dynamic Form Fields - Add & Remove Multiple fields</div> -->
   <div class="panel-heading">Travel Claims</div>
   <div class="panel-body">
-  <form id="travel_claim_form" method="post" onsubmit="travel_claim_form(this);">
+  <form id="travel_claim_form" enctype="multipart/form-data" method="post" onsubmit="travel_claim_form(this);">
   <div id="education_fields">
           
         </div>
 <div class="col-sm-2 nopadding">
   <div class="form-group">
     <div class="input-group">
-      <select class="form-control" type="text" id="project_code" name="project_code[]" required>
+      <select class="form-control" type="text" id="project_code" name="project_code" required>
       
-        <option value="">Select</option>
+        <option value="">Select Project Code</option>
         <script type="text/javascript">
         	function loadProjectCodes(){
         		//alert(localStorage.getItem('testObject'));
@@ -35,9 +35,9 @@
 <div class="col-sm-3 nopadding">
   <div class="form-group">
     <div class="input-group">
-      <select class="form-control" id="travel_type" name="travel_type[]" required>
+      <select class="form-control" id="travel_type" name="travel_type" required>
       
-        <option value="">Select</option>
+        <option value="">Select Claim Type</option>
         <script type="text/javascript">
         	function loadTravelClaimTypes(){
 
@@ -57,12 +57,12 @@
 </div>
        <div class="col-sm-3 nopadding">
   <div class="form-group">
-    <input type="number" class="form-control" id="travel_claim_amount" name="travel_claim_amount[]" value="" placeholder="Enter Amount" required>
+    <input type="number" class="form-control" id="travel_claim_amount" name="travel_claim_amount" value="" placeholder="Enter Amount" required>
   </div>
 </div>
 <div class="col-sm-2 nopadding">
   <div class="form-group">
-    <input type="file" class="form-control" id="file_upload" name="file_upload[]" value="" placeholder="file_upload" required>
+    <input type="file" class="form-control" id="file_upload" name="file_upload" value="" placeholder="file_upload" required>
   </div>
 </div>
 <div class="col-sm-2 nopadding">
@@ -124,15 +124,15 @@ function education_fields() {
     var divtest = document.createElement("div");
 	divtest.setAttribute("class", "form-group removeclass"+room);
 	var rdiv = 'removeclass'+room;
-    /*divtest.innerHTML = '<div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Schoolname" name="Schoolname[]" value="" placeholder="School name"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Major" name="Major[]" value="" placeholder="Major"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Degree" name="Degree[]" value="" placeholder="Degree"></div></div><div class="col-sm-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="educationDate" name="educationDate[]"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option> </select><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_education_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';*/
+    /*divtest.innerHTML = '<div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Schoolname" name="Schoolname" value="" placeholder="School name"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Major" name="Major" value="" placeholder="Major"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Degree" name="Degree" value="" placeholder="Degree"></div></div><div class="col-sm-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="educationDate" name="educationDate"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option> </select><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_education_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';*/
 
 
     divtest.innerHTML = '<div class="col-sm-2 nopadding">'+
   '<div class="form-group">'+
     '<div class="input-group">'+
-      '<select class="form-control" id="project_code'+room+'" name="project_code[]" required> '+
+      '<select class="form-control" id="project_code'+room+'" name="project_code" required> '+
       
-        '<option value="">Select</option>'+
+        
         
         
       '</select>'+
@@ -143,9 +143,9 @@ function education_fields() {
 '<div class="col-sm-3 nopadding">'+
   '<div class="form-group">'+
     '<div class="input-group">'+
-      '<select class="form-control" id="travel_type'+room+'" name="travel_type[]" required>'+
+      '<select class="form-control" id="travel_type'+room+'" name="travel_type" required>'+
       
-        '<option value="">Select</option>'+
+        
         
         
       '</select>'+
@@ -155,12 +155,12 @@ function education_fields() {
 '</div>'+
        '<div class="col-sm-3 nopadding">'+
   '<div class="form-group">'+
-    '<input type="text" class="form-control" id="travel_claim_amount" name="travel_claim_amount[]" value="" placeholder="Enter Amount" required>'+
+    '<input type="number" class="form-control" id="travel_claim_amount" name="travel_claim_amount" value="" placeholder="Enter Amount" required>'+
   '</div>'+
 '</div>'+
 '<div class="col-sm-2 nopadding">'+
   '<div class="form-group">'+
-    '<input type="file" class="form-control" id="file_upload" name="file_upload[]" value="" placeholder="file_upload" required>'+
+    '<input type="file" class="form-control" id="file_upload" name="file_upload" value="" placeholder="file_upload" required>'+
   '</div>'+
 '</div>'+
 '<div class="col-sm-2 nopadding">'+
@@ -223,9 +223,9 @@ function education_fields() {
 var myvar = '<div class="col-sm-2 nopadding">'+
   '<div class="form-group">'+
     '<div class="input-group">'+
-      '<select class="form-control" id="project_code" name="project_code[]">'+
+      '<select class="form-control" id="project_code" name="project_code">'+
       
-        '<option value="">Select</option>'+
+        '<option value="">Select Project Code</option>'+
         
         
       '</select>'+
@@ -236,9 +236,9 @@ var myvar = '<div class="col-sm-2 nopadding">'+
 '<div class="col-sm-2 nopadding">'+
   '<div class="form-group">'+
     '<div class="input-group">'+
-      '<select class="form-control" id="travel_type" name="travel_type[]">'+
+      '<select class="form-control" id="travel_type" name="travel_type">'+
       
-        '<option value="">Select</option>'+
+        '<option value="">Select Claim Type</option>'+
         
         
       '</select>'+
@@ -248,12 +248,12 @@ var myvar = '<div class="col-sm-2 nopadding">'+
 '</div>'+
        '<div class="col-sm-2 nopadding">'+
   '<div class="form-group">'+
-    '<input type="text" class="form-control" id="travel_claim_amount" name="travel_claim_amount[]" value="" placeholder="Enter Amount">'+
+    '<input type="text" class="form-control" id="travel_claim_amount" name="travel_claim_amount" value="" placeholder="Enter Amount">'+
   '</div>'+
 '</div>'+
 '<div class="col-sm-2 nopadding">'+
   '<div class="form-group">'+
-    '<input type="file" class="form-control" id="file_upload" name="file_upload[]" value="" placeholder="file_upload">'+
+    '<input type="file" class="form-control" id="file_upload" name="file_upload" value="" placeholder="file_upload">'+
   '</div>'+
 '</div>'+
 '<div class="col-sm-2 nopadding">'+

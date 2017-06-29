@@ -427,7 +427,7 @@
      $('#new_reimburse').attr('action', new_action);
      //alert($('#Reimbursement_description').val());
      $('#new_submit').click(function(){
-     $('#Reimbursement_description').val($('#Reimbursement_description').val() + $('#Process_Type').val());
+     $('#Reimbursement_description').val($('#Process_Type').val() + $('#Reimbursement_description').val());
 
      $('#new_reimburse').submit(function(){
       /*if($('#gl_account_number').val()==='NULL'){
