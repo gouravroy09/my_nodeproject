@@ -107,7 +107,12 @@ var Custom2 = {
 	},
 	getInvoices:function(callback){
 		return db.query("select * from miscellaneous",callback);
-}
+	},
+	getAllEmpGrades:function(callback){
+
+		return db.query("Select * from employee_grade",callback);
+
+	}
 };
 
 module.exports = Custom2;

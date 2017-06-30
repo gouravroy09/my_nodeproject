@@ -338,6 +338,17 @@
       });
     });
 
+    $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/employee_grades',{
+      format: "json"
+    } ,
+    function( data ) {
+      //localStorage.setItem("empType", data);
+      $.each(data, function(key,value) {
+        $('#Emp_Grade').append($("<option />").val(value.description).text(value.description));
+        //localStorage.setItem(value.description,value.id);
+      });
+    });
+
     updateTable();
   };
 </script>

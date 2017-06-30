@@ -229,3 +229,5 @@ CREATE TABLE `employee_grade` (
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+alter table users add column emp_grade_id int(11);
