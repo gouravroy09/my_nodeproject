@@ -47,7 +47,7 @@ var Custom2 = {
 	},
 	getReimbursementHistoryByUserId:function(id,callback){
 
-	return db.query("select er.*,r.description from employee_reimbursement_history er left join reimbursement r on er.reimbursement_type=r.id where emp_id=? order by time",[id],callback);
+	return db.query("select er.*,r.description from employee_reimbursement_history er left join reimbursement r on er.reimbursement_type=r.id where emp_id=? order by time desc",[id],callback);
 	},
 	/*getPendingReimbursementHistory:function(callback){
 
