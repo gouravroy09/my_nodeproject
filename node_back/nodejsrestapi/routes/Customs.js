@@ -183,9 +183,10 @@ api.get('/users',function(req,res,next){
 
         // create Request object
         var request = new sql.Request();
+
            
         // query to the database and get the records
-        request.query('select * from Users', function (err, recordset) {
+        request.query('select  tblGrades.Grade,UserName,FullName,EmailID,EmpNo,Doj,GradeCode,EmpType from Users left join tblGrades on Users.GradeCode=tblGrades.Id', function (err, recordset) {
             
             if (err) console.log(err);
 
@@ -193,7 +194,7 @@ api.get('/users',function(req,res,next){
             //var i=0;
             addUser(sql,res,recordset);
 
-            console(recordset);
+            //console.log(recordset);
             //for(i=0;i<recordset.length;i++){
                 /*if(i<recordset.length){
 
@@ -210,17 +211,19 @@ api.get('/users',function(req,res,next){
     //sql.close();
     });
 
+
 function addUser(sql,res,recordset){
-    var query_string = "insert into users(username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) values";
+
+    var query_string = "insert into users(emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) values";
 
     //if(i<recordset.recordset.length){
        // console.log(recordset.recordset.length);
         for(var i =0;i < recordset.recordset.length;i++){
             var User = recordset.recordset[i];
             query_string = query_string + "("+
-            stringify(User.UserName)+","+stringify(User.FullName)+","+
+            stringify(User.Grade) + "," + stringify(User.UserName)+","+stringify(User.FullName)+","+
             stringify(User.EmailID)+","+stringify(User.EmpNo)+","+
-            stringify(User.Doj)+","+zeroGrade(User.GradeCode)+",5),";
+            stringify(User.Doj)+","+zeroGrade(User.GradeCode)+","+zeroGrade(User.EmpType)+"),";
         }
         query_string = query_string.slice(0,-1);
        // query_string =query_string ;
