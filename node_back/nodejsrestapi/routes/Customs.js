@@ -185,13 +185,15 @@ api.get('/users',function(req,res,next){
         var request = new sql.Request();
            
         // query to the database and get the records
-        request.query('select * from Users limit 1', function (err, recordset) {
+        request.query('select * from Users', function (err, recordset) {
             
             if (err) console.log(err);
 
             // send records as a response
             //var i=0;
             addUser(sql,res,recordset);
+
+            console(recordset);
             //for(i=0;i<recordset.length;i++){
                 /*if(i<recordset.length){
 
