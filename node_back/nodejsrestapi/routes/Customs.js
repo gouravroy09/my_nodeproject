@@ -79,7 +79,8 @@ api.get('/empTypes',function(req,res,next){
     });
 
 function addEmpType(sql,res,recordset){
-    var query_string = "insert into employee_type(description) values ";
+    var query_string = "delete from employee_type;ALTER TABLE employee_type AUTO_INCREMENT = 1;";
+    query_string = query_string + "insert into employee_type(description) values ";
 
     //if(i<recordset.recordset.length){
        // console.log(recordset.recordset.length);
@@ -143,7 +144,8 @@ api.get('/grades',function(req,res,next){
     });
 
 function addGrade(sql,res,recordset){
-    var query_string = "insert into employee_grade(description) values ";
+    var query_string = "delete from employee_grade;ALTER TABLE employee_grade AUTO_INCREMENT = 1;"
+    query_string = query_string + "insert into employee_grade(description) values ";
 
     //if(i<recordset.recordset.length){
        // console.log(recordset.recordset.length);
@@ -214,7 +216,8 @@ api.get('/users',function(req,res,next){
 
 function addUser(sql,res,recordset){
 
-    var query_string = "insert into users(emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) values";
+    var query_string = "delete from users;ALTER TABLE users AUTO_INCREMENT = 1;"
+    query_string = query_string + "insert into users(emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) values";
 
     //if(i<recordset.recordset.length){
        // console.log(recordset.recordset.length);
