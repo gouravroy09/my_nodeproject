@@ -221,3 +221,11 @@ create table miscellaneous (
 param varchar(2000),
 value varchar(2000)
 );
+
+
+/*30th june 2017*/
+CREATE TABLE `employee_grade` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
