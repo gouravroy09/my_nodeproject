@@ -66,6 +66,10 @@ var Custom2 = {
 
 	return db.query("insert into employee_reimbursement_history(emp_id,reimbursement_type,reimbursement_amount,time,filepath,project_code) values(?,?,?,now(),?,?);",[History.emp_id,History.reimbursement_type,History.reimbursement_amount,filepath,History.Project_Code],callback);
 	},
+	addTravelReimbursementHistory:function(query,callback){
+
+	return db.query(query,callback);
+	},
 	approvedByHrReimbursementHistoryRow:function(id,callback){
 		//console.log(JSON.stringify(History));
 

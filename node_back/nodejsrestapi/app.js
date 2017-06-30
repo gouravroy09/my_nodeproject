@@ -62,6 +62,89 @@ app.post("/api/Upload", function (req, res) {
     });
 });
 
+app.post("/travel_claim", function (req, res) {
+    upload(req, res, function (err) {
+        if (err) {
+          ///this error comes mostly when Images foler is not present
+            return res.end("Something went wrong!");
+        }
+  ///console.log(req.files.length!==null);
+  //console.log(req.files[0].filename);
+  console.log(req.files);
+  var filepathString = req.files[0].filename;
+  //if(req.files.length!==null && req.files.length>0){
+        /*for(i=0;i< req.files.length;i++){
+          filepathString = filepathString + req.files[i].path +',';
+        }*/
+       // filepathString = filepathString.slice(0,-1);
+       var queryString = 'insert into employee_reimbursement_history(emp_id,reimbursement_type,reimbursement_amount,time,filepath,project_code) values ';
+       if(req.files.length==1){
+        //for(var i=0;i< req.files.length;i++){
+        console.log(req.body.project_code);
+        console.log(req.body.project_code.length);
+        console.log(i);
+        console.log(req.files[0].filename);
+          queryString=queryString + '(';
+          queryString=queryString +  req.body.emp_id + ',';
+          queryString=queryString + req.body.travel_type + ',';
+          queryString=queryString + req.body.travel_claim_amount + ',';
+          queryString=queryString + 'now(),';
+          queryString=queryString + '"' +req.files[0].filename + '",';
+          queryString=queryString + '"' + req.body.project_code + '"';
+          queryString=queryString + '),';
+       //}
+       queryString=queryString.slice(0,-1);
+       console.log(queryString);
+        Custom.addTravelReimbursementHistory(queryString,function(err,count){
+
+            //console.log(req.body);
+            if(err)
+            {
+                res.json(err);
+            }
+            else{
+                    //res.json(req.body);//or return count for 1 & 0
+                    //return res.end("File uploaded sucessfully!.");
+                    return res.redirect(req.headers.referer);
+            }
+        });
+      } 
+      else {
+        for(var i=0;i< req.files.length;i++){
+        console.log(req.body.project_code);
+        console.log(req.body.project_code.length);
+        console.log(i);
+        console.log(req.files[0].filename);
+          queryString=queryString + '(';
+          queryString=queryString +  req.body.emp_id + ',';
+          queryString=queryString + req.body.travel_type[i] + ',';
+          queryString=queryString + req.body.travel_claim_amount[i] + ',';
+          queryString=queryString + 'now(),';
+          queryString=queryString + '"' +req.files[i].filename + '",';
+          queryString=queryString + '"' + req.body.project_code[i] + '"';
+          queryString=queryString + '),';
+       }
+       queryString=queryString.slice(0,-1);
+       console.log(queryString);
+        Custom.addTravelReimbursementHistory(queryString,function(err,count){
+
+            //console.log(req.body);
+            if(err)
+            {
+                res.json(err);
+            }
+            else{
+                    //res.json(req.body);//or return count for 1 & 0
+                    //return res.end("File uploaded sucessfully!.");
+                    return res.redirect(req.headers.referer);
+            }
+        }); 
+      }
+       
+  //}
+    });
+});
+
 var xlsx = require('node-xlsx');
 app.post("/excel/Upload", function (req, res) {
     upload(req, res, function (err) {
