@@ -41,7 +41,7 @@ var Custom2 = {
 	},
 	getReimburesmenTypeByEmpTypeAndGrade:function(id1,id2,callback){
 
-		return db.query("select * from users u inner join reimbursement r on u.emp_type_id =r.emp_type_id and u.emp_grade_code =r.emp_grade_code where u.emp_type_id =? and u.emp_grade_code=?",
+		return db.query("select * from reimbursement where emp_type_id =? and emp_grade_code=?",
 			[id1,id2],callback);
 
 	},
