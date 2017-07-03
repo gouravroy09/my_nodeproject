@@ -91,7 +91,7 @@ var Custom2 = {
 	return db.query("update employee_reimbursement_history set status='fin-approved' where id=?;",[id],callback);
 	},
 	getReimbursementHistoyWithUserDetalsByStatus:function(status,callback){
-		return db.query("select *,et.description as emp_type_description,r.description as reimbursement_description from employee_reimbursement_history rh inner join reimbursement r on rh.reimbursement_type =r.id inner join users u on u.emp_grade_code = r.emp_grade_code inner join employee_type et on et.id=u.emp_type_id where rh.status =?",[status],callback);
+		return db.query("select *,et.description as emp_type_description,r.description as reimbursement_description from employee_reimbursement_history rh inner join users u on rh.emp_id =u.id inner join reimbursement r on rh.reimbursement_type = r.id inner join employee_type et on et.id=u.emp_type_id where rh.status =?",[status],callback);
 	},
 	getCurrentMonthReimbursementHistoryForBilling:function(callback){
 		return db.query("select * from employee_reimbursement_history eh inner join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' and month(time)=month(current_date()) and year(time)=year(current_date())",callback);
