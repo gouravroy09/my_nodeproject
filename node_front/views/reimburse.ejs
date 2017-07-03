@@ -314,9 +314,9 @@
            '<td>' + value.emp_type_description + '</td>' +'<td>' + value.emp_grade_code + '</td>' +
           '<td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +'</td>'+
           '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
-          '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.id+'">Approve</a></td>' +
-          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch/'+value.id+'">Reject-Doc MisMatch</a></td>' +
-          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch/'+value.id+'">Reject-Amt/Freq MisMatch</a></td>' +
+          '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+'">Approve</a></td>' +
+          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch/'+value.reimbursement_id+'">Reject-Doc MisMatch</a></td>' +
+          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch/'+value.reimbursement_id+'">Reject-Amt/Freq MisMatch</a></td>' +
           /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
            '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
            + '</form></td>'*/
