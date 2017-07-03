@@ -59,7 +59,7 @@ var Custom2 = {
 	},
 	getUserById:function(id,callback){
 
-	return db.query("select * from users u inner join employee_type e on u.emp_type_id = e.id where emp_no=?",[id],callback);
+	return db.query("select *,u.id from users u inner join employee_type e on u.emp_type_id = e.id where emp_no=?",[id],callback);
 	},
 	addReimbursementHistory:function(History,filepath,callback){
 		console.log(JSON.stringify(History));
