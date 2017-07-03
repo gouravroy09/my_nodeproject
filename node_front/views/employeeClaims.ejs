@@ -12,6 +12,9 @@
 
   <link href="css/table-fixedheader.css" rel="stylesheet">
   <style type="text/css">
+    th, td { width:30px }
+  </style>
+  <style type="text/css">
             th, td {
                 width: 100px;
             }
@@ -136,7 +139,7 @@
               <section id="contact" class="contact-section">
           <div class="container">
             <div class="row">
-              <div class="col-lg-11">
+              
 
               <div class="text-center">
           <h2 style="margin:30px 30px 30px 30px;">Claims Form</h2>
@@ -144,7 +147,7 @@
         <!-- <form class="form-horizontal" id="frmUploader"> -->
         
 
-          <div class="col-lg-10" >
+          <div class="col-lg-12" style="overflow-x: scroll; width:1200px; ">
             <table class ="table table-hover">
               <thead>
                 <tr>
@@ -157,7 +160,7 @@
                   <th>New Claim</th>
                   <th>Project Code</th>
                   <th>Attachments</th>
-                  <th></th>
+                  <th></th><th></th>
                 </tr>  
               </thead>
 
@@ -167,7 +170,7 @@
             <table id="claim_reimbursement" class ="table table-striped">
               <tbody ></tbody>
             </table></div>
-              </div></div></div></section>
+              </div></div></section>
               <section id="travel" class="services-section">
           <div class="container">
             <div class="row">
@@ -315,7 +318,9 @@ function( data ) {
 
   $('#User_Claim_Types').val(data);
   $.each(data, function(key,value) {
-  //var used = map.get(value.id);
+  
+    if(value.description.substring(0,6)!='Travel'){
+      //var used = map.get(value.id);
     //alert(key);
     var max = value.amount;
     var claimed = (map.has(value.id)?map.get(value.id):0);
@@ -327,12 +332,12 @@ function( data ) {
 
     if(remainingFreqeuncy>0){
 
-    $('#claim_reimbursement').append('<tr><th scope="row">'+value.description+'</th><td></td><td></td><td>'+value.amount+
-      '</td><td></td><td></td><td>'+remainingFreqeuncy+'</td><td>'+'</td><td>'+ (map.has(value.id)?map.get(value.id):0)+'</td>'+
-       '<td></td><td>'+remaining+'</td>'+
-      '<input type="text" class="form-control" id="type" placeholder="Type">'+
+    $('#claim_reimbursement').append('<tr><th scope="row">'+value.description+'</th><td>'+value.amount+
+      '</td><td>'+remainingFreqeuncy+'</td><td>'+ (map.has(value.id)?map.get(value.id):0)+'</td>'+
+       '<td>'+remaining+'</td>'+
+      /*'<input type="text" class="form-control" id="type" placeholder="Type">'+
 
-      /*'<td><input type="file" name="imgUploader" multiple /><input style="margin:10px 10px 10px 10px;" type="submit" name="submit" id="btnSubmit" value="Upload" /></td>' +'</tr>'*/
+      '<td><input type="file" name="imgUploader" multiple /><input style="margin:10px 10px 10px 10px;" type="submit" name="submit" id="btnSubmit" value="Upload" /></td>' +'</tr>'*/
       /*'<a class="page-scroll btnSelect"  href="#myModal" data-toggle="modal" style="color:white;background-color:green;">Update</a>&nbsp;&nbsp;'+'<a class="page-scroll btnSelect"  >Delete</a>'+'</td></tr>'*/
 
       '<td><form id="frmUploader'+key+'" enctype="multipart/form-data"  method="post">'+
@@ -371,6 +376,7 @@ function( data ) {
 
       //$('#frmUploader').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value', "something");
     
+    }
     });
 //alert($(value.id);
 });

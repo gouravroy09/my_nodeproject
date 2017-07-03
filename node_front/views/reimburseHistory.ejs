@@ -6,11 +6,12 @@
                           <th> Reimbursement Type</th>
                           <th>Amount Claimed</th>
                           <th>Time</th>
-                           <th></th>
-                          <th></th>
+                           
+                          
                           <!-- <th>Amount</th>
                           <th>Frequency</th>
                           <th>Action</th> -->
+                          <th></th>
                         </tr>
                       </thead>
                     </table>
@@ -25,5 +26,37 @@
 	</table>
 </div>
 
+<script type="text/javascript">
+	//function getReimbursementHistory(){
+  $.ajax({
+    type: "GET",
+    url: /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/custom/reimbursehistory/1',
+    data: '{}',
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (result) {
+      reimbursementClaimed(result);
+      $.each(result, function(key,value) {
+      //alert(key+1);
+        $('#history_table').append(
+          '<tr><td>' + (key+1) + '</td><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + value.time +'</td><td>' + value.status  + '</td></tr>' 
+          );
+
+      });
+
+
+    },
+    error: function(result){
+      console.log(result);
+    }
+  });
+//}
+//$(document).ready()
+  //updateTable();
+  //getUserById('10000167');
+  //alert("dasd");
+  //getReimbursementHistory();
+//test();
+//};
 
 </script>
