@@ -106,7 +106,7 @@ var Custom2 = {
 		return db.query("select * from project_code_employee_mapping",callback);
 	},
 	getInvoices:function(callback){
-		return db.query("select * from miscellaneous",callback);
+		return db.query("select p1.value from  (select @rownum:=@rownum+1 rank, p.value from miscellaneous p, (SELECT @rownum:=0) r order by param desc)  as p1 order by p1.rank desc; ",callback);
 	},
 	getAllEmpGrades:function(callback){
 

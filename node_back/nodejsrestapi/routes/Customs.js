@@ -887,7 +887,8 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
 
                         jsreport.render({ template: { content: html/*fs.readFileSync('./views/index.html' ,'utf8')*/, engine: 'jsrender', recipe: 'phantom-pdf' } }).then(function(out) {
                             //out.stream.pipe(res);
-                            var pdfname = "Date-"+date.getDate() +"-"+date.getMonth()+"-"+date.getFullYear()+"-Time-"+date.getHours()+":"+date.getMinutes()+'.pdf';
+                            var month = date.getMonth() +1;
+                            var pdfname = "Date-"+date.getDate() +"-"+month+"-"+date.getFullYear()+"-Time-"+date.getHours()+":"+date.getMinutes()+'.pdf';
                              out.result.pipe(fs.createWriteStream('./Images/'+pdfname));
                              saveInvoice(update_rows,pdfname,function(err,count){
                                 if(err){
