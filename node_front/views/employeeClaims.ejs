@@ -262,10 +262,8 @@ function getReimbursementHistory(id){
     success: function (result) {
       reimbursementClaimed(result);
       $.each(result, function(key,value) {
-        var statusCell = '</td><td><a class="btn btn-danger" >' + 'rejected'  + '</a></td></tr>' ;
-        if(value.status==='pending'){
-          statusCell = '</td><td><a class="btn btn-danger">' + value.status  + '</a></td></tr>' ;
-          }
+        var statusCell = '</td><td><a class="btn btn-danger" >' + value.status  + '</a></td></tr>' ;
+
         if(value.status==='hr-approved'){
           statusCell = '</td><td><a class="btn btn-warning">' + value.status  + '</a></td></tr>' ;
           }
@@ -384,6 +382,21 @@ function( data ) {
 });
 
 }
+$.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/projectCodes',{
+      format: "json"
+    } ,
+    function( data ) {
+      $('#Project_Codes').val(data);
+      //localStorage.setItem('testObject', data);
+      /*$.each(data, function(key,value) {
+            $('#project_code').append($("<option />").val(value.project_code).text(value.project_code));
+           });
+      //localStorage.setItem("empType", data);
+      $.each(data, function(key,value) {
+        $('#'+selectElementId+'').append($("<option />").val(value.project_code).text(value.project_code));
+        //localStorage.setItem(value.description,value.id);
+      });*/
+    });
 
 function addProjectCodes(selectElementId){
   $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/projectCodes',{
