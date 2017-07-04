@@ -262,7 +262,7 @@ function getReimbursementHistory(id){
     success: function (result) {
       reimbursementClaimed(result);
       $.each(result, function(key,value) {
-        var statusCell = '</td><td><a class="btn btn-danger" >' + value.status  + '</a></td></tr>' ;
+        var statusCell = '</td><td class="btn btn-danger" >' + /*value.status*/'rejected'  + '</td></tr>' ;
 
         if(value.status==='hr-approved'){
           statusCell = '</td><td><a class="btn btn-warning">' + value.status  + '</a></td></tr>' ;
