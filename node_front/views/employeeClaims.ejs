@@ -382,7 +382,9 @@ function( data ) {
 });
 
 }
-$.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/projectCodes',{
+
+function addTravelProjectCodes(){
+  $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/projectCodes',{
       format: "json"
     } ,
     function( data ) {
@@ -390,13 +392,14 @@ $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +'
       //localStorage.setItem('testObject', data);
       /*$.each(data, function(key,value) {
             $('#project_code').append($("<option />").val(value.project_code).text(value.project_code));
-           });
+           });*/
       //localStorage.setItem("empType", data);
-      $.each(data, function(key,value) {
+      /*$.each(data, function(key,value) {
         $('#'+selectElementId+'').append($("<option />").val(value.project_code).text(value.project_code));
         //localStorage.setItem(value.description,value.id);
       });*/
     });
+}
 
 function addProjectCodes(selectElementId){
   $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/projectCodes',{
