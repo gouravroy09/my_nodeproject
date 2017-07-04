@@ -389,6 +389,9 @@ function addTravelProjectCodes(){
     } ,
     function( data ) {
       $('#Project_Codes').val(data);
+      $.each(data, function(key,value) {
+            $('#project_code').append($("<option />").val(value.project_code).text(value.project_code));
+           });
       //localStorage.setItem('testObject', data);
       /*$.each(data, function(key,value) {
             $('#project_code').append($("<option />").val(value.project_code).text(value.project_code));
