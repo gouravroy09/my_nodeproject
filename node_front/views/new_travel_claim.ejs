@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+  <title></title>
 </head>
 <body>
 <div class="panel panel-default">
   <!-- <div class="panel-heading">Dynamic Form Fields - Add & Remove Multiple fields</div> -->
   <div class="panel-heading">Travel Claims</div>
   <div class="panel-body">
-  <form id="travel_claim_form" enctype="multipart/form-data" method="post" onsubmit="travel_claim_form(this);">
+  <form id="travel_claim_form" enctype="multipart/form-data" method="post" onsubmit="return travel_claim_form(this);">
   <input type="hidden" name="travel_emp_id">
-  <input type="hidden" name="travel_max_amount">
   <div id="education_fields">
           
         </div>
@@ -21,12 +20,12 @@
       
         <option value="">Select Project Code</option>
         <script type="text/javascript">
-        	function loadProjectCodes(){
-        		//alert(localStorage.getItem('testObject'));
-        	 /*$.each($('#Project_Codes').val(), function(key,value) {
-        	 	$('#project_code').append($("<option />").val(value.project_code).text(value.project_code));
-        	 });*/
-        	}
+          function loadProjectCodes(){
+            //alert(localStorage.getItem('testObject'));
+           /*$.each($('#Project_Codes').val(), function(key,value) {
+            $('#project_code').append($("<option />").val(value.project_code).text(value.project_code));
+           });*/
+          }
         </script>
         
       </select>
@@ -37,19 +36,19 @@
 <div class="col-sm-2 nopadding">
   <div class="form-group">
     <div class="input-group">
-      <select class="form-control" id="travel_type" name="travel_type" required>
+      <select class="form-control" id="travel_type" name="travel_type"  required>
       
         <option value="">Select Claim Type</option>
         <script type="text/javascript">
-        	function loadTravelClaimTypes(){
+          function loadTravelClaimTypes(){
 
-        	 /*$.each($('#User_Claim_Types').val(), function(key,value) {
-        	 	var string = value.description;
-        	 	if(string.substring(string.length-5,string.length)=='Travel'){
-        	 		$('#travel_type').append($("<option />").val(value.id).text(string);
-        	 	}
-        	 });*/
-        	}
+           /*$.each($('#User_Claim_Types').val(), function(key,value) {
+            var string = value.description;
+            if(string.substring(string.length-5,string.length)=='Travel'){
+              $('#travel_type').append($("<option />").val(value.id).text(string);
+            }
+           });*/
+          }
         </script>
         
       </select>
@@ -104,46 +103,71 @@
 </div>
 </body>
 <script type="text/javascript">
-//var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/custom/travel_claim';
-     //$('#travel_claim_form').attr('action', new_action);
 function travel_claim_form(form){
-  var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/travel_claim';
-  var one_day=1000*60*60*24;
-  //alert((('#travel_date_from').val().getTime()-$('#travel_date_to').val().getTime()/one_day);
-  var travel_claim_amount = $('.travel_claim_amount').val();
-  for(var i=0;i<travel_claim_amount.length;i++){
-    if(i==0){
-
-    }
-  }
-     //$('#travel_claim_form').attr('action', new_action);
+  var new_action = 'http://'+location.hostname + ':3000/travel_claim';
      form.action = new_action;
-     $('#travel_claim_form').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value',$('#Emp_Id').val()));
-     //alert($('#Reimbursement_description').val());
-     //$('#travel_claim_submit_button').click(function(){
-     //$('#Reimbursement_description').val($('#Reimbursement_description').val() + $('#Process_Type').val());
-      //alert('asdas');
-     this.submit(function(){
-      /*if($('#gl_account_number').val()==='NULL'){
-        alert('321321');
-      }*/
-     //});
-     });
-
+      var one_day=1000*60*60*24;
+      var no_of_entries = document.getElementsByName("travel_claim_amount").length;
+      var travel_types = document.getElementsByName("travel_type");
+      for(var i=0;i<no_of_entries;i++){
+          if(i==0){
+            var no_of_days = 
+            (Date.parse($('#travel_date_to').val()) - Date.parse($('#travel_date_from').val()))/(1000*60*60*24);
+            if(no_of_days<1){
+              alert('Date Range not correct!!');
+              form.travel_date_to.focus();
+              return false;
+            }
+            var max =parseInt(localStorage.getItem('Travel'+$('#travel_type').val()));
+            if($('#travel_claim_amount').val()>(max*no_of_days)){
+              alert('Limit for ' + $("#travel_type option:selected").html() + ':' + max*no_of_days);
+              form.travel_claim_amount.focus();
+              //$('#travel_claim_form').children('.emp_id').remove();
+              //form.travel_type.focus();
+              return false;
+            }else{
+              $('#travel_claim_form').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value',$('#Emp_Id').val()));
+              $('#travel_claim_form').children('.travel_date_from').remove();
+                $('#travel_claim_form').children('.travel_date_to').remove();
+                return true;
+            }
+          } else {
+            var no_of_days = 
+            (Date.parse($('#travel_date_to'+i+'').val()) - Date.parse($('#travel_date_from'+i+'').val()))/(1000*60*60*24);
+            if(no_of_days<1){
+              alert('Date Range not correct!!');
+              $('#travel_date_to'+i+'').focus();
+              return false;
+            }
+            var max =parseInt(localStorage.getItem('Travel'+$('#travel_type'+i+'').val()));
+            if($('#travel_claim_amount'+i+'').val()>(max*no_of_days)){
+              alert('Limit for ' + $("#travel_type"+i+" option:selected").html() + ':' + max*no_of_days);
+              $('#travel_claim_amount'+i+'').focus();
+              //$('#travel_claim_form').children('.emp_id').remove();
+              //form.travel_type.focus();
+              return false;
+            }else{
+              $('#travel_claim_form').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value',$('#Emp_Id').val()));
+              $('#travel_claim_form').children('.travel_date_from').remove();
+                $('#travel_claim_form').children('.travel_date_to').remove();
+                return true;
+            }
+          }
+      }
 }
    
 
      //$('#host-origin').val(location.origin);
 </script>
 <script type="text/javascript">
-	var room = 1;
+  var room = 1;
 function education_fields() {
  
-    room++;
+    //room++;
     var objTo = document.getElementById('education_fields')
     var divtest = document.createElement("div");
-	divtest.setAttribute("class", "form-group removeclass"+room);
-	var rdiv = 'removeclass'+room;
+  divtest.setAttribute("class", "form-group removeclass"+room);
+  var rdiv = 'removeclass'+room;
     /*divtest.innerHTML = '<div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Schoolname" name="Schoolname" value="" placeholder="School name"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Major" name="Major" value="" placeholder="Major"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Degree" name="Degree" value="" placeholder="Degree"></div></div><div class="col-sm-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="educationDate" name="educationDate"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option> </select><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_education_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';*/
 
 
@@ -173,10 +197,14 @@ function education_fields() {
     '</div>'+
   '</div>'+
 '</div>'+
+
+
+
 '<div class="col-sm-2 nopadding"><div class="form-group"><input type="date" class="form-control" id="travel_date_from'+room+'" name="travel_date_from" value="" placeholder="From" required></div></div><div class="col-sm-2 nopadding"><div class="form-group"><input type="date" class="form-control" id="travel_date_to'+room+'" name="travel_date_to" value="" placeholder="To" required></div></div>'+
+
        '<div class="col-sm-2 nopadding">'+
   '<div class="form-group">'+
-    '<input type="number" class="form-control" id="travel_claim_amount" name="travel_claim_amount" value="" placeholder="Enter Amount" required>'+
+    '<input type="number" class="form-control" id="travel_claim_amount'+room+'" name="travel_claim_amount" value="" placeholder="Enter Amount" required>'+
   '</div>'+
 '</div>'+
 '<div class="col-sm-1 nopadding">'+
@@ -201,7 +229,7 @@ function education_fields() {
     $('#travel_type'+room+'').append($('#travel_type').html());
 }
    function remove_education_fields(rid) {
-	   $('.removeclass'+rid).remove();
+     $('.removeclass'+rid).remove();
      
    }
 
@@ -218,29 +246,29 @@ function education_fields() {
 
 
 <!-- <script type="text/javascript">
-        	function loadProjectCodes123(id){
+          function loadProjectCodes123(id){
             alert($('#Project_Codes').val());
-        	 $.each($('#Project_Codes').val(), function(key,value) {
-        	 	$('#project_code'+id+'').append($("<option />").val(value.project_code).text(value.project_code));
-        	 });
-        	}
+           $.each($('#Project_Codes').val(), function(key,value) {
+            $('#project_code'+id+'').append($("<option />").val(value.project_code).text(value.project_code));
+           });
+          }
         </script> -->
 
         <!-- <script type="text/javascript">
-        	function loadTravelClaimTypes(){
+          function loadTravelClaimTypes(){
 
-        	 $.each($('#User_Claim_Types').val(), function(key,value) {
-        	 	var string = value.description;
-        	 	if(string.substring(string.length-5,string.length)=='Travel'){
-        	 		$('#travel_type').append($("<option />").val(value.id).text(string);
-        	 	}
-        	 });
-        	}
+           $.each($('#User_Claim_Types').val(), function(key,value) {
+            var string = value.description;
+            if(string.substring(string.length-5,string.length)=='Travel'){
+              $('#travel_type').append($("<option />").val(value.id).text(string);
+            }
+           });
+          }
         </script> -->
 
 
 <script type="text/javascript">
-	
+  
 var myvar = '<div class="col-sm-2 nopadding">'+
   '<div class="form-group">'+
     '<div class="input-group">'+
