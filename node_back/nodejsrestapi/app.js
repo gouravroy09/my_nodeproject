@@ -66,7 +66,7 @@ app.post("/travel_claim", function (req, res) {
     upload(req, res, function (err) {
         if (err) {
           ///this error comes mostly when Images foler is not present
-            return res.end("Something went wrong!");
+            return res.end("Something went wrong!"); 
         }
   ///console.log(req.files.length!==null);
   //console.log(req.files[0].filename);
@@ -77,13 +77,14 @@ app.post("/travel_claim", function (req, res) {
           filepathString = filepathString + req.files[i].path +',';
         }*/
        // filepathString = filepathString.slice(0,-1);
+        console.log(req.body);
        var queryString = 'insert into employee_reimbursement_history(emp_id,reimbursement_type,reimbursement_amount,time,filepath,project_code) values ';
        if(req.files.length==1){
         //for(var i=0;i< req.files.length;i++){
-        console.log(req.body.project_code);
-        console.log(req.body.project_code.length);
-        console.log(i);
-        console.log(req.files[0].filename);
+        //console.log(req.body.project_code);
+       
+       // console.log(i);
+        //console.log(req.files[0].filename);
           queryString=queryString + '(';
           queryString=queryString +  req.body.emp_id + ',';
           queryString=queryString + req.body.travel_type + ',';

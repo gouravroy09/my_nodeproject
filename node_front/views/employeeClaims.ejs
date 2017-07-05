@@ -312,6 +312,7 @@ function( data ) {
             //alert(string.substring(0,5));
             if(string.substring(0,6)=='Travel'){
               $('#travel_type').append($("<option />").val(value.id).text(string));
+              localStorage.setItem('Travel'+value.id,value.amount);
               //$('#travel_type').append($("<option />").val(value.id).text(value);
             }
            });
