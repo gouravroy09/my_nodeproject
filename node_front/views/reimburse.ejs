@@ -104,6 +104,9 @@
                   <a class="page-scroll" href="#page-top"></a>
                 </li>
                 <li>
+                  <a class="page-scroll" href="#travel-claims">Travel Claims</a>
+                </li>
+                <li>
                   <a class="page-scroll" href="#about">All Reimbursement Types</a>
                 </li>
                 <li>
@@ -155,6 +158,49 @@
                 <table class="table table-hover" >
 
                 <tbody id="history_table">
+                  </tbody>
+                </table>
+              </div>
+
+                    <!--<h1>Scrolling Nav</h1>
+                    <p><strong>Usage Instructions:</strong> Make sure to include the <code>scrolling-nav.js</code>, <code>jquery.easing.min.js</code>, and <code>scrolling-nav.css</code> files. To make a link smooth scroll to another section on the page, give the link the <code>.page-scroll</code> class and set the link target to a corresponding ID on the page.</p>
+                    <a class="btn btn-default page-scroll" href="#about">Click Me to Scroll Down!</a>-->
+                </div>
+              </div>
+            </section>
+            <section id="travel-claims" class="intro-section">
+          <div class="container">
+            <div class="row">
+              <h1>Claims Tray</h1>
+              <div class="col-lg-6" >
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Claim_Type</th>
+                          <th> Name</th>
+                          <th> Emp_Number</th>
+                          <th> Emp Type</th>
+                          <th> Grade</th>
+                          <th>Claim Eligibility</th>
+                          <th>Amount Claimed</th>
+                         
+                          <!-- <th>Action</th>
+                          <th>Action</th> -->
+                          
+                          <!-- <th>Amount</th>
+                          <th>Frequency</th>
+                          <th>Action</th> -->
+                        </tr>
+                      </thead>
+                    </table>
+                    </div>
+
+              <div class="col-lg-12" style="overflow-y: scroll;overflow-x: scroll; width:1200px; height:300px;">
+
+                <table class="table table-hover" >
+
+                <tbody id="travel_history_table">
                   </tbody>
                 </table>
               </div>
@@ -305,10 +351,27 @@
     function( data ) {
       localStorage.setItem("empType", data);
       $.each(data, function(key,value) {
-        //if(value.s){}
-        //alert(value.status);
-        //if(value.status==='pending'){
-        $('#history_table').append(
+        if(value.reimbursement_description.substring(0,6)=='Travel'){
+          var claim_eligibility = parseInt(value.amount) * parseInt(value.multiplier);
+         //alert(parseInt(value.amount) * parseInt(value.multiplier));
+            $('#travel_history_table').append(
+          '<tr><th scope="row"> ' + (key+1) + '</th><td>' + value.reimbursement_description + '</td>'+
+          '<td>' + value.fullname + '</td>' + '<td>' + value.emp_no + '</td>' +
+           '<td>' + value.emp_type_description + '</td>' +'<td>' + value.emp_grade_code + '</td>' +
+            '<td>' + claim_eligibility + '</td>' +
+          '<td>' + value.reimbursement_amount + '</td>'+
+          '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
+          '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+'">Approve</a></td>' +
+          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch/'+value.reimbursement_id+'">Reject-Doc MisMatch</a></td>' +
+          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch/'+value.reimbursement_id+'">Reject-Amt/Freq MisMatch</a></td>' +
+          /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
+           '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
+           + '</form></td>'*/
+           +'</tr>' 
+          );
+        }
+        else{
+          $('#history_table').append(
           '<tr><th scope="row"> ' + (key+1) + '</th><td>' + value.reimbursement_description + '</td>'+
           '<td>' + value.fullname + '</td>' + '<td>' + value.emp_no + '</td>' +
            '<td>' + value.emp_type_description + '</td>' +'<td>' + value.emp_grade_code + '</td>' +
@@ -322,6 +385,12 @@
            + '</form></td>'*/
            +'</tr>' 
           );
+
+        }
+        //if(value.s){}
+        //alert(value.status);
+        //if(value.status==='pending'){
+        
         //}
         //$('#frmUploader'+key+'').attr('action' , 'http://' + location.hostname + ':3000/downloadFile');
       });

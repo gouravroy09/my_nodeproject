@@ -78,7 +78,7 @@ app.post("/travel_claim", function (req, res) {
         }*/
        // filepathString = filepathString.slice(0,-1);
         console.log(req.body);
-       var queryString = 'insert into employee_reimbursement_history(emp_id,reimbursement_type,reimbursement_amount,time,filepath,project_code) values ';
+       var queryString = 'insert into employee_reimbursement_history(emp_id,reimbursement_type,reimbursement_amount,time,filepath,project_code,multiplier) values ';
        if(req.files.length==1){
         //for(var i=0;i< req.files.length;i++){
         //console.log(req.body.project_code);
@@ -91,7 +91,8 @@ app.post("/travel_claim", function (req, res) {
           queryString=queryString + req.body.travel_claim_amount + ',';
           queryString=queryString + 'now(),';
           queryString=queryString + '"' +req.files[0].filename + '",';
-          queryString=queryString + '"' + req.body.project_code + '"';
+          queryString=queryString + '"' + req.body.project_code + '",';
+          queryString=queryString + '' + req.body.multiplier + '';
           queryString=queryString + '),';
        //}
        queryString=queryString.slice(0,-1);
@@ -122,7 +123,8 @@ app.post("/travel_claim", function (req, res) {
           queryString=queryString + req.body.travel_claim_amount[i] + ',';
           queryString=queryString + 'now(),';
           queryString=queryString + '"' +req.files[i].filename + '",';
-          queryString=queryString + '"' + req.body.project_code[i] + '"';
+          queryString=queryString + '"' + req.body.project_code[i] + '",';
+          queryString=queryString + '' + req.body.multiplier[i] + '';
           queryString=queryString + '),';
        }
        queryString=queryString.slice(0,-1);

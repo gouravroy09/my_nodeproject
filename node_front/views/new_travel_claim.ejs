@@ -109,19 +109,25 @@ function travel_claim_form(form){
       var one_day=1000*60*60*24;
       var no_of_entries = document.getElementsByName("travel_claim_amount").length;
       var travel_types = document.getElementsByName("travel_type");
-      for(var i=0;i<no_of_entries;i++){
+      var i = 0;
+      for(var j=0;j<travel_types.length;j++){
+          if(travel_types[j].id.slice(11,12)!=""){
+              
+          i = parseInt(travel_types[j].id.slice(11,12));
+          }
+          
           if(i==0){
             var no_of_days = 
             (Date.parse($('#travel_date_to').val()) - Date.parse($('#travel_date_from').val()))/(1000*60*60*24);
             if(no_of_days<1){
               alert('Date Range not correct!!');
-              form.travel_date_to.focus();
+              //form.travel_date_to.focus();
               return false;
             }
             var max =parseInt(localStorage.getItem('Travel'+$('#travel_type').val()));
             if($('#travel_claim_amount').val()>(max*no_of_days)){
               alert('Limit for ' + $("#travel_type option:selected").html() + ':' + max*no_of_days);
-              form.travel_claim_amount.focus();
+              //form.travel_claim_amount.focus();
               //$('#travel_claim_form').children('.emp_id').remove();
               //form.travel_type.focus();
               return false;
@@ -136,13 +142,13 @@ function travel_claim_form(form){
             (Date.parse($('#travel_date_to'+i+'').val()) - Date.parse($('#travel_date_from'+i+'').val()))/(1000*60*60*24);
             if(no_of_days<1){
               alert('Date Range not correct!!');
-              $('#travel_date_to'+i+'').focus();
+              //$('#travel_date_to'+i+'').focus();
               return false;
             }
             var max =parseInt(localStorage.getItem('Travel'+$('#travel_type'+i+'').val()));
             if($('#travel_claim_amount'+i+'').val()>(max*no_of_days)){
               alert('Limit for ' + $("#travel_type"+i+" option:selected").html() + ':' + max*no_of_days);
-              $('#travel_claim_amount'+i+'').focus();
+              //$('#travel_claim_amount'+i+'').focus();
               //$('#travel_claim_form').children('.emp_id').remove();
               //form.travel_type.focus();
               return false;
@@ -153,6 +159,7 @@ function travel_claim_form(form){
                 return true;
             }
           }
+          i++;
       }
 }
    
@@ -160,10 +167,10 @@ function travel_claim_form(form){
      //$('#host-origin').val(location.origin);
 </script>
 <script type="text/javascript">
-  var room = 1;
+  var room = 0;
 function education_fields() {
  
-    //room++;
+    room++;
     var objTo = document.getElementById('education_fields')
     var divtest = document.createElement("div");
   divtest.setAttribute("class", "form-group removeclass"+room);
