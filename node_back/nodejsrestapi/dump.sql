@@ -231,3 +231,7 @@ CREATE TABLE `employee_grade` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 alter table users add column emp_grade_id int(11);
+
+/*6th july 2017*/
+alter table employee_reimbursement_history add column multiplier int(11) default 0;
+
