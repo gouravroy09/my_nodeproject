@@ -939,6 +939,31 @@ function saveInvoice(update_rows,link,callback){
     //return db.query("insert into miscellaneous(param,value) values('invoice',?)",[link],callback);
     //}
 }
+var cors=require('cors');
+api.use(cors());
+var bodyParser = require('body-parser');
+api.use(bodyParser.json({limit: '50mb'}));
+
+api.post('/saveSession',function(req,res,next){
+        console.log(req.body);
+
+        save_query = 'insert into miscellaneous(param,value) values("session'+req.body.session+'","'+req.body.session+'");';
+
+        console.log(save_query);
+        return db.query(save_query,function(err){
+          if(err) res.end(err);
+          res.end('success');
+        });
+    });
+api.post('/deleteSession',function(req,res,next){
+        console.log(req.body);
+        delete_query= 'delete from miscellaneous where param="session'+req.body.session+'"';
+        console.log(delete_query);
+        return db.query(delete_query,function(err){
+          if(err) res.end(err);
+          res.end('success');
+        });
+    });
 
 api.get('/invoice',function(req,res,next){
         //Employee.getEmpTypeById(req.params.id){
