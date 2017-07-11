@@ -18,7 +18,7 @@ var db=require('./dbconnection');
 var app = express();
 var Storage = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, "./Images");
+        callback(null, __dirname+"/Images");
     },
     filename: function (req, file, callback) {
         callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
