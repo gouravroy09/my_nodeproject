@@ -156,7 +156,7 @@ app.post("/excel/Upload", function (req, res) {
             return res.end("Something went wrong!");
         }
   var filepathString = req.files[0].filename;
-  var excelData = xlsx.parse('./Images/'+filepathString);
+  var excelData = xlsx.parse(__dirname + '/Images/'+filepathString);
 //console.log(excelData[0].data[0]);
 var queryString ={};
  queryString.fillers = '';
@@ -300,6 +300,8 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+
 app.set('port', process.env.PORT || 3000);
 var server = app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + server.address().port);

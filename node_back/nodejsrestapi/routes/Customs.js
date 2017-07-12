@@ -329,9 +329,14 @@ api.get('/employee_grades',function(req,res,next){
             //}
         //}
     });
+
+var cookieParser = require('cookie-parser');
+api.use(cookieParser());
 api.get('/pendingReimburseHistory',function(req,res,next){
+  //console.log(req);
     //if(req.params.id){
         //Employee.getEmpTypeById(req.params.id){
+          //console.log(req);
             Custom2.getReimbursementHistoyWithUserDetalsByStatus('pending',function(err,rows){
                 if(err){
                     res.json(err);
@@ -414,8 +419,9 @@ api.get('/:file(*)', function(req, res, next){
   res.download(path);
 });*/
 
-api.get('/hrapproveReimburse/:id',function(req,res,next){
-  Custom2.approvedByHrReimbursementHistoryRow(req.params.id,function(err,count){
+api.get('/hrapproveReimburse/:id1/:id2',function(req,res,next){
+  var cookieString = req.params.id2;
+  Custom2.approvedByHrReimbursementHistoryRow(req.params.id1,function(err,count){
     if(err)
     {
       res.json(err);
@@ -427,8 +433,9 @@ api.get('/hrapproveReimburse/:id',function(req,res,next){
 });
 });
 
-api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id',function(req,res,next){
-  Custom2.rejectedByHrAmtFreqMismatch(req.params.id,function(err,count){
+api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id1/:id2',function(req,res,next){
+  var cookieString = req.params.id2;
+  Custom2.rejectedByHrAmtFreqMismatch(req.params.id1,function(err,count){
     if(err)
     {
       res.json(err);
@@ -439,8 +446,9 @@ api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id',function(req,res,next){
   }
 });
 });
-api.get('/hrrejectReimburse/docMismatch/:id',function(req,res,next){
-  Custom2.rejectedByHrDocMismatch(req.params.id,function(err,count){
+api.get('/hrrejectReimburse/docMismatch/:id1/:id2',function(req,res,next){
+  var cookieString = req.params.id2;
+  Custom2.rejectedByHrDocMismatch(req.params.id1,function(err,count){
     if(err)
     {
       res.json(err);
@@ -889,7 +897,7 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
                             //out.stream.pipe(res);
                             var month = date.getMonth() +1;
                             var pdfname = "Date-"+date.getDate() +"-"+month+"-"+date.getFullYear()+"-Time-"+date.getHours()+":"+date.getMinutes()+'.pdf';
-                             out.result.pipe(fs.createWriteStream('./Images/'+pdfname));
+                             out.result.pipe(fs.createWriteStream(__dirname+'/Images/'+pdfname));
                              saveInvoice(update_rows,pdfname,function(err,count){
                                 if(err){
                                     res.end(err);
