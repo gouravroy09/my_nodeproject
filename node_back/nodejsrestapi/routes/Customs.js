@@ -428,7 +428,22 @@ api.get('/hrapproveReimburse/:id1/:id2',function(req,res,next){
   }
   else
   {
-      res.redirect(req.headers.referer);
+      var from = 'groy@eesl.co.in';
+                    var to = 'groy@eesl.co.in';
+                    var subject = 'Claim Status: HR-Approved';
+                    var text= 'That was easy!';
+                    db.query(
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.params.id1 + ';',function(err,data){
+                                  console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
+                    return res.redirect(req.headers.referer);
+                                  
+                                     
+                                });
+                    //sendMail(res,from,to,subject,text);
+      //res.redirect(req.headers.referer);
   }
 });
 });
@@ -442,7 +457,22 @@ api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id1/:id2',function(req,res,next){
   }
   else
   {
-      res.redirect(req.headers.referer);
+      var from = 'a_mtyagi@eesl.co.in';
+                    var to = 'a_mtyagi@eesl.co.in';
+                    var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
+                    var text= 'That was easy!';
+                    db.query(
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.params.id1 + ';',function(err,data){
+                                  console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
+                    return res.redirect(req.headers.referer);
+                                  
+                                     
+                                });
+                    //sendMail(res,from,to,subject,text);
+      //res.redirect(req.headers.referer);
   }
 });
 });
@@ -455,7 +485,22 @@ api.get('/hrrejectReimburse/docMismatch/:id1/:id2',function(req,res,next){
   }
   else
   {
-      res.redirect(req.headers.referer);
+      var from = 'groy@eesl.co.in';
+                    var to = 'groy@eesl.co.in';
+                    var subject = 'Claim Status : HR Reject - Document Mismatch';
+                    var text= 'That was easy!';
+                    db.query(
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.params.id1 + ';',function(err,data){
+                                  console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
+                    return res.redirect(req.headers.referer);
+                                  
+                                     
+                                });
+                    //sendMail(res,from,to,subject,text);
+      //res.redirect(req.headers.referer);
   }
 });
 });
@@ -999,6 +1044,47 @@ api.get('/projectCodes',function(req,res,next){
             //}
         //}
     });
+
+var nodemailer = require('nodemailer');
+
+
+
+function sendMail(res,from,to,subject,text){
+  var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'groy@eesl.co.in',
+    pass: '2012@roy@2012'
+  }
+});
+
+var mailOptions = {
+  from: from,
+  to: to,
+  subject: subject,
+  text: text
+};
+  transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    res.end(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+}); 
+  return;
+
+}
+
+
+
+// api.get('/send_mail',function(req,res,next){
+//     //if(req.params.id){
+//         //Employee.getEmpTypeById(req.params.id){
+            
+//             //}
+//         //}
+//         sendMail();
+//     });
 
 
 
