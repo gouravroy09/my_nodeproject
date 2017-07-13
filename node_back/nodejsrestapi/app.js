@@ -32,6 +32,7 @@ var upload = multer({ storage: Storage }).any(); //Field name and max count
 });*/
 
 app.post("/api/Upload", function (req, res) {
+  console.log(req.body);
     upload(req, res, function (err) {
         if (err) {
           ///this error comes mostly when Images foler is not present
@@ -156,7 +157,7 @@ app.post("/excel/Upload", function (req, res) {
             return res.end("Something went wrong!");
         }
   var filepathString = req.files[0].filename;
-  var excelData = xlsx.parse(__dirname + '/Images/'+filepathString);
+  var excelData = xlsx.parse( + './Images/'+filepathString);
 //console.log(excelData[0].data[0]);
 var queryString ={};
  queryString.fillers = '';

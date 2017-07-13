@@ -43,6 +43,19 @@ app.get('/claims', claims.claims);
 var claims = require('./routes/claims');
 app.get('/finReimburse', claims.finReimburse);
 
+// var cookieSession = require('cookie-session');
+// app.use(cookieSession({
+//   name: 'session',
+//   keys: ['/* secret keys */'],
+
+//   // Cookie Options
+//   //maxAge: 24 * 60 * 60 * 1000 // 24 hours
+// }));
+var cookieParser = require('cookie-parser');
+//app.use(cookieParser());
+// app.get('/', function(req, res){
+//    res.cookie('name', 'express').send('cookie set'); //Sets name = express
+// });
 
 
 

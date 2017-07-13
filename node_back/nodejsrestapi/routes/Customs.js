@@ -871,7 +871,7 @@ function invoiceHTML(rows){
 }
 
 api.get('/unBilledReimburseHistoy',function(req,res,next){
-        //console.log(req.body);
+        //console.log(req.params.id);
 
         Custom2.getReimbursementHistoryForBilling(function(err,rows){
 
@@ -897,7 +897,7 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
                             //out.stream.pipe(res);
                             var month = date.getMonth() +1;
                             var pdfname = "Date-"+date.getDate() +"-"+month+"-"+date.getFullYear()+"-Time-"+date.getHours()+":"+date.getMinutes()+'.pdf';
-                             out.result.pipe(fs.createWriteStream(__dirname+'/Images/'+pdfname));
+                             out.result.pipe(fs.createWriteStream(+'./Images/'+pdfname));
                              saveInvoice(update_rows,pdfname,function(err,count){
                                 if(err){
                                     res.end(err);

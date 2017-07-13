@@ -26,6 +26,7 @@ router.get('/:id?',function(req,res,next){
 	});
 //post new reimbursment type
 router.post('/',function(req,res,next){
+            console.log(req.body.cookie);
 
 			Employee.addReimburseType(req.body,function(err,count){
 
@@ -60,9 +61,10 @@ router.post('/:id',function(req,res,next){
         }
     });
 });
-router.delete('/:id',function(req,res,next){
+router.post('/delete',function(req,res,next){
+    console.log(req.body);
 
-        Employee.deleteReimbursement(req.params.id,function(err,count){
+        Employee.deleteReimbursement(req.body.reimbursement_type_id,function(err,count){
 
             if(err)
             {
