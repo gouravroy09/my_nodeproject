@@ -6,7 +6,10 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.3.5",
-    "ejs": "*"
+    "connect": "^3.6.2",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.2",
+    "ejs": "^2.5.6",
+    "express": "^3.3.5"
   }
 }
