@@ -1075,6 +1075,31 @@ var mailOptions = {
 
 }
 
+api.post('/addUser',function(req,res,next){
+        console.log(req.body);
+        res.end('success');
+
+        // save_query = 'insert into miscellaneous(param,value) values("session'+req.body.session+'","'+req.body.session+'");';
+
+        // console.log(save_query);
+        // return db.query(save_query,function(err){
+        //   if(err) res.end(err);
+        //   res.end('success');
+        // });
+    });
+
+api.post('/updateUser',function(req,res,next){
+        console.log(req.body);
+        res.end('success');
+        // save_query = 'insert into miscellaneous(param,value) values("session'+req.body.session+'","'+req.body.session+'");';
+
+        // console.log(save_query);
+        // return db.query(save_query,function(err){
+        //   if(err) res.end(err);
+        //   res.end('success');
+        // });
+    });
+
 
 
 // api.get('/send_mail',function(req,res,next){
