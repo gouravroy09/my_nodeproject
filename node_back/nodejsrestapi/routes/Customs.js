@@ -1077,27 +1077,39 @@ var mailOptions = {
 
 api.post('/addUser',function(req,res,next){
         console.log(req.body);
-        res.end('success');
-
-        // save_query = 'insert into miscellaneous(param,value) values("session'+req.body.session+'","'+req.body.session+'");';
-
-        // console.log(save_query);
-        // return db.query(save_query,function(err){
-        //   if(err) res.end(err);
-        //   res.end('success');
-        // });
+        //res.end('success');
+    var query_string = "insert into users(emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) "+
+    "values(?,?,?,?,?,?,?)";
+        db.query(query_string,[req.body.GradeName,
+            req.body.UserName,reqbody.FullName,req.body.EmailID,req.body.EmpNo,req.body.Doj,req.body.GradeCode,req.body.EmpType],function(err){
+                if(err)
+                {
+                    res.end(error);
+                }
+                else
+                {
+                    res.end('success');
+                }
+            });
+    
     });
 
 api.post('/updateUser',function(req,res,next){
-        console.log(req.body);
-        res.end('success');
-        // save_query = 'insert into miscellaneous(param,value) values("session'+req.body.session+'","'+req.body.session+'");';
-
-        // console.log(save_query);
-        // return db.query(save_query,function(err){
-        //   if(err) res.end(err);
-        //   res.end('success');
-        // });
+         console.log(req.body);
+        //res.end('success');
+    var query_string = "replace into users(id,emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) "+
+    "values(?,?,?,?,?,?,?,?)";
+        db.query(query_string,[req.body.Id,req.body.GradeName,
+            req.body.UserName,reqbody.FullName,req.body.EmailID,req.body.EmpNo,req.body.Doj,req.body.GradeCode,req.body.EmpType],function(err){
+                if(err)
+                {
+                    res.end(error);
+                } 
+                else
+                {
+                    res.end('success'); 
+                }
+            });
     });
 
 
