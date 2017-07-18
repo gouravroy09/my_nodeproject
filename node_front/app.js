@@ -29,6 +29,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.post('/', routes.index);
 app.get('/users', user.list);
 
 var about = require('./routes/about');
@@ -39,6 +40,7 @@ app.get('/stationary', stationary.stationary);
 
 var claims = require('./routes/claims');
 app.get('/claims', claims.claims);
+app.post('/claims', claims.claims2);
 
 var claims = require('./routes/claims');
 app.get('/finReimburse', claims.finReimburse);
