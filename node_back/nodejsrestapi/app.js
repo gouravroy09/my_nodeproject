@@ -416,7 +416,7 @@ app.post('/claims/verify', function(req, res){
                                     //res.redirect()
                                   } else
                                   {
-                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'","'+JSON.stringify(new Date())+');',function(err){
+                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'","'+JSON.stringify(new Date())+'");',function(err){
                                       if (err)
                                       {
                                         console.log(err);
@@ -448,7 +448,7 @@ app.post('/hr/claimss/verify', function(req, res){
                                     //res.redirect()
                                   } else
                                   {
-                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'","'+JSON.stringify(new Date())+');',function(err){
+                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'","'+JSON.stringify(new Date())+'");',function(err){
                                       if (err)
                                       {
                                         console.log(err);
