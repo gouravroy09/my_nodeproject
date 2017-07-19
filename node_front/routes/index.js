@@ -11,7 +11,7 @@ exports.index = function(req, res){
 
 exports.index2 = function(req, res){
 	console.log(req.body);
-	res.cookie('name', 'express');
-  res.render('reimburse', { title: 'Express' });
+	res.cookie('sessionId', req.body.sessionId);
+  res.render('reimburse', { roleName: req.body.roleName });
 
 };
