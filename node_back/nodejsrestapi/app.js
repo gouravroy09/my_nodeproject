@@ -407,16 +407,19 @@ app.post('/claims/verify', function(req, res){
                                     res.end(err);
                                   if(data[0]!=undefined)
                                   {
-                                    var deserialized = new Date(JSON.parse(data[0].value));
+                                    var deserialized = new Date(Date.parse(data[0].value));
                                     var hours = Math.abs(new Date() - deserialized) / 36e5;
                                     if(hours>2)
+                                    {
                                       res.end('Session Expired!!');
+                                    }
                                     var url = 'http://'+req.hostname+':5000/claims2';
                                     res.redirect(307, url);
                                     //res.redirect()
                                   } else
                                   {
-                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'","'+JSON.stringify(new Date())+'");',function(err){
+                                    console.log('insert into miscellaneous(param,value) values("'+req.body.sessionId+'",'+JSON.stringify(new Date())+');');
+                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'",'+JSON.stringify(new Date())+');',function(err){
                                       if (err)
                                       {
                                         console.log(err);
@@ -429,9 +432,33 @@ app.post('/claims/verify', function(req, res){
                                 });
 });
 
-app.post('/hr/claimss/verify', function(req, res){
+app.post('/hr/claims/verify', function(req, res){
   console.log(req.body.sessionId);
   //res.end('adssa');
+  db.query(
+                                'select role from users where emp_no = "' +req.body.empId + '";',function(err,data){
+                                  //console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                  {
+                                    res.end(err);
+                                  }
+                                  if(data[0]!=undefined)
+                                  {
+                                    var roleName = data[0].role;
+                                    //var hours = Math.abs(new Date() - deserialized) / 36e5;
+                                    if(roleName!='claim_manager'){
+
+                                      res.end('Your Are Not Authorized!!');
+                                    }
+                                    //var url = 'http://'+req.hostname+':5000/hr/claims2';
+                                    //res.redirect(307, url);
+                                    //res.redirect()
+                                  } else
+                                  {
+                                   res.end('User Details Incomplete!!'); 
+                                  }
+                                });
+
   db.query(
                                 'select value from miscellaneous where param = "' +req.body.sessionId + '";',function(err,data){
                                   //console.log('select email_id from users where id = ' +req.body.emp_id + ';');
@@ -439,22 +466,32 @@ app.post('/hr/claimss/verify', function(req, res){
                                     res.end(err);
                                   if(data[0]!=undefined)
                                   {
-                                    var deserialized = new Date(JSON.parse(data[0].value));
+
+                                    //if(response) {
+    // try {
+    //      console.log(new Date(Date.parse(data[0].value)));
+    // } catch(e) {
+    //     console.log(e); // error in the above string (in this case, yes)!
+    // }
+//}
+                                    var deserialized = new Date(Date.parse(data[0].value));
                                     var hours = Math.abs(new Date() - deserialized) / 36e5;
                                     if(hours>2)
+                                    {
                                       res.end('Session Expired!!');
-                                    var url = 'http://'+req.hostname+':5000/hr/claims2';
+                                    }
+                                    var url = 'http://'+req.hostname+':5000/hrClaims2';
                                     res.redirect(307, url);
                                     //res.redirect()
                                   } else
                                   {
-                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'","'+JSON.stringify(new Date())+'");',function(err){
+                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'",'+JSON.stringify(new Date())+');',function(err){
                                       if (err)
                                       {
                                         console.log(err);
                                         res.end('Login Again!!');
                                       }
-                                    var url = 'http://'+req.hostname+':5000/hr/claims2';
+                                    var url = 'http://'+req.hostname+':5000/hrClaims2';
                                     res.redirect(307, url);
                                     });
                                   }

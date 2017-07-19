@@ -234,4 +234,6 @@ alter table users add column emp_grade_id int(11);
 
 /*6th july 2017*/
 alter table employee_reimbursement_history add column multiplier int(11) default 0;
+/*19th july 2017*/
+alter table users add column role varchar(300);
 

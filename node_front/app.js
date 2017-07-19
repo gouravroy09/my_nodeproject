@@ -29,7 +29,16 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.post('/', routes.index);
+app.post('/', function(req, res){
+	//console.log(req.host);
+	var url = 'http://'+req.host+':3000/hr/claims/verify';
+	res.redirect(307, url);
+	//res.cookie('name1', 'express');
+	//res.cookie('name', 'express');
+  //res.render('reimburse', { title: 'Express' });
+
+});
+app.post('/hrClaims2', routes.index2);
 app.get('/users', user.list);
 
 var about = require('./routes/about');
@@ -41,8 +50,8 @@ app.get('/stationary', stationary.stationary);
 var claims = require('./routes/claims');
 app.get('/claims', claims.claims);
 app.post('/claims', function(req, res){
-	console.log(req.body);
-	var url = 'http://'+req.hostname+':3000/claims/verify';
+	console.log(req.host);
+	var url = 'http://'+req.host+':3000/claims/verify';
 	res.redirect(307, url);
 	//res.cookie('name1', 'express');
 	//res.cookie('name', 'express');
