@@ -419,8 +419,41 @@ api.get('/:file(*)', function(req, res, next){
   res.download(path);
 });*/
 
+function checkSession(req,res){
+    db.query(
+                                'select value from miscellaneous where param = "' + req.params.id2 + '";',function(err,data){
+                                  //console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  if(data[0]!=undefined)
+                                  {
+                                    var deserialized = new Date(JSON.parse(data[0].value));
+                                    var hours = Math.abs(new Date() - deserialized) / 36e5;
+                                    if(hours>2)
+                                      res.end('Session Expired!!');
+                                    //var url = 'http://'+req.host+':5000/claims2';
+                                    //res.redirect(307, url);
+                                    //res.redirect()
+                                  } else
+                                  {
+                                    db.query('insert into miscellaneous(param,value) values("'+req.params.id2+'","'+JSON.stringify(new Date())+');',function(err){
+                                      if (err)
+                                      {
+                                        console.log(err);
+                                        res.end('Login Again!!');
+                                      }
+                                    //var url = 'http://'+req.host+':5000/claims2';
+                                    //res.redirect(307, url);
+                                    });
+                                  }
+                                });
+    return;
+}
+
 api.get('/hrapproveReimburse/:id1/:id2',function(req,res,next){
-  var cookieString = req.params.id2;
+  //var cookieString = req.params.id2;
+  checkSession(req,res);
+  //db.query()
   Custom2.approvedByHrReimbursementHistoryRow(req.params.id1,function(err,count){
     if(err)
     {
@@ -449,7 +482,8 @@ api.get('/hrapproveReimburse/:id1/:id2',function(req,res,next){
 });
 
 api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id1/:id2',function(req,res,next){
-  var cookieString = req.params.id2;
+  //var cookieString = req.params.id2;
+  checkSession(req,res);
   Custom2.rejectedByHrAmtFreqMismatch(req.params.id1,function(err,count){
     if(err)
     {
@@ -477,7 +511,8 @@ api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id1/:id2',function(req,res,next){
 });
 });
 api.get('/hrrejectReimburse/docMismatch/:id1/:id2',function(req,res,next){
-  var cookieString = req.params.id2;
+  //var cookieString = req.params.id2;
+  checkSession(req,res);
   Custom2.rejectedByHrDocMismatch(req.params.id1,function(err,count){
     if(err)
     {

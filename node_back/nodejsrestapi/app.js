@@ -397,4 +397,68 @@ var server = app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + server.address().port);
 });
 
+app.post('/claims/verify', function(req, res){
+  console.log(req.body.sessionId);
+  //res.end('adssa');
+  db.query(
+                                'select value from miscellaneous where param = "' +req.body.sessionId + '";',function(err,data){
+                                  //console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  if(data[0]!=undefined)
+                                  {
+                                    var deserialized = new Date(JSON.parse(data[0].value));
+                                    var hours = Math.abs(new Date() - deserialized) / 36e5;
+                                    if(hours>2)
+                                      res.end('Session Expired!!');
+                                    var url = 'http://'+req.host+':5000/claims2';
+                                    res.redirect(307, url);
+                                    //res.redirect()
+                                  } else
+                                  {
+                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'","'+JSON.stringify(new Date())+');',function(err){
+                                      if (err)
+                                      {
+                                        console.log(err);
+                                        res.end('Login Again!!');
+                                      }
+                                    var url = 'http://'+req.host+':5000/claims2';
+                                    res.redirect(307, url);
+                                    });
+                                  }
+                                });
+});
+
+app.post('/hr/claimss/verify', function(req, res){
+  console.log(req.body.sessionId);
+  //res.end('adssa');
+  db.query(
+                                'select value from miscellaneous where param = "' +req.body.sessionId + '";',function(err,data){
+                                  //console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  if(data[0]!=undefined)
+                                  {
+                                    var deserialized = new Date(JSON.parse(data[0].value));
+                                    var hours = Math.abs(new Date() - deserialized) / 36e5;
+                                    if(hours>2)
+                                      res.end('Session Expired!!');
+                                    var url = 'http://'+req.host+':5000/hr/claims2';
+                                    res.redirect(307, url);
+                                    //res.redirect()
+                                  } else
+                                  {
+                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'","'+JSON.stringify(new Date())+');',function(err){
+                                      if (err)
+                                      {
+                                        console.log(err);
+                                        res.end('Login Again!!');
+                                      }
+                                    var url = 'http://'+req.host+':5000/hr/claims2';
+                                    res.redirect(307, url);
+                                    });
+                                  }
+                                });
+});
+
 module.exports = app;
