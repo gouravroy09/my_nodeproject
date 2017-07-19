@@ -186,6 +186,7 @@
           <input id="Emp_Type_Id" name="Emp_Type_Id" type="hidden" />
           <input id="Project_Codes" name="Project_Codes" type="hidden" />
           <input id="User_Claim_Types" name="User_Claim_Types" type="hidden" />
+          <input id="Passed_Emp_Id" name="Passed_Emp_Id" type="hidden"  value="<%= empId %>" />
         </body>
 
        
@@ -428,7 +429,7 @@ window.onload = function() {
   //alert(document.URL.split('?')[1].split('=')[1]);
   loadTravelClaimTypes();
   loadProjectCodes();
-  getUserById(document.URL.split('?')[1].split('=')[1]);
+  getUserById($('#Passed_Emp_Id').val());
   addTravelProjectCodes();
   //getReimbursementHistory();
 //test();
