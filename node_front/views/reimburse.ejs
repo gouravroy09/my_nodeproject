@@ -266,6 +266,7 @@
                   <script type="text/javascript">
                   var link = 'http://'+location.hostname +':3000/custom/unBilledReimburseHistoy';
                     $('#generateBillTag').attr('href',link);
+                    // $('#generateBillTag').append('<input type="hidden" name="cookie" value="'+document.cookie+'" />');
                     //$('#generateBillTag').attr('target','_blank');
                   </script>
                     <!-- <h1>Update Reimbursement</h1>
@@ -300,6 +301,7 @@
                  <!--  <a id = "generateBillTag" class="btn btn-warning" >Uplos</a> -->
                   <script type="text/javascript">
                   var link = 'http://'+location.hostname +':3000/excel/Upload';
+                  $('#uploadExcelForm').append('<input type="hidden" name="cookie" value="'+document.cookie+'" />');
                     $('#uploadExcelForm').attr('action',link);
                     $('#uploadExcelButton').click(function(){
                       $('#uploadExcelForm').submit();
@@ -361,9 +363,9 @@
             '<td>' + claim_eligibility + '</td>' +
           '<td>' + value.reimbursement_amount + '</td>'+
           '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
-          '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+'">Approve</a></td>' +
-          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch/'+value.reimbursement_id+'">Reject-Doc MisMatch</a></td>' +
-          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch/'+value.reimbursement_id+'">Reject-Amt/Freq MisMatch</a></td>' +
+          '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+"/"+document.cookie+'">Approve</a></td>' +
+          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch/'+value.reimbursement_id+"/"+document.cookie+'">Reject-Doc MisMatch</a></td>' +
+          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch/'+value.reimbursement_id+"/"+document.cookie+'">Reject-Amt/Freq MisMatch</a></td>' +
           /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
            '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
            + '</form></td>'*/
@@ -377,9 +379,9 @@
            '<td>' + value.emp_type_description + '</td>' +'<td>' + value.emp_grade_code + '</td>' +
           '<td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +'</td>'+
           '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
-          '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+'">Approve</a></td>' +
-          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch/'+value.reimbursement_id+'">Reject-Doc MisMatch</a></td>' +
-          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch/'+value.reimbursement_id+'">Reject-Amt/Freq MisMatch</a></td>' +
+          '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+"/"+document.cookie+'">Approve</a></td>' +
+          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch/'+value.reimbursement_id+"/"+document.cookie+'">Reject-Doc MisMatch</a></td>' +
+          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch/'+value.reimbursement_id+"/"+document.cookie+'">Reject-Amt/Freq MisMatch</a></td>' +
           /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
            '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
            + '</form></td>'*/
@@ -439,6 +441,7 @@
      $('#update_Reimbursement_description').prop('disabled',true);
      var update_action = /*'http://localhost:3000/Reimbursements/'*/ 'http://'+location.hostname +':3000/Reimbursements/'+reimbursement_type_id;
      $('#update_reimburse').attr('action', update_action);
+     $('#update_reimburse').append('<input type="hidden" name="cookie" value="'+document.cookie+'" />');
      $('#update_submit').click(function() {
       var data = {};
       data.update_frequency = $('#update_frequency').val();
@@ -463,10 +466,13 @@
 
 });
      } else{
+      var data = {};
+      data.reimbursement_type_id = reimbursement_type_id;
+      data.cookie = document.cookie;
       $.ajax({
-            type: "DELETE",
-            url: /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/Reimbursements/'+reimbursement_type_id,
-            data: '{}',
+            type: "POST",
+            url: /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/Reimbursements/delete/',
+            data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
@@ -508,6 +514,8 @@
      //alert($('#Reimbursement_description').val());
      $('#new_submit').click(function(){
      $('#Reimbursement_description').val($('#Process_Type').val() + $('#Reimbursement_description').val());
+     $('#new_reimburse').append('<input type="hidden" name="cookie" value="'+document.cookie+'" />');
+
 
      $('#new_reimburse').submit(function(){
       /*if($('#gl_account_number').val()==='NULL'){

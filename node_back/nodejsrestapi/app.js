@@ -18,7 +18,7 @@ var db=require('./dbconnection');
 var app = express();
 var Storage = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, "./Images");
+        callback(null, __dirname+"/Images");
     },
     filename: function (req, file, callback) {
         callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
@@ -32,6 +32,7 @@ var upload = multer({ storage: Storage }).any(); //Field name and max count
 });*/
 
 app.post("/api/Upload", function (req, res) {
+  console.log(req.body);
     upload(req, res, function (err) {
         if (err) {
           ///this error comes mostly when Images foler is not present
@@ -55,6 +56,11 @@ app.post("/api/Upload", function (req, res) {
             else{
                     //res.json(req.body);//or return count for 1 & 0
                     //return res.end("File uploaded sucessfully!.");
+                    var from = 'groy@eesl.co.in';
+                    var to = 'groy@eesl.co.in';
+                    var subject = 'Non-Travel Claim uploaded';
+                    var text= 'That was easy!';
+                    sendMail(res,from,to,subject,text);
                     return res.redirect(req.headers.referer);
             }
         });
@@ -87,6 +93,13 @@ app.post("/travel_claim", function (req, res) {
         //console.log(req.files[0].filename);
           queryString=queryString + '(';
           queryString=queryString +  req.body.emp_id + ',';
+          // var user_email = db.query(
+          //   'select email_id from users where id = ' +req.body.emp_id + ';',function(err){
+          //     if(err)
+          //       res.end(err);
+          //     else
+
+          //   });
           queryString=queryString + req.body.travel_type + ',';
           queryString=queryString + req.body.travel_claim_amount + ',';
           queryString=queryString + 'now(),';
@@ -107,7 +120,25 @@ app.post("/travel_claim", function (req, res) {
             else{
                     //res.json(req.body);//or return count for 1 & 0
                     //return res.end("File uploaded sucessfully!.");
+                    var from = 'a_mtyagi@eesl.co.in';
+                    var to = '';
+                    
+                    //console.log(to);
+                    //to = result[0].email_id;
+                    var subject = 'Travel Claim uploaded';
+                    var text= 'That was easy!';
+                    //console.log(to);
+                    db.query(
+                                'select email_id from users where id = ' +req.body.emp_id + ';',function(err,data){
+                                  console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
                     return res.redirect(req.headers.referer);
+                                  
+                                     
+                                });
+                    
             }
         });
       } 
@@ -128,6 +159,7 @@ app.post("/travel_claim", function (req, res) {
           queryString=queryString + '),';
        }
        queryString=queryString.slice(0,-1);
+       queryString=queryString + ';';
        console.log(queryString);
         Custom.addTravelReimbursementHistory(queryString,function(err,count){
 
@@ -139,7 +171,24 @@ app.post("/travel_claim", function (req, res) {
             else{
                     //res.json(req.body);//or return count for 1 & 0
                     //return res.end("File uploaded sucessfully!.");
+
+                    var from = 'a_mtyagi@eesl.co.in';
+                    var to = 'a_mtyagi@eesl.co.in';
+                    var subject = 'Travel Claim uploaded';
+                    var text= 'That was easy!';
+                    console.log(text);
+                    db.query(
+                                'select email_id from users where id = ' +req.body.emp_id + ';',function(err,data){
+                                  console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
                     return res.redirect(req.headers.referer);
+                                  
+                                     
+                                });
+                    //sendMail(res,from,to,subject,text);
+                    //return res.redirect(req.headers.referer);
             }
         }); 
       }
@@ -147,6 +196,47 @@ app.post("/travel_claim", function (req, res) {
   //}
     });
 });
+
+var nodemailer = require('nodemailer');
+
+
+
+function sendMail(res,from,to,subject,text){
+  var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'groy@eesl.co.in',
+    pass: '2012@roy@2012'
+  }
+});
+
+var mailOptions = {
+  from: from,
+  to: to,
+  subject: subject,
+  text: text
+};
+  transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+}); 
+  return;
+
+}
+
+
+
+// api.get('/send_mail',function(req,res,next){
+//     //if(req.params.id){
+//         //Employee.getEmpTypeById(req.params.id){
+            
+//             //}
+//         //}
+//         sendMail();
+//     });
 
 var xlsx = require('node-xlsx');
 app.post("/excel/Upload", function (req, res) {
@@ -156,7 +246,7 @@ app.post("/excel/Upload", function (req, res) {
             return res.end("Something went wrong!");
         }
   var filepathString = req.files[0].filename;
-  var excelData = xlsx.parse('./Images/'+filepathString);
+  var excelData = xlsx.parse( + './Images/'+filepathString);
 //console.log(excelData[0].data[0]);
 var queryString ={};
  queryString.fillers = '';
@@ -305,7 +395,13 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
 /*app.set('port', process.env.PORT || 3000);
+
+
+
+
+
 var server = app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + server.address().port);
 });*/

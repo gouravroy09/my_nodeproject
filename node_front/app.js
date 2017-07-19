@@ -29,6 +29,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.post('/', routes.index);
 app.get('/users', user.list);
 
 var about = require('./routes/about');
@@ -39,15 +40,32 @@ app.get('/stationary', stationary.stationary);
 
 var claims = require('./routes/claims');
 app.get('/claims', claims.claims);
+app.post('/claims', claims.claims2);
 
 var claims = require('./routes/claims');
 app.get('/finReimburse', claims.finReimburse);
+
 
 var RO_Stationary = require('./routes/RO_Stationary');
 app.get('/RO_Stationary', RO_Stationary.RO_Stationary);
 
 var HR_Stationary = require('./routes/HR_Stationary');
 app.get('/HR_Stationary', HR_Stationary.HR_Stationary);
+
+// var cookieSession = require('cookie-session');
+// app.use(cookieSession({
+//   name: 'session',
+//   keys: ['/* secret keys */'],
+
+//   // Cookie Options
+//   //maxAge: 24 * 60 * 60 * 1000 // 24 hours
+// }));
+var cookieParser = require('cookie-parser');
+//app.use(cookieParser());
+// app.get('/', function(req, res){
+//    res.cookie('name', 'express').send('cookie set'); //Sets name = express
+// });
+
 
 
 

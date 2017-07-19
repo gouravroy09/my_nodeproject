@@ -329,9 +329,14 @@ api.get('/employee_grades',function(req,res,next){
             //}
         //}
     });
+
+var cookieParser = require('cookie-parser');
+api.use(cookieParser());
 api.get('/pendingReimburseHistory',function(req,res,next){
+  //console.log(req);
     //if(req.params.id){
         //Employee.getEmpTypeById(req.params.id){
+          //console.log(req);
             Custom2.getReimbursementHistoyWithUserDetalsByStatus('pending',function(err,rows){
                 if(err){
                     res.json(err);
@@ -427,40 +432,88 @@ api.get('/:file(*)', function(req, res, next){
   res.download(path);
 });*/
 
-api.get('/hrapproveReimburse/:id',function(req,res,next){
-  Custom2.approvedByHrReimbursementHistoryRow(req.params.id,function(err,count){
+api.get('/hrapproveReimburse/:id1/:id2',function(req,res,next){
+  var cookieString = req.params.id2;
+  Custom2.approvedByHrReimbursementHistoryRow(req.params.id1,function(err,count){
     if(err)
     {
       res.json(err);
   }
   else
   {
-      res.redirect(req.headers.referer);
+      var from = 'groy@eesl.co.in';
+                    var to = 'groy@eesl.co.in';
+                    var subject = 'Claim Status: HR-Approved';
+                    var text= 'That was easy!';
+                    db.query(
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.params.id1 + ';',function(err,data){
+                                  console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
+                    return res.redirect(req.headers.referer);
+                                  
+                                     
+                                });
+                    //sendMail(res,from,to,subject,text);
+      //res.redirect(req.headers.referer);
   }
 });
 });
 
-api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id',function(req,res,next){
-  Custom2.rejectedByHrAmtFreqMismatch(req.params.id,function(err,count){
+api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id1/:id2',function(req,res,next){
+  var cookieString = req.params.id2;
+  Custom2.rejectedByHrAmtFreqMismatch(req.params.id1,function(err,count){
     if(err)
     {
       res.json(err);
   }
   else
   {
-      res.redirect(req.headers.referer);
+      var from = 'a_mtyagi@eesl.co.in';
+                    var to = 'a_mtyagi@eesl.co.in';
+                    var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
+                    var text= 'That was easy!';
+                    db.query(
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.params.id1 + ';',function(err,data){
+                                  console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
+                    return res.redirect(req.headers.referer);
+                                  
+                                     
+                                });
+                    //sendMail(res,from,to,subject,text);
+      //res.redirect(req.headers.referer);
   }
 });
 });
-api.get('/hrrejectReimburse/docMismatch/:id',function(req,res,next){
-  Custom2.rejectedByHrDocMismatch(req.params.id,function(err,count){
+api.get('/hrrejectReimburse/docMismatch/:id1/:id2',function(req,res,next){
+  var cookieString = req.params.id2;
+  Custom2.rejectedByHrDocMismatch(req.params.id1,function(err,count){
     if(err)
     {
       res.json(err);
   }
   else
   {
-      res.redirect(req.headers.referer);
+      var from = 'groy@eesl.co.in';
+                    var to = 'groy@eesl.co.in';
+                    var subject = 'Claim Status : HR Reject - Document Mismatch';
+                    var text= 'That was easy!';
+                    db.query(
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.params.id1 + ';',function(err,data){
+                                  console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
+                    return res.redirect(req.headers.referer);
+                                  
+                                     
+                                });
+                    //sendMail(res,from,to,subject,text);
+      //res.redirect(req.headers.referer);
   }
 });
 });
@@ -876,7 +929,7 @@ function invoiceHTML(rows){
 }
 
 api.get('/unBilledReimburseHistoy',function(req,res,next){
-        //console.log(req.body);
+        //console.log(req.params.id);
 
         Custom2.getReimbursementHistoryForBilling(function(err,rows){
 
@@ -902,7 +955,7 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
                             //out.stream.pipe(res);
                             var month = date.getMonth() +1;
                             var pdfname = "Date-"+date.getDate() +"-"+month+"-"+date.getFullYear()+"-Time-"+date.getHours()+":"+date.getMinutes()+'.pdf';
-                             out.result.pipe(fs.createWriteStream('./Images/'+pdfname));
+                             out.result.pipe(fs.createWriteStream('./node_back/nodejsrestapi/Images/'+pdfname));
                              saveInvoice(update_rows,pdfname,function(err,count){
                                 if(err){
                                     res.end(err);
@@ -952,6 +1005,31 @@ function saveInvoice(update_rows,link,callback){
     //return db.query("insert into miscellaneous(param,value) values('invoice',?)",[link],callback);
     //}
 }
+var cors=require('cors');
+api.use(cors());
+var bodyParser = require('body-parser');
+api.use(bodyParser.json({limit: '50mb'}));
+
+api.post('/saveSession',function(req,res,next){
+        console.log(req.body);
+
+        save_query = 'insert into miscellaneous(param,value) values("session'+req.body.session+'","'+req.body.session+'");';
+
+        console.log(save_query);
+        return db.query(save_query,function(err){
+          if(err) res.end(err);
+          res.end('success');
+        });
+    });
+api.post('/deleteSession',function(req,res,next){
+        console.log(req.body);
+        delete_query= 'delete from miscellaneous where param="session'+req.body.session+'"';
+        console.log(delete_query);
+        return db.query(delete_query,function(err){
+          if(err) res.end(err);
+          res.end('success');
+        });
+    });
 
 api.get('/invoice',function(req,res,next){
         //Employee.getEmpTypeById(req.params.id){
@@ -979,6 +1057,84 @@ api.get('/projectCodes',function(req,res,next){
             //}
         //}
     });
+
+var nodemailer = require('nodemailer');
+
+
+
+function sendMail(res,from,to,subject,text){
+  var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'groy@eesl.co.in',
+    pass: '2012@roy@2012'
+  }
+});
+
+var mailOptions = {
+  from: from,
+  to: to,
+  subject: subject,
+  text: text
+};
+  transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    res.end(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+}); 
+  return;
+
+}
+
+api.post('/addUser',function(req,res,next){
+        console.log(req.body);
+        //res.end('success');
+    var query_string = "insert into users(emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) "+
+    "values(?,?,?,?,?,?,?)";
+        db.query(query_string,[req.body.GradeName,
+            req.body.UserName,reqbody.FullName,req.body.EmailID,req.body.EmpNo,req.body.Doj,req.body.GradeCode,req.body.EmpType],function(err){
+                if(err)
+                {
+                    res.end(error);
+                }
+                else
+                {
+                    res.end('success');
+                }
+            });
+    
+    });
+
+api.post('/updateUser',function(req,res,next){
+         console.log(req.body);
+        //res.end('success');
+    var query_string = "replace into users(id,emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) "+
+    "values(?,?,?,?,?,?,?,?)";
+        db.query(query_string,[req.body.Id,req.body.GradeName,
+            req.body.UserName,reqbody.FullName,req.body.EmailID,req.body.EmpNo,req.body.Doj,req.body.GradeCode,req.body.EmpType],function(err){
+                if(err)
+                {
+                    res.end(error);
+                } 
+                else
+                {
+                    res.end('success'); 
+                }
+            });
+    });
+
+
+
+// api.get('/send_mail',function(req,res,next){
+//     //if(req.params.id){
+//         //Employee.getEmpTypeById(req.params.id){
+            
+//             //}
+//         //}
+//         sendMail();
+//     });
 
 
 
