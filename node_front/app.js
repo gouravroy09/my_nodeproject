@@ -42,7 +42,7 @@ var claims = require('./routes/claims');
 app.get('/claims', claims.claims);
 app.post('/claims', function(req, res){
 	console.log(req.body);
-	var url = 'http://'+req.host+':3000/claims/verify';
+	var url = 'http://'+req.hostname+':3000/claims/verify';
 	res.redirect(307, url);
 	//res.cookie('name1', 'express');
 	//res.cookie('name', 'express');

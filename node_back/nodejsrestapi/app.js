@@ -411,7 +411,7 @@ app.post('/claims/verify', function(req, res){
                                     var hours = Math.abs(new Date() - deserialized) / 36e5;
                                     if(hours>2)
                                       res.end('Session Expired!!');
-                                    var url = 'http://'+req.host+':5000/claims2';
+                                    var url = 'http://'+req.hostname+':5000/claims2';
                                     res.redirect(307, url);
                                     //res.redirect()
                                   } else
@@ -422,7 +422,7 @@ app.post('/claims/verify', function(req, res){
                                         console.log(err);
                                         res.end('Login Again!!');
                                       }
-                                    var url = 'http://'+req.host+':5000/claims2';
+                                    var url = 'http://'+req.hostname+':5000/claims2';
                                     res.redirect(307, url);
                                     });
                                   }
