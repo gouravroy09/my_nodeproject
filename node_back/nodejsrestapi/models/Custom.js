@@ -39,7 +39,7 @@ var Custom2 = {
 	deleteReimbursement:function(id,callback){
     return db.query("delete from reimbursement where id=?",[id],callback);
 	},
-	getReimburesmenTypeByEmpTypeAndGrade:function(id1,id2,callback){
+	getReimbursementTypeByEmpTypeAndGrade:function(id1,id2,callback){
 
 		return db.query("select * from reimbursement where emp_type_id =? and emp_grade_code=?",
 			[id1,id2],callback);
@@ -61,6 +61,7 @@ var Custom2 = {
 
 	return db.query("select *,u.id from users u inner join employee_type e on u.emp_type_id = e.id where emp_no=?",[id],callback);
 	},
+	
 	addReimbursementHistory:function(History,filepath,callback){
 		console.log(JSON.stringify(History));
 

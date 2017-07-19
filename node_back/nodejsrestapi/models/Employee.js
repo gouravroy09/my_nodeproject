@@ -20,6 +20,13 @@ var Employee = {
 			[ReimburseType.Emp_Type,ReimburseType.Reimbursement_description,
 			ReimburseType.amount,ReimburseType.frequency,ReimburseType.Emp_Grade,ReimburseType.gl_account_number],callback);
 	},
+	addemployee_info:function(employee_info,callback){
+		console.log("inside service");
+		console.log(Employee_info.Name);
+		return db.query("Insert into Employee_info(Name,designation,department,Reporting_officer,date) values(?,?,?,?,?)",
+			[Employee_info.Name,Employee_info.designation,
+			Employee_info.department,Employee_info.Reporting_officer,Employee_info.date],callback);
+	},
 	updateReimbursementType:function(id,ReimbursementType,callback){
 		console.log("inside service");
 		console.log(id);

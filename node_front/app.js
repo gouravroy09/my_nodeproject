@@ -43,6 +43,11 @@ app.get('/claims', claims.claims);
 var claims = require('./routes/claims');
 app.get('/finReimburse', claims.finReimburse);
 
+var RO_Stationary = require('./routes/RO_Stationary');
+app.get('/RO_Stationary', RO_Stationary.RO_Stationary);
+
+var HR_Stationary = require('./routes/HR_Stationary');
+app.get('/HR_Stationary', HR_Stationary.HR_Stationary);
 
 
 

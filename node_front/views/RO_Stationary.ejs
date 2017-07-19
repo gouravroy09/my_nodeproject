@@ -9,14 +9,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Stationary</title>
-    
+    <title>RO_stationary</title>
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/scrolling-nav.css" rel="stylesheet">
-    <style>
+    <script>
     .entry:not(:first-of-type)
 {
     margin-top: 10px;
@@ -26,7 +26,8 @@
 {
     font-size: 12px;
 }
-    </style>
+    </script>
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -51,7 +52,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">My Info</a>
+                <a class="navbar-brand page-scroll" href="#page-top">RO_Info</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -62,12 +63,14 @@
                         <a class="page-scroll" href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#about">Stationary required</a>
+                        <a class="page-scroll" href="#about">Stationary Required</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#services">History</a>
+                        <a class="page-scroll" href="#services">New Entries</a>
                     </li>
-                   
+                    <li>
+                        <a class="page-scroll" href="#contact">History</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -80,84 +83,84 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                <h1 style="text-align:center;margin:40px 40px 40px 40px;">Energy Efficiency Services Limited</h1>
+                    <h1 style="text-align:center;margin:40px 40px 40px 40px;">Energy Efficiency Services Limited</h1>
 
 <div class="container">
-<form class="form-horizontal"  id="Employee_Info" method="post">
+<form class="form-horizontal"  id="Employee_info" method="post">
   <div class="form-group">
     <label class="control-label col-sm-4"  for="Name">Name:</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" name="Name" id="Name"  placeholder="Enter your name" required="" disabled>
+      <input type="text" class="form-control" name="Name" placeholder="Enter your name" required="">
      </div>
      </div>
       <div class="form-group">
-    <label class="control-label col-sm-4"  for="Designation" >Designation:</label>
+    <label class="control-label col-sm-4"  for="Designation">Designation:</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" id="Designation" name="Designation" placeholder="Enter your designation" required="" disabled>
+      <input type="text" class="form-control" id="Designation" name="Designation" placeholder="Enter your designation" required="">
      </div>
      </div>
      <div class="form-group">
     <label class="control-label col-sm-4"  for="Department">Department:</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control"  name="Department" id="Department"  placeholder="Enter your department" required="" disabled>
+      <input type="text" class="form-control"  name="Department"   placeholder="Enter your department" required="">
      </div>
      </div>
      <div class="form-group">
-    <label class="control-label col-sm-4"  for="Reporting_Officer">Reporting Officer:</label>
+    <label class="control-label col-sm-4"  for="Department">Reporting Officer:</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control"  name="Reporting_Officer" id="Reporting_Officer" placeholder="Enter your Reporting_Officer" required="" disabled>
+      <input type="text" class="form-control"  name="ReportingOfficer"   placeholder="Enter your Reporting Officer" required="">
      </div>
      </div>
      <div class="form-group">
     <label class="control-label col-sm-4"  for="Email Id">Email Id:</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control"  name="Email Id"  id="Email_Id"  placeholder="Enter your Email Id" required="" disabled>
+      <input type="text" class="form-control"  name="Email Id"  placeholder="Enter your Email Id" required="">
      </div>
      </div>
      <div class="form-group">
     <label class="control-label col-sm-4"  for="Mobile No">Mobile No.:</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control"  name="Mobile No"  id="Mobile_No"  placeholder="Enter your number" required="" disabled>
+      <input type="text" class="form-control"  name="Mobile No"  placeholder="Enter your number" required="">
      </div>
      </div>
      </form>
      </div>
-                    <!--<h1>Scrolling Nav</h1>
-                    <p><strong>Usage Instructions:</strong> Make sure to include the <code>scrolling-nav.js</code>, <code>jquery.easing.min.js</code>, and <code>scrolling-nav.css</code> files. To make a link smooth scroll to another section on the page, give the link the <code>.page-scroll</code> class and set the link target to a corresponding ID on the page.</p>
-                    <a class="btn btn-default page-scroll" href="#about">Click Me to Scroll Down!</a>-->
-                </div>
+      </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="about-section">
+     <section id="about" class="about-section">
         <div class="container">
             <div class="row control-group" id="fields">
             <div class= "controls">
                 <div class="col-sm-12">
                     <h1>Stationary Required</h1>
+  <form class="form-horizontal" role="form" autocomplete="off" method="post">
     <h4 style="margin:40px 40px 40px 40px;text-align:center;" ><b>Please issue the following stationary items for official use:</b></h4>
      <div class="col-lg-12" >
      <table  class="table" id ="reimbursement_declare">
     <thead>
       <tr>
-        <th class="col-sm-6">Item</th>
-        <th class="col-sm-6">Quantity_Required</th>
+        <th class="col-sm-4">S.no.</th>
+        <th class="col-sm-4">Item</th>
+        <th class="col-sm-4">Quantity_Required</th>
       </tr>  
     </thead>
     </table>
     </div>
-    <% include add_stationary_form %>
- <!--  <form class="form-horizontal" role="form" autocomplete="off" id="stationary_required" method="post">
     <div class="row">
                    
                     <div class="voca">
-                    <div class="col-sm-6">
-                        <input class="form-control" placeholder="Enter Item" name="Item" type="text">
+                    <div class="col-sm-1">
+                        <input class="form-control" placeholder="No." type="number">
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" placeholder="Enter Item" name="vocatrans" type="text">
                     </div>
                     <div class="col-md-1">
-                        <select class="form-control" name="quantity_required">
+                        <select class="form-control">
                           <option>1</option>
                           <option>2</option>
                           <option>3</option>
@@ -170,19 +173,16 @@
                     </button>
                     </div>
                     </div>
-                    <button id="test_submit" class="btn btn-primary btn-xl center-block" type="button" align="center" style="margin-top:20px">Submit</button>
-     </form> -->
+                    <button  class="btn btn-primary btn-xl center-block" type="button" align="center" style="margin-top:20px">Submit</button>
+     </form>
                 </div>
             </div>
         </div>
         </div>
     </section>
-    
-  
-  
     <script>
       //$(function()
-/*function dynamicInput(){
+function dynamicInput(){
     $(document).on('click', '.btn-add', function(e)
     {
         e.preventDefault();
@@ -204,26 +204,29 @@
     e.preventDefault();
     return false;
   });
-}*/
-
-    </script>
-
+}
+window.onload = function(){
+  dynamicInput();
+}
+</script>
 
     <!-- Services Section -->
     <section id="services" class="services-section">
-              <div class="container">
-                <div class="row" >
-                <h1>History</h1>
-                <form id="delete_form"></form>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                   <h1>New Entries</h1>
+                    <form id="New_Entry"></form>
                 <div class="col-lg-12" >
-                    <table class="table table-hover" id="history_table">
+                    <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th class="col-sm-1">#</th>
-                          <th class="col-sm-3">Item</th>
-                          <th class="col-sm-2">Quantity</th>
-                          <th class="col-sm-4">Status</th>
-                          <th class="col-sm-2">Received/Not Received</th>
+                          <th class="col-sm-2">#</th>
+                          <th class="col-sm-2">Name</th>
+                          <th class="col-sm-2">Designation</th>
+                          <th class="col-sm-2">Item</th>
+                          <th class="col-sm-2">Quantity Required</th>
+                          <th class="col-sm-2">Action</th>
                         </tr>
                       </thead>
                     </table>
@@ -236,62 +239,49 @@
                       </tbody>
                     </table>
                   </div>
+                    
+
+
                 </div>
-              </div>  
-            </section>
-            <script type="text/javascript">
-            window.onload = function(){
-              //dynamicInput(); 
-              Stationary_required_form(); 
+            </div>
+        </div>
+    </section>
 
-  //updateTable();
-  getEmployeeById('10000167');
- 
-//test();
-};
-             //$(document).on('click','.btn-primary',function(){
-              //alert("asdas");
-
-     //$('#new_entry').click(function(){
-    //alert($('#Item').val());
-     //$('#Stationary_required').submit();  
-     //});
-           // });
-          
-
-     //$('#host-origin').val(location.origin);
-</script>
-<script type="text/javascript">
- function getEmployeeById(id){
-            $.getJSON( 'http://'+location.hostname + ':3000/custom/user/' + id,{
-              format: "json"
-            } ,
-            function( data ) {
-              $('#Name').val(data[0].fullname);
-              $('#Designation').val(data[0].Designation);
-              $('#Department').val(data[0].Department);
-              $('#Reporting_Officer').val(data[0].Reporting_officer);
-              $('#Email_Id').val(data[0].email_id);
-              $('#Mobile_No').val(data[0].Mobile_No);
-      //alert(data[0].emp_no);
-
-    });
-          }
-
-    function Stationary_required_form(){
-      
-   var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/stationary';
-     $('#stationary_required').attr('action', new_action);
-          $('#test_submit').click(function(){
-              $('#stationary_required').submit();
-          });
-    }
-
-  
-   
-</script>
     <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>History</h1>
+                    <div class="col-lg-12" >
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th class="col-sm-2">#</th>
+                          <th class="col-sm-2">Name</th>
+                          <th class="col-sm-2">Designation</th>
+                          <th class="col-sm-2">Item</th>
+                          <th class="col-sm-2">Quantity Required</th>
+                          <th class="col-sm-2">Status</th>
+                        </tr>
+                      </thead>
+                    </table>
+                    </div>
+                  <div class="col-lg-12" style="overflow-y: scroll; height:300px;">
+                    
+                    <table class="table table-hover" id ="testtable" >
+                      
+                      <tbody id="all_reimbursements">
+                      </tbody>
+                    </table>
+                  </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
     
+
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
