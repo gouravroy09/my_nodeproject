@@ -482,3 +482,11 @@ alter table employee_reimbursement_history add column multiplier int(11) default
 /*6th june'17 by megha*/
 alter table users add column Designation varchar(100),add column Department varchar(100),add column Reporting_Officer  varchar(100),add column Mobile_No. varchar(50);
 
+/*6th june'17 by megha*/
+
+ CREATE TABLE `stationary_required` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Item` varchar(50) DEFAULT NULL,
+  `quantity_required` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 ;
