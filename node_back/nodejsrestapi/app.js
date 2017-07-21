@@ -61,7 +61,11 @@ app.post("/api/Upload", function (req, res) {
                     var subject = 'Non-Travel Claim uploaded';
                     var text= 'That was easy!';
                     sendMail(res,from,to,subject,text);
-                    return res.redirect(req.headers.referer);
+                    //res.cookie('sessionId', req.body.session);
+                    //res.empId = req.body.passed_emp_id;
+                    //return res.redirect(req.headers.referer);
+                    var url = 'http://'+req.hostname+':5000/claims2';
+                                    res.redirect(307, url);
             }
         });
   //}
@@ -134,8 +138,9 @@ app.post("/travel_claim", function (req, res) {
                                   if(err)
                                     res.end(err);
                                   sendMail(res,from,data[0].email_id,subject,text);
-                    return res.redirect(req.headers.referer);
-                                  
+                    //return res.redirect(req.headers.referer);
+                      var url = 'http://'+req.hostname+':5000/claims2';
+                                    res.redirect(307, url);            
                                      
                                 });
                     
@@ -183,8 +188,9 @@ app.post("/travel_claim", function (req, res) {
                                   if(err)
                                     res.end(err);
                                   sendMail(res,from,data[0].email_id,subject,text);
-                    return res.redirect(req.headers.referer);
-                                  
+                    //return res.redirect(req.headers.referer);
+                      var url = 'http://'+req.hostname+':5000/claims2';
+                                    res.redirect(307, url);            
                                      
                                 });
                     //sendMail(res,from,to,subject,text);
@@ -246,7 +252,7 @@ app.post("/excel/Upload", function (req, res) {
             return res.end("Something went wrong!");
         }
   var filepathString = req.files[0].filename;
-  var excelData = xlsx.parse( + './Images/'+filepathString);
+  var excelData = xlsx.parse( __dirname+ '/Images/'+filepathString);
 //console.log(excelData[0].data[0]);
 var queryString ={};
  queryString.fillers = '';

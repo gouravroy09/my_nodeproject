@@ -133,6 +133,8 @@ function travel_claim_form(form){
               return false;
             }else{
               $('#travel_claim_form').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value',$('#Emp_Id').val()));
+              $('#travel_claim_form').append($('<input />').attr('type', 'hidden').attr('name', 'sessionId').attr('value',document.cookie.split("=").slice(-1).pop()));
+              $('#travel_claim_form').append($("<input />").attr('type', 'hidden').attr('name', "empId").attr('value',$('#Passed_Emp_Id').val()));
               $('#travel_claim_form').children('.travel_date_from').remove();
                 $('#travel_claim_form').children('.travel_date_to').remove();
                 return true;
@@ -154,6 +156,8 @@ function travel_claim_form(form){
               return false;
             }else{
               $('#travel_claim_form').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value',$('#Emp_Id').val()));
+              $('#travel_claim_form').append($('<input />').attr('type', 'hidden').attr('name', 'sessionId').attr('value',document.cookie.split("=").slice(-1).pop()));
+              $('#travel_claim_form').append($("<input />").attr('type', 'hidden').attr('name', "empId").attr('value',$('#Passed_Emp_Id').val()));
               $('#travel_claim_form').children('.travel_date_from').remove();
                 $('#travel_claim_form').children('.travel_date_to').remove();
                 return true;

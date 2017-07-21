@@ -427,7 +427,7 @@ function checkSession(req,res){
                                     res.end(err);
                                   if(data[0]!=undefined)
                                   {
-                                    var deserialized = new Date(JSON.parse(data[0].value));
+                                    var deserialized = new Date(Date.parse(data[0].value));
                                     var hours = Math.abs(new Date() - deserialized) / 36e5;
                                     if(hours>2)
                                       res.end('Session Expired!!');
@@ -436,7 +436,7 @@ function checkSession(req,res){
                                     //res.redirect()
                                   } else
                                   {
-                                    db.query('insert into miscellaneous(param,value) values("'+req.params.id2+'","'+JSON.stringify(new Date())+');',function(err){
+                                    db.query('insert into miscellaneous(param,value) values("'+req.params.id2+'",'+JSON.stringify(new Date())+');',function(err){
                                       if (err)
                                       {
                                         console.log(err);
@@ -471,8 +471,18 @@ api.get('/hrapproveReimburse/:id1/:id2',function(req,res,next){
                                   if(err)
                                     res.end(err);
                                   sendMail(res,from,data[0].email_id,subject,text);
-                    return res.redirect(req.headers.referer);
-                                  
+
+                    //return res.redirect(req.headers.referer);
+                      var url = 'http://'+req.hostname+':5000/hrClaims2';
+                      requestify.post(url, {
+    sessionId: req.params.id2, roleName : 'claim_manager'
+})
+.then(function(response) {
+    // Get the response body (JSON parsed or jQuery object for XMLs)
+    //res.end();
+    res.redirect(307,url);
+});
+                                    //res.redirect( url);            
                                      
                                 });
                     //sendMail(res,from,to,subject,text);
@@ -480,6 +490,10 @@ api.get('/hrapproveReimburse/:id1/:id2',function(req,res,next){
   }
 });
 });
+
+var requestify = require('requestify');
+
+
 
 api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id1/:id2',function(req,res,next){
   //var cookieString = req.params.id2;
@@ -501,8 +515,16 @@ api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id1/:id2',function(req,res,next){
                                   if(err)
                                     res.end(err);
                                   sendMail(res,from,data[0].email_id,subject,text);
-                    return res.redirect(req.headers.referer);
-                                  
+                    //return res.redirect(req.headers.referer);
+                      var url = 'http://'+req.hostname+':5000/hrClaims2';
+                      requestify.post(url, {
+    sessionId: req.params.id2, roleName : 'claim_manager'
+})
+.then(function(response) {
+    // Get the response body (JSON parsed or jQuery object for XMLs)
+    //res.end();
+    res.redirect(307,url);
+});            
                                      
                                 });
                     //sendMail(res,from,to,subject,text);
@@ -530,8 +552,16 @@ api.get('/hrrejectReimburse/docMismatch/:id1/:id2',function(req,res,next){
                                   if(err)
                                     res.end(err);
                                   sendMail(res,from,data[0].email_id,subject,text);
-                    return res.redirect(req.headers.referer);
-                                  
+                    //return res.redirect(req.headers.referer);
+                      var url = 'http://'+req.hostname+':5000/hrClaims2';
+                      requestify.post(url, {
+    sessionId: req.params.id2, roleName : 'claim_manager'
+})
+.then(function(response) {
+    // Get the response body (JSON parsed or jQuery object for XMLs)
+    //res.end();
+    res.redirect(307,url);
+});            
                                      
                                 });
                     //sendMail(res,from,to,subject,text);

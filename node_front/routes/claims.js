@@ -11,6 +11,13 @@ exports.claims2 = function(req, res){
   res.render('employeeClaims',  {empId: req.body.empId});
 
 };
+exports.claims3 = function(req, res){
+	//console.log(req.body);
+	//res.cookie('sessionId', req.body.sessionId);
+
+  res.render('employeeClaims',  {title: 'Express'});
+
+};
 exports.finReimburse = function(req, res){
   res.render('fin_reimburse', { title: 'Express' });
 };

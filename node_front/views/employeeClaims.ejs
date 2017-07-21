@@ -373,8 +373,10 @@ function( data ) {
     addProjectCodes('selectProject'+key);
     $('#frmUploader'+key+'').attr('action' , 'http://' + location.hostname + ':3000/api/Upload');
     $('#frmUploader'+key+'').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value',$('#Emp_Id').val()));
+    $('#frmUploader'+key+'').append($("<input />").attr('type', 'hidden').attr('name', "empId").attr('value',$('#Passed_Emp_Id').val()));
+    
     $('#frmUploader'+key+'').append($('<input />').attr('type', 'hidden').attr('name', 'reimbursement_type').attr('value',value.id));
-    $('#frmUploader'+key+'').append($('<input />').attr('type', 'hidden').attr('name', 'session').attr('value',document.cookie));
+    $('#frmUploader'+key+'').append($('<input />').attr('type', 'hidden').attr('name', 'sessionId').attr('value',document.cookie.split("=").slice(-1).pop()));
     }
 
       //$('#frmUploader').append($("<input />").attr('type', 'hidden').attr('name', "emp_id").attr('value', "something");

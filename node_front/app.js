@@ -28,7 +28,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
+//app.get('/', routes.index);
 app.post('/', function(req, res){
 	//console.log(req.host);
 	var url = 'http://'+req.host+':3000/hr/claims/verify';
@@ -39,6 +39,12 @@ app.post('/', function(req, res){
 
 });
 app.post('/hrClaims2', routes.index2);
+app.get('/:sessionId?', function(req, res){
+	//console.log(req.body);
+	res.cookie('sessionId', req.params.sessionId);
+  res.render('reimburse', { roleName: 'claim_manager' });
+
+});
 app.get('/users', user.list);
 
 var about = require('./routes/about');
@@ -59,6 +65,7 @@ app.post('/claims', function(req, res){
 
 });
 app.post('/claims2', claims.claims2);
+app.get('/claims2', claims.claims3);
 
 var claims = require('./routes/claims');
 app.get('/finReimburse', claims.finReimburse);
