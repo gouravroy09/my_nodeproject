@@ -951,8 +951,8 @@ function invoiceHTML(rows){
 
 }
 
-api.get('/unBilledReimburseHistoy',function(req,res,next){
-        //console.log(req.params.id);
+api.post('/unBilledReimburseHistoy',function(req,res,next){
+        //console.log('asdasdasdasdasdsadas');
 
         Custom2.getReimbursementHistoryForBilling(function(err,rows){
 
@@ -983,7 +983,7 @@ api.get('/unBilledReimburseHistoy',function(req,res,next){
                                 if(err){
                                     res.end(err);
                                 }else{
-                                    res.redirect(req.headers.referer+'#services');
+                                    res.redirect(307,req.headers.referer+'#services');
                                 }
                              })
                              //res.redirect(req.headers.referer);

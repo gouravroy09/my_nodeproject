@@ -250,25 +250,62 @@
               <div class="container">
                 <div class="row">
                 <div class="col-lg-6" style="overflow-y: scroll; height:300px;">
-                <a id = "perviewBillTag" class="btn btn-warning" >Preview Bill</a>
-                  <a id = "generateBillTag" class="btn btn-warning" >Generate Bill</a>
+                <a id = "previewBillTag" class="btn btn-warning" >Preview Bill</a>
+                
+                  <a id = "generateBillTag" href="javascript: generateBillForm();" class="btn btn-warning" >Generate Bill</a>
+                  
+                  <script type="text/javascript">
+                  
+                    //$('#generateBillTag').click(function(){
+                      //$('#generateBillForm').attr('action',link);
+                      //$('#generateBillForm').append('<input type="hidden" name="sessionId" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
+                      //$('#generateBillForm').append('<input type="hidden" name="roleName" value="claim_manager" />');
+                      //alert("asdas");
+                      //$('#generateBillForm').submit();
+                    //});
+                    // $('#generateBillTag').append('<input type="hidden" name="cookie" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
+                    //$('#generateBillTag').attr('target','_blank');
+                    function generateBillForm(){
+      var link = 'http://'+location.hostname +':3000/custom/unBilledReimburseHistoy';
+      
+    var data = {};
+      //data.reimbursement_id = id;
+      data.sessionId = document.cookie.split("=").slice(-1).pop();
+      data.roleName = 'claim_manager';
+      var f = document.createElement("form");
+      var sessionId = document.createElement("input"); 
+    var roleName = document.createElement("input");
+    //var reimbursement_id = document.createElement("input");
+    sessionId.value=document.cookie.split("=").slice(-1).pop();
+    sessionId.name="sessionId";
+    f.appendChild(sessionId);  
+    roleName.value="claim_manager";
+    roleName.name="roleName";
+    f.appendChild(roleName);  
+    //reimbursement_id.value=id;
+    //reimbursement_id.name="reimbursement_id";
+    //f.appendChild(reimbursement_id);    
+      f.setAttribute('method',"post");
+      f.setAttribute('action',link);
+     
+      document.body.appendChild(f);
+
+    f.submit();
+     
+  }
+                  </script>
                   </div>
                   <script type="text/javascript">
                   var link = 'http://'+location.hostname +':3000/custom/viewUnbilledRimburseHistory';
-                    $('#perviewBillTag').attr('href',link);
-                    $('#perviewBillTag').attr('target','_blank');
+                    $('#previewBillTag').attr('href',link);
+                    $('#previewBillTag').attr('target','_blank');
                   </script>
                    <!-- <div class="col-lg-12">
                   </div> -->
                   <div class="col-lg-6" style="overflow-y: scroll; height:300px;">
                   <table class="table table-striped"><tr><th></th><th>Invoice</th><th></th><th>Action</th></tr></table>
                   <table class="table table-striped" style="white-space: nowrap;" id="invoice_table"></table>
-                  <script type="text/javascript">
-                  var link = 'http://'+location.hostname +':3000/custom/unBilledReimburseHistoy';
-                    $('#generateBillTag').attr('href',link);
-                    // $('#generateBillTag').append('<input type="hidden" name="cookie" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
-                    //$('#generateBillTag').attr('target','_blank');
-                  </script>
+                  
                     <!-- <h1>Update Reimbursement</h1>
                     <div id="printableArea">
                       <h1>Print me</h1>
@@ -468,32 +505,11 @@
     f.appendChild(reimbursement_id);    
       f.setAttribute('method',"post");
       f.setAttribute('action','http://'+location.hostname +':3000'+'/custom/hrapproveReimburse');
-      // f.appendChild('<input type="hidden" name="sessionId" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
-      // f.appendChild('<input type="hidden" name="roleName" value="claim_manager" />');
-      // f.appendChild('<input type="hidden" name="reimbursement_id" value="'+id+'" />');
+     
       document.body.appendChild(f);
 
     f.submit();
-      //alert('asdsa');
-      //f.submit();
-    // $.ajax({
-    //         type: "POST",
-    //         url: 'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse',
-            
-    //         data: JSON.stringify(data),
-    //         contentType: "application/json; charset=utf-8",
-    //         dataType: "json",
-    //         success: function (result) {
-    //     console.log(result);
-    //     if(result.status == 200){
-    //         //self.isEditMode(!self.isEditMode());
-    //         location.reload();
-    //     }
-    // },
-    // error: function(result){
-    //     console.log(result);
-    // }
-    //     });
+     
   }
 </script>
 <script type="text/javascript">

@@ -246,6 +246,7 @@ var mailOptions = {
 
 var xlsx = require('node-xlsx');
 app.post("/excel/Upload", function (req, res) {
+    console.log(req.files);
     upload(req, res, function (err) {
         if (err) {
           ///this error comes mostly when Images foler is not present
