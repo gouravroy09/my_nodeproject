@@ -363,9 +363,14 @@
             '<td>' + claim_eligibility + '</td>' +
           '<td>' + value.reimbursement_amount + '</td>'+
           '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
-          '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+"/"+document.cookie.split("=").slice(-1).pop()+'">Approve</a></td>' +
-          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch/'+value.reimbursement_id+"/"+document.cookie.split("=").slice(-1).pop()+'">Reject-Doc MisMatch</a></td>' +
-          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch/'+value.reimbursement_id+"/"+document.cookie.split("=").slice(-1).pop()+'">Reject-Amt/Freq MisMatch</a></td>' +
+          '<td> <a class="btn btn-success" href="javascript: hrApproveAction('+value.reimbursement_id+');">Approve</a></td>' +
+
+          // +'<td><a class="btn btn-success"><form action="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+"/"+document.cookie.split("=").slice(-1).pop()+'" method="post"><button type="submit" name="your_name" value="your_value" class="btn-link">Approve</button></form></a</td>'+
+
+
+
+          '<td> <a class="btn btn-danger" href="href="javascript: hrRejectDocMismatch('+value.reimbursement_id+');"">Reject-Doc MisMatch</a></td>' +
+          '<td> <a class="btn btn-danger" href="href="javascript: hrRejectAmtFreqMismatch('+value.reimbursement_id+');"">Reject-Amt/Freq MisMatch</a></td>' +
           /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
            '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
            + '</form></td>'*/
@@ -379,9 +384,15 @@
            '<td>' + value.emp_type_description + '</td>' +'<td>' + value.emp_grade_code + '</td>' +
           '<td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +'</td>'+
           '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
-          '<td> <a class="btn btn-success" href="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+"/"+document.cookie.split("=").slice(-1).pop()+'">Approve</a></td>' +
-          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch/'+value.reimbursement_id+"/"+document.cookie.split("=").slice(-1).pop()+'">Reject-Doc MisMatch</a></td>' +
-          '<td> <a class="btn btn-danger" href="'+'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch/'+value.reimbursement_id+"/"+document.cookie.split("=").slice(-1).pop()+'">Reject-Amt/Freq MisMatch</a></td>' +
+          
+          '<td> <a class="btn btn-success" href="javascript: hrApproveAction('+value.reimbursement_id+');">Approve</a></td>' +
+
+          // +'<td><a class="btn btn-success"><form action="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+"/"+document.cookie.split("=").slice(-1).pop()+'" method="post"><button type="submit" name="your_name" value="your_value" class="btn-link">Approve</button></form></a</td>'+
+
+
+
+          '<td> <a class="btn btn-danger" href="href="javascript: hrRejectDocMismatch('+value.reimbursement_id+');"">Reject-Doc MisMatch</a></td>' +
+          '<td> <a class="btn btn-danger" href="href="javascript: hrRejectAmtFreqMismatch('+value.reimbursement_id+');"">Reject-Amt/Freq MisMatch</a></td>' +
           /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
            '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
            + '</form></td>'*/
@@ -422,6 +433,68 @@
 
     updateTable();
   };
+</script>
+<script type="text/javascript">
+
+  function hrApproveAction(id){
+      var url = 'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse';
+      hreftoPost(id,url);
+  }
+  function hrRejectDocMismatch(id){
+      var url = 'http://'+location.hostname +':3000'+'/hrrejectReimburse/docMismatch';
+      hreftoPost(id,url);
+  }
+  function hrRejectAmtFreqMismatch(id){
+      var url = 'http://'+location.hostname +':3000'+'/hrrejectReimburse/amt-Freq-Mismatch';
+      hreftoPost(id,url);
+  }
+  function hreftoPost(id,url){
+    var data = {};
+      data.reimbursement_id = id;
+      data.sessionId = document.cookie.split("=").slice(-1).pop();
+      data.roleName = 'claim_manager';
+      var f = document.createElement("form");
+      var sessionId = document.createElement("input"); 
+    var roleName = document.createElement("input");
+    var reimbursement_id = document.createElement("input");
+    sessionId.value=document.cookie.split("=").slice(-1).pop();
+    sessionId.name="sessionId";
+    f.appendChild(sessionId);  
+    roleName.value="claim_manager";
+    roleName.name="roleName";
+    f.appendChild(roleName);  
+    reimbursement_id.value=id;
+    reimbursement_id.name="reimbursement_id";
+    f.appendChild(reimbursement_id);    
+      f.setAttribute('method',"post");
+      f.setAttribute('action','http://'+location.hostname +':3000'+'/custom/hrapproveReimburse');
+      // f.appendChild('<input type="hidden" name="sessionId" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
+      // f.appendChild('<input type="hidden" name="roleName" value="claim_manager" />');
+      // f.appendChild('<input type="hidden" name="reimbursement_id" value="'+id+'" />');
+      document.body.appendChild(f);
+
+    f.submit();
+      //alert('asdsa');
+      //f.submit();
+    // $.ajax({
+    //         type: "POST",
+    //         url: 'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse',
+            
+    //         data: JSON.stringify(data),
+    //         contentType: "application/json; charset=utf-8",
+    //         dataType: "json",
+    //         success: function (result) {
+    //     console.log(result);
+    //     if(result.status == 200){
+    //         //self.isEditMode(!self.isEditMode());
+    //         location.reload();
+    //     }
+    // },
+    // error: function(result){
+    //     console.log(result);
+    // }
+    //     });
+  }
 </script>
 <script type="text/javascript">
   $(document).on('click','.btnSelect',function(){

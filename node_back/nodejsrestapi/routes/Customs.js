@@ -388,40 +388,16 @@ api.get('/userreimburse2/:id1?/:id2?/:id3?',function(req,res,next){
             if(err){
                 res.json(err);
             }else{
-                    //res.write(rows);
-                   //res.write(rows);
-                   //xyz.push(rows);
+                    
                    res.locals.row2 = rows;
                }
            });
-            //console.log(res.local.rows1);
-            /*var json = JSON.stringify({
-            	result : data
-            });*/
-            //console.log(json);
-            //res.end();
-        //}
+           
     });
-
-/*api.get("/", function(req, res){
-  res.send('<ul>'
-    + '<li>Download <a href="/amazing.txt">amazing.txt</a>.</li>'
-    + '<li>Download <a href="/missing.txt">missing.txt</a>.</li>'
-    + '</ul>');
-});
-
-// /files/* is accessed via req.params[0]
-// but here we name it :file
-api.get('/:file(*)', function(req, res, next){
-  var file = req.params.file
-    , path = __dirname + '/Images/' + file;
-
-  res.download(path);
-});*/
 
 function checkSession(req,res){
     db.query(
-                                'select value from miscellaneous where param = "' + req.params.id2 + '";',function(err,data){
+                                'select value from miscellaneous where param = "' + req.body.sessionId + '";',function(err,data){
                                   //console.log('select email_id from users where id = ' +req.body.emp_id + ';');
                                   if(err)
                                     res.end(err);
@@ -436,7 +412,7 @@ function checkSession(req,res){
                                     //res.redirect()
                                   } else
                                   {
-                                    db.query('insert into miscellaneous(param,value) values("'+req.params.id2+'",'+JSON.stringify(new Date())+');',function(err){
+                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'",'+JSON.stringify(new Date())+');',function(err){
                                       if (err)
                                       {
                                         console.log(err);
@@ -450,11 +426,12 @@ function checkSession(req,res){
     return;
 }
 
-api.get('/hrapproveReimburse/:id1/:id2',function(req,res,next){
+api.post('/hrapproveReimburse',function(req,res,next){
   //var cookieString = req.params.id2;
+  console.log(req.body);
   checkSession(req,res);
   //db.query()
-  Custom2.approvedByHrReimbursementHistoryRow(req.params.id1,function(err,count){
+  Custom2.approvedByHrReimbursementHistoryRow(req.body.reimbursement_id,function(err,count){
     if(err)
     {
       res.json(err);
@@ -466,27 +443,19 @@ api.get('/hrapproveReimburse/:id1/:id2',function(req,res,next){
                     var subject = 'Claim Status: HR-Approved';
                     var text= 'That was easy!';
                     db.query(
-                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.params.id1 + ';',function(err,data){
-                                  console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
+                                  console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
                                   if(err)
                                     res.end(err);
                                   sendMail(res,from,data[0].email_id,subject,text);
 
                     //return res.redirect(req.headers.referer);
                       var url = 'http://'+req.hostname+':5000/hrClaims2';
-                      requestify.post(url, {
-    sessionId: req.params.id2, roleName : 'claim_manager'
-})
-.then(function(response) {
-    // Get the response body (JSON parsed or jQuery object for XMLs)
-    //res.end();
-    res.redirect(307,url);
-});
-                                    //res.redirect( url);            
+                      res.redirect(307,url);
+         
                                      
                                 });
-                    //sendMail(res,from,to,subject,text);
-      //res.redirect(req.headers.referer);
+
   }
 });
 });
@@ -495,10 +464,10 @@ var requestify = require('requestify');
 
 
 
-api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id1/:id2',function(req,res,next){
+api.post('/hrrejectReimburse/amt-Freq-Mismatch',function(req,res,next){
   //var cookieString = req.params.id2;
   checkSession(req,res);
-  Custom2.rejectedByHrAmtFreqMismatch(req.params.id1,function(err,count){
+  Custom2.rejectedByHrAmtFreqMismatch(req.body.reimbursement_id,function(err,count){
     if(err)
     {
       res.json(err);
@@ -510,21 +479,22 @@ api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id1/:id2',function(req,res,next){
                     var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
                     var text= 'That was easy!';
                     db.query(
-                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.params.id1 + ';',function(err,data){
-                                  console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
+                                  console.log('select email_id from users where id = ' +rreq.body.reimbursement_id + ';');
                                   if(err)
                                     res.end(err);
                                   sendMail(res,from,data[0].email_id,subject,text);
                     //return res.redirect(req.headers.referer);
                       var url = 'http://'+req.hostname+':5000/hrClaims2';
-                      requestify.post(url, {
-    sessionId: req.params.id2, roleName : 'claim_manager'
-})
-.then(function(response) {
-    // Get the response body (JSON parsed or jQuery object for XMLs)
-    //res.end();
-    res.redirect(307,url);
-});            
+                      res.redirect(307,url);
+//                       requestify.post(url, {
+//     sessionId: req.params.id2, roleName : 'claim_manager'
+// })
+// .then(function(response) {
+//     // Get the response body (JSON parsed or jQuery object for XMLs)
+//     //res.end();
+//     res.redirect(307,url);
+// });            
                                      
                                 });
                     //sendMail(res,from,to,subject,text);
@@ -532,10 +502,10 @@ api.get('/hrrejectReimburse/amt-Freq-Mismatch/:id1/:id2',function(req,res,next){
   }
 });
 });
-api.get('/hrrejectReimburse/docMismatch/:id1/:id2',function(req,res,next){
+api.post('/hrrejectReimburse/docMismatch',function(req,res,next){
   //var cookieString = req.params.id2;
   checkSession(req,res);
-  Custom2.rejectedByHrDocMismatch(req.params.id1,function(err,count){
+  Custom2.rejectedByHrDocMismatch(req.body.reimbursement_id,function(err,count){
     if(err)
     {
       res.json(err);
@@ -547,21 +517,22 @@ api.get('/hrrejectReimburse/docMismatch/:id1/:id2',function(req,res,next){
                     var subject = 'Claim Status : HR Reject - Document Mismatch';
                     var text= 'That was easy!';
                     db.query(
-                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.params.id1 + ';',function(err,data){
-                                  console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
+                                  console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
                                   if(err)
                                     res.end(err);
                                   sendMail(res,from,data[0].email_id,subject,text);
                     //return res.redirect(req.headers.referer);
                       var url = 'http://'+req.hostname+':5000/hrClaims2';
-                      requestify.post(url, {
-    sessionId: req.params.id2, roleName : 'claim_manager'
-})
-.then(function(response) {
-    // Get the response body (JSON parsed or jQuery object for XMLs)
-    //res.end();
-    res.redirect(307,url);
-});            
+                      res.redirect(307,url);
+//                       requestify.post(url, {
+//     sessionId: req.params.id2, roleName : 'claim_manager'
+// })
+// .then(function(response) {
+//     // Get the response body (JSON parsed or jQuery object for XMLs)
+//     //res.end();
+//     res.redirect(307,url);
+// });            
                                      
                                 });
                     //sendMail(res,from,to,subject,text);
