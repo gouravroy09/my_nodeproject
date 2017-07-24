@@ -480,7 +480,7 @@ api.post('/hrrejectReimburse/amt-Freq-Mismatch',function(req,res,next){
                     var text= 'That was easy!';
                     db.query(
                                 'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
-                                  console.log('select email_id from users where id = ' +rreq.body.reimbursement_id + ';');
+                                  console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
                                   if(err)
                                     res.end(err);
                                   sendMail(res,from,data[0].email_id,subject,text);
