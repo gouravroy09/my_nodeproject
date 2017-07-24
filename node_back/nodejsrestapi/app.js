@@ -60,12 +60,23 @@ app.post("/api/Upload", function (req, res) {
                     var to = 'groy@eesl.co.in';
                     var subject = 'Non-Travel Claim uploaded';
                     var text= 'That was easy!';
-                    sendMail(res,from,to,subject,text);
+                    //sendMail(res,from,to,subject,text);
                     //res.cookie('sessionId', req.body.session);
                     //res.empId = req.body.passed_emp_id;
                     //return res.redirect(req.headers.referer);
                     var url = 'http://'+req.hostname+':5000/claims2';
-                                    res.redirect(307, url);
+                                    //res.redirect(307, url);
+                                    db.query(
+                                'select email_id from users where id = ' +req.body.emp_id + ';',function(err,data){
+                                  console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
+                    //return res.redirect(req.headers.referer);
+                      var url = 'http://'+req.hostname+':5000/claims2';
+                                    res.redirect(307, url);            
+                                     
+                                });
             }
         });
   //}
