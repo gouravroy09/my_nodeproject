@@ -46,7 +46,7 @@ router.post('/',function(req,res,next){
             });
 		});
 //update reimbursement type
-router.post('/:id',function(req,res,next){
+router.post('/update/:id',function(req,res,next){
 
     Employee.updateReimbursementType(req.params.id,req.body,function(err,rows){
 
@@ -64,7 +64,7 @@ router.post('/:id',function(req,res,next){
 router.post('/delete',function(req,res,next){
     console.log(req.body);
 
-        Employee.deleteReimbursement(req.body.reimbursement_type_id,function(err,count){
+        Employee.deleteReimbursement(req.body.reimbursement_id,function(err,count){
 
             if(err)
             {
@@ -73,7 +73,8 @@ router.post('/delete',function(req,res,next){
             else
             {
                 //res.redirect('http://localhost:5000/#about');
-                res.end('{"success" : "Updated Successfully", "status" : 200}');
+                res.redirect(307,req.headers.referer);
+                //res.end('{"success" : "Updated Successfully", "status" : 200}');
             }
 
         });

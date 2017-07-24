@@ -504,7 +504,7 @@
     reimbursement_id.name="reimbursement_id";
     f.appendChild(reimbursement_id);    
       f.setAttribute('method',"post");
-      f.setAttribute('action','http://'+location.hostname +':3000'+'/custom/hrapproveReimburse');
+      f.setAttribute('action',url);
      
       document.body.appendChild(f);
 
@@ -528,7 +528,7 @@
      $('#update_frequency').val(frequency);
      $('#update_Emp_Type').prop('disabled', true);
      $('#update_Reimbursement_description').prop('disabled',true);
-     var update_action = /*'http://localhost:3000/Reimbursements/'*/ 'http://'+location.hostname +':3000/Reimbursements/'+reimbursement_type_id;
+     var update_action = /*'http://localhost:3000/Reimbursements/'*/ 'http://'+location.hostname +':3000/Reimbursements/update/'+reimbursement_type_id;
      $('#update_reimburse').attr('action', update_action);
      $('#update_reimburse').append('<input type="hidden" name="cookie" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
      $('#update_submit').click(function() {
@@ -555,26 +555,27 @@
 
 });
      } else{
-      var data = {};
-      data.reimbursement_type_id = reimbursement_type_id;
-      data.cookie = document.cookie.split("=").slice(-1).pop();
-      $.ajax({
-            type: "POST",
-            url: /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/Reimbursements/delete/',
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-        console.log(result);
-        if(result.status == 200){
-            //self.isEditMode(!self.isEditMode());
-            location.reload();
-        }
-    },
-    error: function(result){
-        console.log(result);
-    }
-        });
+      hreftoPost(reimbursement_type_id,'http://'+location.hostname + ':3000/Reimbursements/delete');
+    //   var data = {};
+    //   data.reimbursement_type_id = reimbursement_type_id;
+    //   data.cookie = document.cookie.split("=").slice(-1).pop();
+    //   $.ajax({
+    //         type: "POST",
+    //         url: /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/Reimbursements/delete/',
+    //         data: JSON.stringify(data),
+    //         contentType: "application/json; charset=utf-8",
+    //         dataType: "json",
+    //         success: function (result) {
+    //     console.log(result);
+    //     if(result.status == 200){
+    //         //self.isEditMode(!self.isEditMode());
+    //         location.reload();
+    //     }
+    // },
+    // error: function(result){
+    //     console.log(result);
+    // }
+    //     });
      }
   });
   
