@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Employee=require('../models/Employee');
+var db=require('../dbconnection');
 
 router.get('/:id?',function(req,res,next){
 	if(req.params.id){
@@ -45,6 +46,36 @@ router.post('/',function(req,res,next){
                 }
             });
 		});
+function checkSession(req,res){
+    db.query(
+                                'select value from miscellaneous where param = "' + req.body.sessionId + '";',function(err,data){
+                                  //console.log('select email_id from users where id = ' +req.body.emp_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  if(data[0]!=undefined)
+                                  {
+                                    var deserialized = new Date(Date.parse(data[0].value));
+                                    var hours = Math.abs(new Date() - deserialized) / 36e5;
+                                    if(hours>2)
+                                      res.end('Session Expired!!');
+                                    //var url = 'http://'+req.host+':5000/claims2';
+                                    //res.redirect(307, url);
+                                    //res.redirect()
+                                  } else
+                                  {
+                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'",'+JSON.stringify(new Date())+');',function(err){
+                                      if (err)
+                                      {
+                                        console.log(err);
+                                        res.end('Login Again!!');
+                                      }
+                                    //var url = 'http://'+req.host+':5000/claims2';
+                                    //res.redirect(307, url);
+                                    });
+                                  }
+                                });
+    return;
+}
 //update reimbursement type
 router.post('/update/:id',function(req,res,next){
 
@@ -62,6 +93,7 @@ router.post('/update/:id',function(req,res,next){
     });
 });
 router.post('/delete',function(req,res,next){
+    checkSession(req,res);
     console.log(req.body);
 
         Employee.deleteReimbursement(req.body.reimbursement_id,function(err,count){
