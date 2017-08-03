@@ -939,7 +939,7 @@ function invoiceHTML(rows){
      var html = '';
                     var date=new Date();
                 if(rows.length>0){
-                    html +='<h1>Invoice</h1>';
+                    html +='<h1>Expense Summary</h1>';
                 html +='Date :' + date.toLocaleDateString();    
                 html+='<table><tr><th>Project Code</th><th>Claim Type</th><th>Claim Amount</th><th>Count</th></tr>';
                 for(i=0;i<rows.length;i++){
