@@ -1159,6 +1159,111 @@ api.post('/updateUser',function(req,res,next){
 //         sendMail();
 //     });
 
+api.post('/report',function(req,res){
+    //import xlsx from 'node-xlsx';
+// Or var xlsx = require('node-xlsx').default; 
+
+// Parse a buffer
+console.log(req.body);
+// const data = [[1, 2, 3], [true, false, null, 'sheetjs'], ['foo', 'bar', new Date('2014-02-19T14:30Z'), '0.3'], ['baz', null, 'qux']];
+// var buffer = xlsx.build([{name: "mySheetName", data: data}]);
+// res.send(buffer);
+
+/*excelParser.worksheets({
+  inFile: './Report.xlsx'
+}, function(err, worksheets){
+  if(err) console.error(err);
+  console.log(worksheets);
+});*/
+    //var status ='pending';
+  Custom2.getReimbursementHistoyWithUserDetalsByDateRange(req.body.from,req.body.to,function(err,rows){
+    if(err)
+    {
+      res.json(err);
+    }
+    else
+    {
+        var conf={};
+        conf.rows = [];
+        if(rows.length!=undefined){
+            
+        conf.cols=[{
+            caption:'reimbursement_amount',
+            type:'string',
+            width:3
+        },
+        {
+            caption:'time',
+            type:'string',
+            width:50
+        },
+        {
+            caption:'status',
+            type:'string',
+            width:15
+        },
+        {
+            caption:'bill_generated',
+            type:'string',
+            width:15
+        },
+        {
+            caption:'project_code',
+            type:'string',
+            width:15
+        },
+        {
+            caption:'fullname',
+            type:'string',
+            width:15
+        },
+        {
+            caption:'emp_no',
+            type:'string',
+            width:15
+        },
+        {
+            caption:'doj',
+            type:'string',
+            width:15
+        },
+        {
+            caption:'emp_grade_code',
+            type:'string',
+            width:15
+        },
+        {
+            caption:'reimbursement_description',
+            type:'string',
+            width:15
+        },
+        {
+            caption:'emp_type_description',
+            type:'string',
+            width:15
+        }
+        ];
+        var arr =[];
+        for(i=0;i<rows.length;i++){
+            arr.push(rows[i].reimbursement_amount,rows[i].time,rows[i].status,rows[i].bill_generated!=null?rows[i].bill_generated:"",
+                rows[i].project_code,rows[i].fullname,rows[i].emp_no,rows[i].doj,rows[i].emp_grade_code,
+                rows[i].reimbursement_description,rows[i].emp_type_description);
+        }
+        conf.rows = arr;
+        console.log('asdsadsadsadasd');
+        }
+        console.log(conf.rows);
+        conf.name = "mysheet";
+    var result = nodeExcel.execute(conf);
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+    res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
+    res.end(result, 'binary');
+        //console.log(rows);
+         //var buffer = xlsx.build([{name: "mySheetName", data: rows}]);
+         //res.send(buffer);
+    }
+});
+});
 
 
 module.exports = api

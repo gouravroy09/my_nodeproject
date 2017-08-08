@@ -93,6 +93,9 @@ var Custom2 = {
 	getReimbursementHistoyWithUserDetalsByStatus:function(status,callback){
 		return db.query("select *,et.description as emp_type_description,r.description as reimbursement_description,rh.id as reimbursement_id from employee_reimbursement_history rh inner join users u on rh.emp_id =u.id inner join reimbursement r on rh.reimbursement_type = r.id inner join employee_type et on et.id=u.emp_type_id where rh.status =?",[status],callback);
 	},
+	getReimbursementHistoyWithUserDetalsByDateRange:function(from,to,callback){
+		return db.query("select *,et.description as emp_type_description,r.description as reimbursement_description,rh.id as reimbursement_id from employee_reimbursement_history rh inner join users u on rh.emp_id =u.id inner join reimbursement r on rh.reimbursement_type = r.id inner join employee_type et on et.id=u.emp_type_id where date(rh.time) > ? and date(rh.time) < ?",[from,to],callback);
+	},
 	getCurrentMonthReimbursementHistoryForBilling:function(callback){
 		return db.query("select * from employee_reimbursement_history eh inner join reimbursement r on r.id = eh.reimbursement_type where eh.bill_generated='no' and month(time)=month(current_date()) and year(time)=year(current_date())",callback);
 	},
