@@ -14,7 +14,7 @@
   <input type="hidden" id = "multiplier" name="multiplier">
   <div class="col-sm-3 nopadding">
   <div class="form-group">
-    <input type="number" id="tour_id" name="tour_id" class="form-control"  placeholder="Tour Id">
+    <input type="number" id="tour_id" name="tour_id" class="form-control" min="0" placeholder="Tour Id">
   </div>
   <script type="text/javascript">
   function populateTravelFormWithTourId(){
@@ -147,7 +147,7 @@
 </div>
        <div class="col-sm-2 nopadding">
   <div class="form-group">
-    <input type="number" class="form-control" id="travel_claim_amount" name="travel_claim_amount" value="" placeholder="Enter Amount" required>
+    <input type="number" class="form-control" id="travel_claim_amount" name="travel_claim_amount" value="" placeholder="Enter Amount" min="0" required>
   </div>
 </div>
 <div class="col-sm-3 nopadding">
