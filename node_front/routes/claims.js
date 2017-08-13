@@ -8,7 +8,7 @@ exports.claims2 = function(req, res){
 	console.log(req.body);
 	res.cookie('sessionId', req.body.sessionId);
 
-  res.render('employeeClaims',  {empId: req.body.empId, tour_id:req.body.tour_id});
+  res.render('employeeClaims',  {empId: req.body.empId, tour_id:req.body.tour_id, tour_advance : req.body.tour_advance});
 
 };
 exports.claims3 = function(req, res){
