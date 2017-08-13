@@ -263,16 +263,16 @@ function getReimbursementHistory(id){
     success: function (result) {
       reimbursementClaimed(result);
       $.each(result, function(key,value) {
-        var statusCell = '</td><td><a class="btn btn-danger" >' + value.status  + '</a></td></tr>' ;
+        var statusCell = '</td><td><a class="btn btn-danger" >' + (value.status=='approve_ro'?'ro_approval_pending':value.status) + '</a></td>' ;
 
         if(value.status==='hr-approved'){
-          statusCell = '</td><td><a class="btn btn-warning">' + value.status  + '</a></td></tr>' ;
+          statusCell = '</td><td><a class="btn btn-warning">' + value.status  + '</a></td>' ;
           }
           if(value.status==='fin-approved'){
-          statusCell = '</td><td><a class="btn btn-info" >' + value.status  + '</a></td></tr>' ;
+          statusCell = '</td><td><a class="btn btn-info" >' + value.status  + '</a></td>' ;
           }
           if(value.status==='processed'){
-          statusCell = '</td><td><a class="btn btn-success">' + value.status  + '</a></td></tr>' ;
+          statusCell = '</td><td><a class="btn btn-success">' + value.status  + '</a></td>' ;
           }
           /*else if(value.status=='hr-approved'){
 
@@ -282,9 +282,12 @@ function getReimbursementHistory(id){
 
           }*/
       //alert(key+1);
+      var rejectReason = value.reject_reason!=null?value.reject_reason:"--";
         $('#history_table').append(
-          '<tr><th scope="row">' + (key+1) + '</th><td>' + value.description + '</td><td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +
-            statusCell
+          '<tr><td >' + value.tour_id + '</td><td >' + value.description + '</td><td >' + value.reimbursement_amount 
+          //+ '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() 
+          +
+            '</td><td >' +statusCell + '</td><td >' + rejectReason + '</td></  tr>' 
           /*'</td><td class="btn btn-success" >' + value.status  + '</td></tr>' */
           );
 
@@ -433,6 +436,19 @@ window.onload = function() {
   loadProjectCodes();
   getUserById($('#Passed_Emp_Id').val());
   addTravelProjectCodes();
+  populateTravelFormWithTourId();
+  $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/allUsers',{
+      format: "json"
+    } ,
+    function( data ) {
+      //localStorage.setItem("empType", data);
+      //alert(data.length);
+      //$('#approver_email').append($("<datalist />").attr("id","emails"));
+      $.each(data, function(key,value) {
+        $('#emailList').append($("<option />").val(value.email_id).text(value.fullname+'('+value.email_id+')'));
+        //localStorage.setItem(value.description,value.id);
+      });
+    });
   //getReimbursementHistory();
 //test();
 };

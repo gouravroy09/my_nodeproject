@@ -280,6 +280,19 @@ api.get('/rest/:id?',function(req,res,next){
         }
     });
 
+api.get('/allUsers',function(req,res,next){
+    
+        //else{
+            Custom2.getAllUsers(function(err,rows){
+                if(err){
+                    res.json(err);
+                }else{
+                    res.json(rows);
+                }
+            });
+        //}
+    });
+
 
 api.get('/userreimburse/:id1?/:id2?',function(req,res,next){
     if(req.params.id1 && req.params.id2){
@@ -307,6 +320,19 @@ api.get('/reimbursehistory/:id?',function(req,res,next){
     //if(req.params.id){
         //Employee.getEmpTypeById(req.params.id){
             Custom2.getReimbursementHistoryByUserId(req.params.id,function(err,rows){
+                if(err){
+                    res.json(err);
+                }else{
+                    res.json(rows);
+                }
+            });
+            //}
+        //}
+    });
+api.get('/reimbursehistoryByApproverEmail/:id?',function(req,res,next){
+    //if(req.params.id){
+        //Employee.getEmpTypeById(req.params.id){
+            Custom2.getReimbursementHistoryByApproverEmailId(req.params.id,function(err,rows){
                 if(err){
                     res.json(err);
                 }else{
@@ -426,10 +452,174 @@ function checkSession(req,res){
     return;
 }
 
+api.post('/approverTravelApproveReimburse',function(req,res,next){
+  //var cookieString = req.params.id2;
+  console.log(req.body);
+  checkSession(req,res);
+
+  Custom2.claimIdsByTourId(req.body.tour_id,function(err,rows){
+
+    if(err){
+        res.json(err);
+    }
+    else{
+        var query_param = '(';
+        if(rows.length!=undefined){
+            for(i=0;i<rows.length;i++){
+                query_param = query_param + rows[i].id+ ',';
+            }
+            query_param = query_param.slice(0,-1) + ')';
+        }
+        
+        Custom2.approvedByApproverReimbursementHistoryRowForTourId(query_param, function(err,count){
+    if(err)
+    {
+      res.json(err);
+  }
+  else
+  {
+      var from = 'a_mtyagi@eesl.co.in';
+                    var to = 'a_mtyagi@eesl.co.in';
+                    var subject = 'Claim Status : Approver Approved';
+                    var text= '***This is an auto generated mail, please do not reply to this mail.***';
+                    db.query(
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
+                                  //console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
+                                  //sendMail(res,from,req.body.approver_email,subject,text);
+                    //return res.redirect(req.headers.referer);
+                      var url = 'http://'+req.hostname+':5000/approverClaims';
+                      updateTourDetails(req.body.id);
+                      res.redirect(307,url);
+        
+                                     
+                                });
+
+  }
+});
+
+    }
+  
+});
+  //db.query()
+//   Custom2.approvedByHrReimbursementHistoryRow(req.body.reimbursement_id,function(err,count){
+//     if(err)
+//     {
+//       res.json(err);
+//   }
+//   else
+//   {
+//       var from = 'groy@eesl.co.in';
+//                     var to = 'groy@eesl.co.in';
+//                     var subject = 'Claim Status: HR-Approved';
+//                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
+//                     db.query(
+//                                 'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
+//                                   console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
+//                                   if(err)
+//                                     res.end(err);
+//                                   sendMail(res,from,data[0].email_id,subject,text);
+
+//                     //return res.redirect(req.headers.referer);
+//                       var url = 'http://'+req.hostname+':5000/hrClaims2';
+//                       res.redirect(307,url);
+         
+                                     
+//                                 });
+
+//   }
+// });
+});
+
+api.post('/hrTravelApproveReimburse',function(req,res,next){
+  //var cookieString = req.params.id2;
+  console.log(req.body);
+  checkSession(req,res);
+
+  Custom2.claimIdsByTourId(req.body.tour_id,function(err,rows){
+
+    if(err){
+        res.json(err);
+    }
+    else{
+        var query_param = '(';
+        if(rows.length!=undefined){
+            for(i=0;i<rows.length;i++){
+                query_param = query_param + rows[i].id+ ',';
+            }
+            query_param = query_param.slice(0,-1) + ')';
+        }
+        
+        Custom2.approvedByHrReimbursementHistoryRowForTourId(query_param, function(err,count){
+    if(err)
+    {
+      res.json(err);
+  }
+  else
+  {
+      var from = 'a_mtyagi@eesl.co.in';
+                    var to = 'a_mtyagi@eesl.co.in';
+                    var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
+                    var text= '***This is an auto generated mail, please do not reply to this mail.***';
+                    db.query(
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
+                                  //console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
+                                  sendMail(res,from,req.body.approver_email,subject,text);
+                    //return res.redirect(req.headers.referer);
+                      var url = 'http://'+req.hostname+':5000/hrClaims2';
+                      updateTourDetails(req.body.id);
+                      res.redirect(307,url);
+        
+                                     
+                                });
+
+  }
+});
+
+    }
+  
+});
+  //db.query()
+//   Custom2.approvedByHrReimbursementHistoryRow(req.body.reimbursement_id,function(err,count){
+//     if(err)
+//     {
+//       res.json(err);
+//   }
+//   else
+//   {
+//       var from = 'groy@eesl.co.in';
+//                     var to = 'groy@eesl.co.in';
+//                     var subject = 'Claim Status: HR-Approved';
+//                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
+//                     db.query(
+//                                 'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
+//                                   console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
+//                                   if(err)
+//                                     res.end(err);
+//                                   sendMail(res,from,data[0].email_id,subject,text);
+
+//                     //return res.redirect(req.headers.referer);
+//                       var url = 'http://'+req.hostname+':5000/hrClaims2';
+//                       res.redirect(307,url);
+         
+                                     
+//                                 });
+
+//   }
+// });
+});
+
 api.post('/hrapproveReimburse',function(req,res,next){
   //var cookieString = req.params.id2;
   console.log(req.body);
   checkSession(req,res);
+
+  
   //db.query()
   Custom2.approvedByHrReimbursementHistoryRow(req.body.reimbursement_id,function(err,count){
     if(err)
@@ -441,7 +631,7 @@ api.post('/hrapproveReimburse',function(req,res,next){
       var from = 'groy@eesl.co.in';
                     var to = 'groy@eesl.co.in';
                     var subject = 'Claim Status: HR-Approved';
-                    var text= 'That was easy!';
+                    var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     db.query(
                                 'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
                                   console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
@@ -461,8 +651,104 @@ api.post('/hrapproveReimburse',function(req,res,next){
 });
 
 var requestify = require('requestify');
+api.post('/approverreject',function(req,res,next){
+  //var cookieString = req.params.id2;
+  checkSession(req,res);
+  console.log(req.body);
+  Custom2.claimIdsByTourId(req.body.tour_id,function(err,rows){
 
+    if(err){
+        res.json(err);
+    }
+    else{
+        var query_param = '(';
+        if(rows.length!=undefined){
+            for(i=0;i<rows.length;i++){
+                query_param = query_param + rows[i].id+ ',';
+            }
+            query_param = query_param.slice(0,-1) + ')';
+        }
+        
+        Custom2.rejectedByHr(query_param,req.body.reject_reason, function(err,count){
+    if(err)
+    {
+      res.json(err);
+  }
+  else
+  {
+      var from = 'a_mtyagi@eesl.co.in';
+                    var to = 'a_mtyagi@eesl.co.in';
+                    var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
+                    var text= '***This is an auto generated mail, please do not reply to this mail.***';
+                    db.query(
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
+                                  //console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
+                    //return res.redirect(req.headers.referer);
+                      var url = 'http://'+req.hostname+':5000/approverClaims';
+                      res.redirect(307,url);
+        
+                                     
+                                });
 
+  }
+});
+
+    }
+  
+});
+});
+api.post('/hrreject',function(req,res,next){
+  //var cookieString = req.params.id2;
+  checkSession(req,res);
+  console.log(req.body);
+  Custom2.claimIdsByTourId(req.body.tour_id,function(err,rows){
+
+    if(err){
+        res.json(err);
+    }
+    else{
+        var query_param = '(';
+        if(rows.length!=undefined){
+            for(i=0;i<rows.length;i++){
+                query_param = query_param + rows[i].id+ ',';
+            }
+            query_param = query_param.slice(0,-1) + ')';
+        }
+        
+        Custom2.rejectedByHr(query_param,req.body.reject_reason, function(err,count){
+    if(err)
+    {
+      res.json(err);
+  }
+  else
+  {
+      var from = 'a_mtyagi@eesl.co.in';
+                    var to = 'a_mtyagi@eesl.co.in';
+                    var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
+                    var text= '***This is an auto generated mail, please do not reply to this mail.***';
+                    db.query(
+                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
+                                  //console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
+                                  if(err)
+                                    res.end(err);
+                                  sendMail(res,from,data[0].email_id,subject,text);
+                    //return res.redirect(req.headers.referer);
+                      var url = 'http://'+req.hostname+':5000/hrClaims2';
+                      res.redirect(307,url);
+        
+                                     
+                                });
+
+  }
+});
+
+    }
+  
+});
+});
 
 api.post('/hrrejectReimburse/amt-Freq-Mismatch',function(req,res,next){
   //var cookieString = req.params.id2;
@@ -477,7 +763,7 @@ api.post('/hrrejectReimburse/amt-Freq-Mismatch',function(req,res,next){
       var from = 'a_mtyagi@eesl.co.in';
                     var to = 'a_mtyagi@eesl.co.in';
                     var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
-                    var text= 'That was easy!';
+                    var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     db.query(
                                 'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
                                   console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
@@ -515,7 +801,7 @@ api.post('/hrrejectReimburse/docMismatch',function(req,res,next){
       var from = 'groy@eesl.co.in';
                     var to = 'groy@eesl.co.in';
                     var subject = 'Claim Status : HR Reject - Document Mismatch';
-                    var text= 'That was easy!';
+                    var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     db.query(
                                 'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
                                   console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
@@ -951,6 +1237,7 @@ function invoiceHTML(rows){
 
 }
 
+
 api.post('/unBilledReimburseHistoy',function(req,res,next){
         //console.log('asdasdasdasdasdsadas');
 
@@ -1189,8 +1476,8 @@ console.log(req.body);
             
         conf.cols=[{
             caption:'reimbursement_amount',
-            type:'string',
-            width:3
+            type:'number',
+            width:50
         },
         {
             caption:'time',
@@ -1200,7 +1487,7 @@ console.log(req.body);
         {
             caption:'status',
             type:'string',
-            width:15
+            width:50
         },
         {
             caption:'bill_generated',
@@ -1245,9 +1532,15 @@ console.log(req.body);
         ];
         var arr =[];
         for(i=0;i<rows.length;i++){
-            arr.push(rows[i].reimbursement_amount,rows[i].time,rows[i].status,rows[i].bill_generated!=null?rows[i].bill_generated:"",
+  //          var t = rows[i].time.toString.split(/[- :]/);
+
+// Apply each element to the Date function
+//var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
+//console.log(d);
+            a=[rows[i].reimbursement_amount,rows[i].time,rows[i].status,rows[i].bill_generated!=null?rows[i].bill_generated:"",
                 rows[i].project_code,rows[i].fullname,rows[i].emp_no,rows[i].doj,rows[i].emp_grade_code,
-                rows[i].reimbursement_description,rows[i].emp_type_description);
+                rows[i].reimbursement_description,rows[i].emp_type_description];
+            arr.push(a);
         }
         conf.rows = arr;
         console.log('asdsadsadsadasd');
@@ -1264,6 +1557,40 @@ console.log(req.body);
     }
 });
 });
+
+function  updateTourDetails(tourId) {
+   
+    var sql = require("mssql");
+
+    // config for your database
+    var config = {
+        user: 'emp_portal',
+        password: 'P0rt@l',
+        server: '115.124.113.186', 
+        database: 'TestServerDB' 
+    };
+
+    // connect to your database
+    sql.connect(config, function (err) {
+    
+        if (err) console.log(err);
+
+        // create Request object
+        var request = new sql.Request();
+           
+        // query to the database and get the records
+        request.query('update TourDetails set Status=2 where TourId ='+ tourId, function (err, recordset) {
+            
+            if (err) console.log(err)
+
+            // send records as a response
+            res.send(recordset);
+            
+        });
+    });
+    sql.close();
+    return;
+}
 
 
 module.exports = api

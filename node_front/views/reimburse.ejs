@@ -174,12 +174,14 @@
             <section id="travel-claims" class="intro-section">
           <div class="container">
             <div class="row">
-              <h1>Claims Tray</h1>
-              <div class="col-lg-6" >
+              <h1>Travel Claims Tray</h1>
+              <div class="col-lg-7" >
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th>#</th>
+                          <th>Tour Id</th>
+                          <th></th>
+                          <th></th>
                           <th>Claim_Type</th>
                           <th> Name</th>
                           <th> Emp_Number</th>
@@ -214,6 +216,9 @@
                 </div>
               </div>
             </section>
+            <div>
+            <% include reject_travel_claim.ejs %>
+            </div>
 
             <!-- About Section -->
             <section id="about" class="about-section">
@@ -359,6 +364,7 @@
             <div>
             <% include update_reimbursement.ejs %>
             </div>
+            
             <!-- Contact Section -->
             <section id="contact" class="contact-section">
               <div class="container">
@@ -379,7 +385,7 @@
               <div class="container">
                 <div class="row">
                   <div class="col-lg-12">
-                    <h1>New Reimbursement</h1>
+                    <h1>Claims Report</h1>
                     <form id='reportExcel' >
                       <input type="date" id="report_from_date" name="from" required="">
                       <input type="date" id="report_to_date" name="to"  required="">
@@ -441,30 +447,61 @@
     } ,
     function( data ) {
       localStorage.setItem("empType", data);
+      var tourIdList = new Set();
+      //var tourIdList3 = new Array();
+      //var tourIdList2 = new Set();
       $.each(data, function(key,value) {
         if(value.reimbursement_description.substring(0,6)=='Travel'){
-          var claim_eligibility = parseInt(value.amount) * parseInt(value.multiplier);
+          tourIdList.add(value.tour_id);
+        }
+
+      });
+      //tourIdList2 = new Set(tourIdList3); 
+      //tourIdList.from(new Set(tourIdList2));
+      //alert(tourIdList2.size);
+      tourIdList.forEach(function(tourId) {
+        
          //alert(parseInt(value.amount) * parseInt(value.multiplier));
-            $('#travel_history_table').append(
-          '<tr><th scope="row"> ' + (key+1) + '</th><td>' + value.reimbursement_description + '</td>'+
+            
+          var travel_html = '<tr><th scope="row"> ' + tourId + '</th>'+
+          '<td><div class="col-lg-6" style="overflow-y: scroll;overflow-x: scroll; width:650px; height:200px;"><table class="table table-hover">';
+          $.each(data, function(key,value) {
+            if(tourId==value.tour_id){
+              var claim_eligibility = parseInt(value.amount) * parseInt(value.multiplier);
+            travel_html = travel_html +'<tr><td>' + value.reimbursement_description + '</td>'+
           '<td>' + value.fullname + '</td>' + '<td>' + value.emp_no + '</td>' +
            '<td>' + value.emp_type_description + '</td>' +'<td>' + value.emp_grade_code + '</td>' +
             '<td>' + claim_eligibility + '</td>' +
           '<td>' + value.reimbursement_amount + '</td>'+
-          '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
-          '<td> <a class="btn btn-success" href="javascript: hrApproveAction('+value.reimbursement_id+');">Approve</a></td>' +
+          '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download Bill</a></td></tr>' ;
+            }
+            
+
+          });
+
+          travel_html = travel_html +'</table></div></td>'+
+          
+          '<td> <a class="btn btn-success" href="javascript: hrTravelApproveAction('+tourId+');">Approve</a></td>' +
 
           // +'<td><a class="btn btn-success"><form action="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+"/"+document.cookie.split("=").slice(-1).pop()+'" method="post"><button type="submit" name="your_name" value="your_value" class="btn-link">Approve</button></form></a</td>'+
 
 
-
-          '<td> <a class="btn btn-danger" href="javascript: hrRejectDocMismatch('+value.reimbursement_id+');">Reject-Doc MisMatch</a></td>' +
-          '<td> <a class="btn btn-danger" href="javascript: hrRejectAmtFreqMismatch('+value.reimbursement_id+');">Reject-Amt/Freq MisMatch</a></td>' +
+          '<td>'+
+        '<a class="btn btn-primary"  href="#myTravelRejectForm" data-toggle="modal" >Reject</a>'+'</td>'
+          // '<td> <a class="btn btn-danger" href="javascript: hrRejectDocMismatch('+tourId+');">Reject-Doc MisMatch</a></td>' +
+          // '<td> <a class="btn btn-danger" href="javascript: hrRejectAmtFreqMismatch('+tourId+');">Reject-Amt/Freq MisMatch</a></td>' +
           /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
            '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
            + '</form></td>'*/
-           +'</tr>' 
-          );
+           +'</tr>' ;
+
+          $('#travel_history_table').append(travel_html);
+
+      });
+
+      $.each(data, function(key,value) {
+        if(value.reimbursement_description.substring(0,6)=='Travel'){
+          
         }
         else{
           $('#history_table').append(
@@ -472,7 +509,7 @@
           '<td>' + value.fullname + '</td>' + '<td>' + value.emp_no + '</td>' +
            '<td>' + value.emp_type_description + '</td>' +'<td>' + value.emp_grade_code + '</td>' +
           '<td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +'</td>'+
-          '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download</a></td>' +
+          '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download Bill</a></td>' +
           
           '<td> <a class="btn btn-success" href="javascript: hrApproveAction('+value.reimbursement_id+');">Approve</a></td>' +
 
@@ -524,6 +561,27 @@
   };
 </script>
 <script type="text/javascript">
+  $(document).on('click','.btn.btn-primary',function(){
+     var currentRow=$(this).closest("tr");
+     var tour_id=currentRow.find("th:eq(0)").html();
+     
+     //if($(this).text()==='Update'){
+     $('#reject_reason_tour_id').val(tour_id);
+     
+     $('#reject_reason_tour_id').prop('disabled', true);
+     
+     var update_action = /*'http://localhost:3000/Reimbursements/'*/ 'http://'+location.hostname +':3000/custom/hrreject';
+     $('#reject_travel_claim_form').attr('action', update_action);
+     $('#reject_travel_claim_form').append('<input type="hidden" name="cookie" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
+     $('#reject_travel_claim_submit').click(function() {
+      hrTravelReject(tour_id,$('#reject_reason').val());
+
+});
+     //} 
+  });
+  
+</script>
+<script type="text/javascript">
 
   function hrApproveAction(id){
       var url = 'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse';
@@ -536,6 +594,130 @@
   function hrRejectAmtFreqMismatch(id){
       var url = 'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch';
       hreftoPost(id,url);
+  }
+  function hrReject(tourId,rejectReason){
+      var url = 'http://'+location.hostname +':3000'+'/custom/hrreject';
+      // var data = {};
+      // data.reimbursement_id = id;
+      // data.sessionId = document.cookie.split("=").slice(-1).pop();
+      // data.roleName = 'claim_manager';
+      // data.reject_reason = rejectReason;
+      var f = document.createElement("form");
+      var sessionId = document.createElement("input"); 
+    var roleName = document.createElement("input");
+    var reimbursement_id = document.createElement("input");
+    var reject_reason = document.createElement("input");
+    sessionId.value=document.cookie.split("=").slice(-1).pop();
+    sessionId.name="sessionId";
+    f.appendChild(sessionId);  
+    roleName.value="claim_manager";
+    roleName.name="roleName";
+    f.appendChild(roleName);  
+    reimbursement_id.value=reimbursement_id;
+    reimbursement_id.name="reimbursement_id";
+    f.appendChild(reimbursement_id);
+    reject_reason.value=rejectReason;
+    reject_reason.name="reject_reason";
+    f.appendChild(reject_reason);     
+      f.setAttribute('method',"post");
+      f.setAttribute('action',url);
+     
+      document.body.appendChild(f);
+
+    f.submit();
+  }
+  function hreftoPost(id,url){
+    var data = {};
+      data.reimbursement_id = id;
+      data.sessionId = document.cookie.split("=").slice(-1).pop();
+      data.roleName = 'claim_manager';
+      var f = document.createElement("form");
+      var sessionId = document.createElement("input"); 
+    var roleName = document.createElement("input");
+    var reimbursement_id = document.createElement("input");
+    sessionId.value=document.cookie.split("=").slice(-1).pop();
+    sessionId.name="sessionId";
+    f.appendChild(sessionId);  
+    roleName.value="claim_manager";
+    roleName.name="roleName";
+    f.appendChild(roleName);  
+    reimbursement_id.value=id;
+    reimbursement_id.name="reimbursement_id";
+    f.appendChild(reimbursement_id);    
+      f.setAttribute('method',"post");
+      f.setAttribute('action',url);
+     
+      document.body.appendChild(f);
+
+    f.submit();
+     
+  }
+</script>
+<script type="text/javascript">
+
+
+  function hrTravelApproveAction(id){
+      var url = 'http://'+location.hostname +':3000'+'/custom/hrTravelapproveReimburse';
+      var f = document.createElement("form");
+      var sessionId = document.createElement("input"); 
+    var roleName = document.createElement("input");
+    var tour_id = document.createElement("input");
+    var reject_reason = document.createElement("input");
+    sessionId.value=document.cookie.split("=").slice(-1).pop();
+    sessionId.name="sessionId";
+    f.appendChild(sessionId);  
+    roleName.value="claim_manager";
+    roleName.name="roleName";
+    f.appendChild(roleName);  
+    tour_id.value=id;
+    tour_id.name="tour_id";
+    f.appendChild(tour_id);
+        
+      f.setAttribute('method',"post");
+      f.setAttribute('action',url);
+     
+      document.body.appendChild(f);
+
+    f.submit();
+  }
+  // function hrTravelRejectDocMismatch(id){
+  //     var url = 'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch';
+  //     hreftoPost(id,url);
+  // }
+  // function hrTravelRejectAmtFreqMismatch(id){
+  //     var url = 'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch';
+  //     hreftoPost(id,url);
+  // }
+  function hrTravelReject(tourId,rejectReason){
+      var url = 'http://'+location.hostname +':3000'+'/custom/hrreject';
+      // var data = {};
+      // data.reimbursement_id = id;
+      // data.sessionId = document.cookie.split("=").slice(-1).pop();
+      // data.roleName = 'claim_manager';
+      // data.reject_reason = rejectReason;
+      var f = document.createElement("form");
+      var sessionId = document.createElement("input"); 
+    var roleName = document.createElement("input");
+    var tour_id = document.createElement("input");
+    var reject_reason = document.createElement("input");
+    sessionId.value=document.cookie.split("=").slice(-1).pop();
+    sessionId.name="sessionId";
+    f.appendChild(sessionId);  
+    roleName.value="claim_manager";
+    roleName.name="roleName";
+    f.appendChild(roleName);  
+    tour_id.value=tourId;
+    tour_id.name="tour_id";
+    f.appendChild(tour_id);
+    reject_reason.value=rejectReason;
+    reject_reason.name="reject_reason";
+    f.appendChild(reject_reason);     
+      f.setAttribute('method',"post");
+      f.setAttribute('action',url);
+     
+      document.body.appendChild(f);
+
+    f.submit();
   }
   function hreftoPost(id,url){
     var data = {};

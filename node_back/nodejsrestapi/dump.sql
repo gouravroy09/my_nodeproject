@@ -237,3 +237,27 @@ alter table employee_reimbursement_history add column multiplier int(11) default
 /*19th july 2017*/
 alter table users add column role varchar(300);
 
+/*10th august 2017*/
+
+create table tour_details(
+  tour_id int(11) ,
+current_advance int(11),
+
+primary key tour_id 
+);
+
+
+alter table employee_reimbursement_history add column tour_id int(11) default 0;
+alter table employee_reimbursement_history add column reject_reason varchar(500);
+
+alter table employee_reimbursement_history change column status status enum('pending','hr-approved','fin-approved','processed','hr-reject-amnt/freq-exceed','hr-reject-doc-nomatch','approve_ro') default 'approve_ro';
+
+alter table employee_reimbursement_history add column approver_email varchar(500);
+
+alter table employee_reimbursement_history change column bill_generated bill_generated enum('yes','no') default 'no';
+
+
+alter table employee_reimbursement_history drop column time;
+
+alter table employee_reimbursement_history ADD `time` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ;
+

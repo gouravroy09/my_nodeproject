@@ -39,6 +39,7 @@ app.post('/', function(req, res){
 
 });
 app.post('/hrClaims2', routes.index2);
+app.post('/approverClaims2', routes.index2);
 app.get('/:sessionId?', function(req, res){
 	//console.log(req.body);
 	res.cookie('sessionId', req.params.sessionId);
@@ -64,6 +65,8 @@ app.post('/claims', function(req, res){
   //res.render('reimburse', { title: 'Express' });
 
 });
+app.post('/approverClaims', claims.claims4);
+app.get('/approverClaims', claims.claims5);
 app.post('/claims2', claims.claims2);
 app.get('/claims2', claims.claims3);
 

@@ -1,0 +1,68 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="css/scrolling-nav.css" rel="stylesheet">
+
+  <link href="css/table-fixedheader.css" rel="stylesheet">
+<div id="myTravelRejectForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Reject Travel Claim</h3>
+  </div>
+  <div class="modal-body">
+
+                    <form  method="post" class="form-horizontal" id ="reject_travel_claim_form">
+                      <fieldset>
+<div class="form-group">
+  <label class="col-md-4 control-label" for="reject_reason_tour_id">Tour Id</label>
+  <div class="col-md-4">
+    <input id="reject_reason_tour_id" type="text" name="reject_reason_tour_id" class="form-control" value=""/>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Reject_Reason">Reject Reason</label>  
+  <div class="col-md-4">
+    <input id="reject_reason" name="reject_reason" type="text" placeholder="Type" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="signup"></label>
+  <div class="col-md-4">
+    <button id="reject_travel_claim_submit" name="update_submit" class="btn btn-success" data-dismiss="modal" aria-hidden="true">Submit</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+
+
+
+
+  </div>
+  <!-- <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div> -->
+</div>
+</div>
+</div>
+
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Scrolling Nav JavaScript -->
+<script src="js/jquery.easing.min.js"></script>
+<script src="js/scrolling-nav.js"></script>

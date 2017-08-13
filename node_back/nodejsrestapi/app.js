@@ -59,7 +59,7 @@ app.post("/api/Upload", function (req, res) {
                     var from = 'groy@eesl.co.in';
                     var to = 'groy@eesl.co.in';
                     var subject = 'Non-Travel Claim uploaded';
-                    var text= 'That was easy!';
+                    var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     //sendMail(res,from,to,subject,text);
                     //res.cookie('sessionId', req.body.session);
                     //res.empId = req.body.passed_emp_id;
@@ -89,6 +89,7 @@ app.post("/travel_claim", function (req, res) {
           ///this error comes mostly when Images foler is not present
             return res.end("Something went wrong!"); 
         }
+        updateTourDetails(req.body.tour_id);
   ///console.log(req.files.length!==null);
   //console.log(req.files[0].filename);
   console.log(req.files);
@@ -99,7 +100,7 @@ app.post("/travel_claim", function (req, res) {
         }*/
        // filepathString = filepathString.slice(0,-1);
         console.log(req.body);
-       var queryString = 'insert into employee_reimbursement_history(emp_id,reimbursement_type,reimbursement_amount,time,filepath,project_code,multiplier) values ';
+       var queryString = 'insert into employee_reimbursement_history(emp_id,tour_id,reimbursement_type,reimbursement_amount,time,filepath,project_code,multiplier,approver_email) values ';
        if(req.files.length==1){
         //for(var i=0;i< req.files.length;i++){
         //console.log(req.body.project_code);
@@ -108,6 +109,7 @@ app.post("/travel_claim", function (req, res) {
         //console.log(req.files[0].filename);
           queryString=queryString + '(';
           queryString=queryString +  req.body.emp_id + ',';
+          queryString=queryString +  req.body.tour_id + ',';
           // var user_email = db.query(
           //   'select email_id from users where id = ' +req.body.emp_id + ';',function(err){
           //     if(err)
@@ -120,7 +122,8 @@ app.post("/travel_claim", function (req, res) {
           queryString=queryString + 'now(),';
           queryString=queryString + '"' +req.files[0].filename + '",';
           queryString=queryString + '"' + req.body.project_code + '",';
-          queryString=queryString + '' + req.body.multiplier + '';
+          queryString=queryString + '' + req.body.multiplier + ',';
+          queryString=queryString + '"' + req.body.approver_email + '"';
           queryString=queryString + '),';
        //}
        queryString=queryString.slice(0,-1);
@@ -141,7 +144,7 @@ app.post("/travel_claim", function (req, res) {
                     //console.log(to);
                     //to = result[0].email_id;
                     var subject = 'Travel Claim uploaded';
-                    var text= 'That was easy!';
+                    var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     //console.log(to);
                     db.query(
                                 'select email_id from users where id = ' +req.body.emp_id + ';',function(err,data){
@@ -166,12 +169,14 @@ app.post("/travel_claim", function (req, res) {
         console.log(req.files[0].filename);
           queryString=queryString + '(';
           queryString=queryString +  req.body.emp_id + ',';
+          queryString=queryString +  req.body.tour_id + ',';
           queryString=queryString + req.body.travel_type[i] + ',';
           queryString=queryString + req.body.travel_claim_amount[i] + ',';
           queryString=queryString + 'now(),';
           queryString=queryString + '"' +req.files[i].filename + '",';
-          queryString=queryString + '"' + req.body.project_code[i] + '",';
-          queryString=queryString + '' + req.body.multiplier[i] + '';
+          queryString=queryString + '"' + req.body.project_code + '",';
+          queryString=queryString + '' + req.body.multiplier[i] + ',';
+          queryString=queryString + '"' + req.body.approver_email + '"';
           queryString=queryString + '),';
        }
        queryString=queryString.slice(0,-1);
@@ -191,7 +196,7 @@ app.post("/travel_claim", function (req, res) {
                     var from = 'a_mtyagi@eesl.co.in';
                     var to = 'a_mtyagi@eesl.co.in';
                     var subject = 'Travel Claim uploaded';
-                    var text= 'That was easy!';
+                    var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     console.log(text);
                     db.query(
                                 'select email_id from users where id = ' +req.body.emp_id + ';',function(err,data){
@@ -515,5 +520,39 @@ app.post('/hr/claims/verify', function(req, res){
                                   }
                                 });
 });
+
+function  updateTourDetails(tourId) {
+   
+    var sql = require("mssql");
+
+    // config for your database
+    var config = {
+        user: 'emp_portal',
+        password: 'P0rt@l',
+        server: '115.124.113.186', 
+        database: 'TestServerDB' 
+    };
+
+    // connect to your database
+    sql.connect(config, function (err) {
+    
+        if (err) console.log(err);
+
+        // create Request object
+        var request = new sql.Request();
+           
+        // query to the database and get the records
+        request.query('update TourDetails set Status=1 where TourId ='+ tourId, function (err, recordset) {
+            
+            if (err) console.log(err)
+
+            // send records as a response
+            //res.send(recordset);
+            
+        });
+    });
+    sql.close();
+    return;
+}
 
 module.exports = app;
