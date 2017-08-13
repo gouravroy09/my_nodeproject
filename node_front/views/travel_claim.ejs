@@ -14,12 +14,12 @@
   <input type="hidden" id = "multiplier" name="multiplier">
   <div class="col-sm-3 nopadding">
   <div class="form-group">
-    <input type="number" id="tour_id" name="tour_id" class="form-control" min="0" placeholder="Tour Id">
+    <input type="number" id="tour_id" name="tour_id" class="form-control" min="0" placeholder="Tour Id" value="<%= tour_id %>" disabled>
   </div>
   <script type="text/javascript">
   function populateTravelFormWithTourId(){
 
-    $('#tour_id').val(1);
+    //$('#tour_id').val(1);
      
      //$('#tour_id').prop('disabled', true);
 
