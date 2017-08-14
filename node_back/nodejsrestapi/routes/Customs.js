@@ -457,50 +457,8 @@ api.post('/approverTravelApproveReimburse',function(req,res,next){
   //var cookieString = req.params.id2;
   console.log(req.body);
   checkSession(req,res);
-var config = {
-            user: 'emp_portal',
-            password: 'P0rt@l',
-            server: '115.124.113.186', 
-            database: 'emp_portal_test' 
-        };
-    // connect to your database
-    sql.connect(config, function (err) {
-    
-        if (err) console.log(err);
 
-        // create Request object
-        var request = new sql.Request();
-
-           
-        // query to the database and get the records
-        console.log('update TourDetails set ClaimStatus=2 where TourId =' + req.body.tour_id);
-        request.query('update TourDetails set ClaimStatus=2 where TourId =' + req.body.tour_id, function (err, recordset) {
-            
-            if (err) console.log(err);
-
-            // send records as a response
-            //var i=0;
-            //addUser(sql,res,recordset);
-
-            console.log(recordset);
-            //for(i=0;i<recordset.length;i++){
-                /*if(i<recordset.length){
-
-                Custom2.addUser(recordset[i],function(err,count){
-
-                });
-                }*/
-            //}
-            //res.end(JSON.stringify (recordset));
-            approverTravelApproveReimburse(req);
-        });
-    });
-
-
-});
-
-function approverTravelApproveReimburse(req){
-      Custom2.claimIdsByTourId(req.body.tour_id,function(err,rows){
+  Custom2.claimIdsByTourId(req.body.tour_id,function(err,rows){
 
     if(err){
         res.json(err);
@@ -546,55 +504,42 @@ function approverTravelApproveReimburse(req){
     }
   
 });
-}
+  //db.query()
+//   Custom2.approvedByHrReimbursementHistoryRow(req.body.reimbursement_id,function(err,count){
+//     if(err)
+//     {
+//       res.json(err);
+//   }
+//   else
+//   {
+//       var from = 'groy@eesl.co.in';
+//                     var to = 'groy@eesl.co.in';
+//                     var subject = 'Claim Status: HR-Approved';
+//                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
+//                     db.query(
+//                                 'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
+//                                   console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
+//                                   if(err)
+//                                     res.end(err);
+//                                   sendMail(res,from,data[0].email_id,subject,text);
+
+//                     //return res.redirect(req.headers.referer);
+//                       var url = 'http://'+req.hostname+':5000/hrClaims2';
+//                       res.redirect(307,url);
+         
+                                     
+//                                 });
+
+//   }
+// });
+});
+
 api.post('/hrTravelApproveReimburse',function(req,res,next){
   //var cookieString = req.params.id2;
   console.log(req.body);
   checkSession(req,res);
-var config = {
-            user: 'emp_portal',
-            password: 'P0rt@l',
-            server: '115.124.113.186', 
-            database: 'emp_portal_test' 
-        };
-    // connect to your database
-    sql.connect(config, function (err) {
-    
-        if (err) console.log(err);
 
-        // create Request object
-        var request = new sql.Request();
-
-           
-        // query to the database and get the records
-        console.log('update TourDetails set ClaimStatus=3 where TourId =' + req.body.tour_id);
-        request.query('update TourDetails set ClaimStatus=3 where TourId =' + req.body.tour_id, function (err, recordset) {
-            
-            if (err) console.log(err);
-
-            // send records as a response
-            //var i=0;
-            //addUser(sql,res,recordset);
-
-            console.log(recordset);
-            //for(i=0;i<recordset.length;i++){
-                /*if(i<recordset.length){
-
-                Custom2.addUser(recordset[i],function(err,count){
-
-                });
-                }*/
-            //}
-            //res.end(JSON.stringify (recordset));
-            hrTravelApproveReimburse(req);
-        });
-    });
-
-
-});
-
-function hrTravelApproveReimburse(req){
-      Custom2.claimIdsByTourId(req.body.tour_id,function(err,rows){
+  Custom2.claimIdsByTourId(req.body.tour_id,function(err,rows){
 
     if(err){
         res.json(err);
@@ -640,7 +585,35 @@ function hrTravelApproveReimburse(req){
     }
   
 });
-}
+  //db.query()
+//   Custom2.approvedByHrReimbursementHistoryRow(req.body.reimbursement_id,function(err,count){
+//     if(err)
+//     {
+//       res.json(err);
+//   }
+//   else
+//   {
+//       var from = 'groy@eesl.co.in';
+//                     var to = 'groy@eesl.co.in';
+//                     var subject = 'Claim Status: HR-Approved';
+//                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
+//                     db.query(
+//                                 'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
+//                                   console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
+//                                   if(err)
+//                                     res.end(err);
+//                                   sendMail(res,from,data[0].email_id,subject,text);
+
+//                     //return res.redirect(req.headers.referer);
+//                       var url = 'http://'+req.hostname+':5000/hrClaims2';
+//                       res.redirect(307,url);
+         
+                                     
+//                                 });
+
+//   }
+// });
+});
 
 api.post('/hrapproveReimburse',function(req,res,next){
   //var cookieString = req.params.id2;
@@ -1603,7 +1576,7 @@ function  updateTourDetails(tourId) {
 
            
         // query to the database and get the records
-        request.query('update TourDetails set ClaimStatus=2 where TourId =' +tourId, function (err, recordset) {
+        request.query('update TourDetails set ClaimStatus=2 where TourId =' +ourId, function (err, recordset) {
             
             if (err) console.log(err);
 
