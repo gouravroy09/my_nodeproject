@@ -90,7 +90,43 @@ app.post("/travel_claim", function (req, res) {
             return res.end("Something went wrong!"); 
         }
         //updateTourDetails(req.body.tour_id);
-  ///console.log(req.files.length!==null);
+
+        var config = {
+            user: 'emp_portal',
+            password: 'P0rt@l',
+            server: '115.124.113.186', 
+            database: 'emp_portal_test' 
+        };
+    // connect to your database
+    sql.connect(config, function (err) {
+    
+        if (err) console.log(err);
+
+        // create Request object
+        var request = new sql.Request();
+
+           
+        // query to the database and get the records
+        //console.log('update TourDetails set ClaimStatus=1 where TourId =' + tourId);
+        request.query('update TourDetails set ClaimStatus=1 where TourId =' + req.body.tour_id, function (err, recordset) {
+            
+            if (err) console.log(err);
+
+            // send records as a response
+            //var i=0;
+            //addUser(sql,res,recordset);
+
+            console.log(recordset);
+            //for(i=0;i<recordset.length;i++){
+                /*if(i<recordset.length){
+
+                Custom2.addUser(recordset[i],function(err,count){
+
+                });
+                }*/
+            //}
+            //res.end(JSON.stringify (recordset));
+            ///console.log(req.files.length!==null);
   //console.log(req.files[0].filename);
   console.log(req.files);
   var filepathString = req.files[0].filename;
@@ -216,6 +252,10 @@ app.post("/travel_claim", function (req, res) {
       }
        
   //}
+            
+        });
+    });
+  
     });
 });
 
@@ -538,6 +578,7 @@ function  updateTourDetails(tourId) {
 
            
         // query to the database and get the records
+        console.log('update TourDetails set ClaimStatus=1 where TourId =' + tourId);
         request.query('update TourDetails set ClaimStatus=1 where TourId =' + tourId, function (err, recordset) {
             
             if (err) console.log(err);
@@ -555,7 +596,7 @@ function  updateTourDetails(tourId) {
                 });
                 }*/
             //}
-            res.end(JSON.stringify (recordset));
+            //res.end(JSON.stringify (recordset));
             
         });
     });
@@ -565,46 +606,46 @@ function  updateTourDetails(tourId) {
     return;
 }
 const sql = require('mssql');
-// app.get("/updateMSSQLTABLE", function (req, res) {
-//  var config = {
-//             user: 'emp_portal',
-//             password: 'P0rt@l',
-//             server: '115.124.113.186', 
-//             database: 'emp_portal_test' 
-//         };
-//     // connect to your database
-//     sql.connect(config, function (err) {
+app.get("/updateMSSQLTABLE", function (req, res) {
+ var config = {
+            user: 'emp_portal',
+            password: 'P0rt@l',
+            server: '115.124.113.186', 
+            database: 'emp_portal_test' 
+        };
+    // connect to your database
+    sql.connect(config, function (err) {
     
-//         if (err) console.log(err);
+        if (err) console.log(err);
 
-//         // create Request object
-//         var request = new sql.Request();
+        // create Request object
+        var request = new sql.Request();
 
            
-//         // query to the database and get the records
-//         request.query('update TourDetails set ClaimStatus=1 where TourId =3838', function (err, recordset) {
+        // query to the database and get the records
+        request.query('update TourDetails set ClaimStatus=1 where TourId =3838', function (err, recordset) {
             
-//             if (err) console.log(err);
+            if (err) console.log(err);
 
-//             // send records as a response
-//             //var i=0;
-//             //addUser(sql,res,recordset);
+            // send records as a response
+            //var i=0;
+            //addUser(sql,res,recordset);
 
-//             console.log(recordset);
-//             //for(i=0;i<recordset.length;i++){
-//                 /*if(i<recordset.length){
+            console.log(recordset);
+            //for(i=0;i<recordset.length;i++){
+                /*if(i<recordset.length){
 
-//                 Custom2.addUser(recordset[i],function(err,count){
+                Custom2.addUser(recordset[i],function(err,count){
 
-//                 });
-//                 }*/
-//             //}
-//             res.end(JSON.stringify (recordset));
+                });
+                }*/
+            //}
+            //res.end(JSON.stringify (recordset));
             
-//         });
-//     });
+        });
+    });
+    console.log(" updateMSSQLTABLE updateMSSQLTABLE updateMSSQLTABLE end");
+    //sql.close();
 
-//     //sql.close();
-
-// });
+});
 module.exports = app;
