@@ -492,14 +492,14 @@ var config = {
                 }*/
             //}
             //res.end(JSON.stringify (recordset));
-            approverTravelApproveReimburse();
+            approverTravelApproveReimburse(req);
         });
     });
 
 
 });
 
-function approverTravelApproveReimburse(){
+function approverTravelApproveReimburse(req){
       Custom2.claimIdsByTourId(req.body.tour_id,function(err,rows){
 
     if(err){
@@ -586,14 +586,14 @@ var config = {
                 }*/
             //}
             //res.end(JSON.stringify (recordset));
-            hrTravelApproveReimburse();
+            hrTravelApproveReimburse(req);
         });
     });
 
 
 });
 
-function hrTravelApproveReimburse(){
+function hrTravelApproveReimburse(req){
       Custom2.claimIdsByTourId(req.body.tour_id,function(err,rows){
 
     if(err){
