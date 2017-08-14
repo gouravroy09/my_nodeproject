@@ -55,7 +55,7 @@ var stationary = require('./routes/stationary');
 app.get('/stationary', stationary.stationary);
 
 var claims = require('./routes/claims');
-//app.get('/claims', claims.claims);
+app.get('/claims', claims.claims);
 app.post('/claims', function(req, res){
 	console.log(req.host);
 	var url = 'http://'+req.host+':3000/claims/verify';
@@ -66,9 +66,9 @@ app.post('/claims', function(req, res){
 
 });
 app.post('/approverClaims', claims.claims4);
-//app.get('/approverClaims', claims.claims5);
+app.get('/approverClaims', claims.claims5);
 app.post('/claims2', claims.claims2);
-//app.get('/claims2', claims.claims3);
+app.get('/claims2', claims.claims3);
 
 var claims = require('./routes/claims');
 app.get('/finReimburse', claims.finReimburse);
