@@ -460,7 +460,8 @@ api.post('/approverTravelApproveReimburse',function(req,res,next){
 var config = {
             user: 'emp_portal',
             password: 'P0rt@l',
-            server: '115.124.113.186', 
+            //server: '115.124.113.186', 
+            server: 'localhost',  
             database: 'emp_portal_test' 
         };
     // connect to your database
@@ -552,7 +553,8 @@ api.post('/hrTravelApproveReimburse',function(req,res,next){
 var config = {
             user: 'emp_portal',
             password: 'P0rt@l',
-            server: '115.124.113.186', 
+            //server: '115.124.113.186', 
+            server: 'localhost',  
             database: 'emp_portal_test' 
         };
     // connect to your database
