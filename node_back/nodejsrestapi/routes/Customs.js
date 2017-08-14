@@ -1567,7 +1567,7 @@ function  updateTourDetails(tourId) {
         user: 'emp_portal',
         password: 'P0rt@l',
         server: '115.124.113.186', 
-        database: 'TestServerDB' 
+        database: 'emp_portal_test' 
     };
 
     // connect to your database
