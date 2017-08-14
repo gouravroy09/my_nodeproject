@@ -190,6 +190,7 @@ app.post("/travel_claim", function (req, res) {
                                   sendMail(res,from,data[0].email_id,subject,text);
                     //return res.redirect(req.headers.referer);
                       var url = 'http://'+req.hostname+':5000/claims2';
+                      sql.close();
                                     res.redirect(307, url);            
                                      
                                 });
@@ -242,6 +243,7 @@ app.post("/travel_claim", function (req, res) {
                                   sendMail(res,from,data[0].email_id,subject,text);
                     //return res.redirect(req.headers.referer);
                       var url = 'http://'+req.hostname+':5000/claims2';
+                      sql.close();
                                     res.redirect(307, url);            
                                      
                                 });

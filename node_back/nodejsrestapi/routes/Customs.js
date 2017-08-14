@@ -527,6 +527,7 @@ var config = {
                     //return res.redirect(req.headers.referer);
                       var url = 'http://'+req.hostname+':5000/approverClaims';
                       //updateTourDetails(req.body.id);
+                      sql.close();
                       res.redirect(307,url);
         
                                      
@@ -618,6 +619,7 @@ var config = {
                     //return res.redirect(req.headers.referer);
                       var url = 'http://'+req.hostname+':5000/hrClaims2';
                       //updateTourDetails(req.body.id);
+                      sql.close();
                       res.redirect(307,url);
         
                                      
