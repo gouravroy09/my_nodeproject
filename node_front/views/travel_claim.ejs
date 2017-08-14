@@ -12,16 +12,17 @@
 
   <input type="hidden" name="travel_emp_id">
   <input type="hidden" id = "multiplier" name="multiplier">
+  <input type="hidden" name="tour_id" id="tour_id" value="<%= tour_id %>" >
   <div class="col-sm-3 nopadding">
   <div class="form-group">
-    <input type="number" id="tour_id" name="tour_id" class="form-control" min="0" placeholder="Tour Id" value="<%= tour_id %>" disabled>
+    <input type="number" id="passed_tour_id"  class="form-control" min="0" placeholder="Tour Id"  disabled>
   </div>
   <script type="text/javascript">
   function populateTravelFormWithTourId(){
-
-    //$('#tour_id').val(1);
+    //alert($('#tour_id').val());
+    $('#passed_tour_id').val(parseInt($('#tour_id').val()));
      
-     //$('#tour_id').prop('disabled', true);
+     //$('#paased_tour_id').prop('disabled', true);
 
 
   }
