@@ -37,6 +37,7 @@ api.get('/users2', function (req, res) {
             
         });
     });
+    sql.close();
 });
 
 api.get('/empTypes',function(req,res,next){
@@ -61,7 +62,7 @@ api.get('/empTypes',function(req,res,next){
 
             // send records as a response
             //var i=0;
-            addEmpType(sql,res,recordset);
+            //addEmpType(sql,res,recordset);
             //for(i=0;i<recordset.length;i++){
                 /*if(i<recordset.length){
 
@@ -75,7 +76,7 @@ api.get('/empTypes',function(req,res,next){
         });
     });
 
-    //sql.close();
+    sql.close();
     });
 
 function addEmpType(sql,res,recordset){
@@ -491,7 +492,7 @@ api.post('/approverTravelApproveReimburse',function(req,res,next){
                                   //sendMail(res,from,req.body.approver_email,subject,text);
                     //return res.redirect(req.headers.referer);
                       var url = 'http://'+req.hostname+':5000/approverClaims';
-                      updateTourDetails(req.body.id);
+                      //updateTourDetails(req.body.id);
                       res.redirect(307,url);
         
                                      
@@ -572,7 +573,7 @@ api.post('/hrTravelApproveReimburse',function(req,res,next){
                                   sendMail(res,from,req.body.approver_email,subject,text);
                     //return res.redirect(req.headers.referer);
                       var url = 'http://'+req.hostname+':5000/hrClaims2';
-                      updateTourDetails(req.body.id);
+                      //updateTourDetails(req.body.id);
                       res.redirect(307,url);
         
                                      

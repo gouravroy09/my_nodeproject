@@ -89,7 +89,7 @@ app.post("/travel_claim", function (req, res) {
           ///this error comes mostly when Images foler is not present
             return res.end("Something went wrong!"); 
         }
-        updateTourDetails(req.body.tour_id);
+        //updateTourDetails(req.body.tour_id);
   ///console.log(req.files.length!==null);
   //console.log(req.files[0].filename);
   console.log(req.files);
@@ -522,9 +522,10 @@ app.post('/hr/claims/verify', function(req, res){
 });
 
 function  updateTourDetails(tourId) {
+  console.log("in update tour details");
    
     var sql = require("mssql");
-
+console.log("in update tour details2");
     // config for your database
     var config = {
         user: 'emp_portal',
@@ -535,7 +536,8 @@ function  updateTourDetails(tourId) {
 
     // connect to your database
     sql.connect(config, function (err) {
-    
+    console.log("Hello serr");
+
         if (err) console.log(err);
 
         // create Request object
@@ -543,8 +545,12 @@ function  updateTourDetails(tourId) {
            
         // query to the database and get the records
         request.query('update TourDetails set Status=1 where TourId ='+ tourId, function (err, recordset) {
-            
-            if (err) console.log(err)
+            console.log('update TourDetails set Status=1 where TourId ='+ tourId);
+            if (err) 
+              {
+                console.log(err );  
+                  
+                  }
 
             // send records as a response
             //res.send(recordset);
