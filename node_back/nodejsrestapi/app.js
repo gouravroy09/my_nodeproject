@@ -522,43 +522,89 @@ app.post('/hr/claims/verify', function(req, res){
 });
 
 function  updateTourDetails(tourId) {
-  console.log("in update tour details");
-   
-    var sql = require("mssql");
-console.log("in update tour details2");
-    // config for your database
-    var config = {
-        user: 'emp_portal',
-        password: 'P0rt@l',
-        server: '115.124.113.186', 
-        database: 'emp_portal_test' 
-    };
-
+  var config = {
+            user: 'emp_portal',
+            password: 'P0rt@l',
+            server: '115.124.113.186', 
+            database: 'emp_portal_test' 
+        };
     // connect to your database
     sql.connect(config, function (err) {
-    console.log("Hello serr");
-
+    
         if (err) console.log(err);
 
         // create Request object
         var request = new sql.Request();
+
            
         // query to the database and get the records
-        request.query('update TourDetails set Status=1 where TourId ='+ tourId, function (err, recordset) {
-            console.log('update TourDetails set Status=1 where TourId ='+ tourId);
-            if (err) 
-              {
-                console.log(err );  
-                  
-                  }
+        request.query('update TourDetails set ClaimStatus=1 where TourId =' + tourId, function (err, recordset) {
+            
+            if (err) console.log(err);
 
             // send records as a response
-            //res.send(recordset);
+            //var i=0;
+            //addUser(sql,res,recordset);
+
+            console.log(recordset);
+            //for(i=0;i<recordset.length;i++){
+                /*if(i<recordset.length){
+
+                Custom2.addUser(recordset[i],function(err,count){
+
+                });
+                }*/
+            //}
+            res.end(JSON.stringify (recordset));
             
         });
     });
+
+    //sql.close();
     sql.close();
     return;
 }
+const sql = require('mssql');
+// app.get("/updateMSSQLTABLE", function (req, res) {
+//  var config = {
+//             user: 'emp_portal',
+//             password: 'P0rt@l',
+//             server: '115.124.113.186', 
+//             database: 'emp_portal_test' 
+//         };
+//     // connect to your database
+//     sql.connect(config, function (err) {
+    
+//         if (err) console.log(err);
 
+//         // create Request object
+//         var request = new sql.Request();
+
+           
+//         // query to the database and get the records
+//         request.query('update TourDetails set ClaimStatus=1 where TourId =3838', function (err, recordset) {
+            
+//             if (err) console.log(err);
+
+//             // send records as a response
+//             //var i=0;
+//             //addUser(sql,res,recordset);
+
+//             console.log(recordset);
+//             //for(i=0;i<recordset.length;i++){
+//                 /*if(i<recordset.length){
+
+//                 Custom2.addUser(recordset[i],function(err,count){
+
+//                 });
+//                 }*/
+//             //}
+//             res.end(JSON.stringify (recordset));
+            
+//         });
+//     });
+
+//     //sql.close();
+
+// });
 module.exports = app;

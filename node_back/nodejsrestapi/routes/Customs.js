@@ -195,9 +195,9 @@ api.get('/users',function(req,res,next){
 
             // send records as a response
             //var i=0;
-            addUser(sql,res,recordset);
+            //addUser(sql,res,recordset);
 
-            //console.log(recordset);
+            console.log(recordset);
             //for(i=0;i<recordset.length;i++){
                 /*if(i<recordset.length){
 
@@ -206,7 +206,7 @@ api.get('/users',function(req,res,next){
                 });
                 }*/
             //}
-            //res.send(recordset);
+            res.end(JSON.stringify (recordset));
             
         });
     });
@@ -1560,17 +1560,12 @@ console.log(req.body);
 });
 
 function  updateTourDetails(tourId) {
-   
-    var sql = require("mssql");
-
-    // config for your database
-    var config = {
-        user: 'emp_portal',
-        password: 'P0rt@l',
-        server: '115.124.113.186', 
-        database: 'emp_portal_test' 
-    };
-
+  var config = {
+            user: 'emp_portal',
+            password: 'P0rt@l',
+            server: '115.124.113.186', 
+            database: 'emp_portal_test' 
+        };
     // connect to your database
     sql.connect(config, function (err) {
     
@@ -1578,17 +1573,32 @@ function  updateTourDetails(tourId) {
 
         // create Request object
         var request = new sql.Request();
+
            
         // query to the database and get the records
-        request.query('update TourDetails set Status=2 where TourId ='+ tourId, function (err, recordset) {
+        request.query('update TourDetails set ClaimStatus=2 where TourId =' +tourId, function (err, recordset) {
             
-            if (err) console.log(err)
+            if (err) console.log(err);
 
             // send records as a response
-            res.send(recordset);
+            //var i=0;
+            //addUser(sql,res,recordset);
+
+            console.log(recordset);
+            //for(i=0;i<recordset.length;i++){
+                /*if(i<recordset.length){
+
+                Custom2.addUser(recordset[i],function(err,count){
+
+                });
+                }*/
+            //}
+            res.end(JSON.stringify (recordset));
             
         });
     });
+
+    //sql.close();
     sql.close();
     return;
 }
