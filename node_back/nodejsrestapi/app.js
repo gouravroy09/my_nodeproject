@@ -171,6 +171,7 @@ app.post("/travel_claim", function (req, res) {
             if(err)
             {
                 res.json(err);
+                 sql.close();
             }
             else{
                     //res.json(req.body);//or return count for 1 & 0
@@ -226,6 +227,7 @@ app.post("/travel_claim", function (req, res) {
             if(err)
             {
                 res.json(err);
+                 sql.close();
             }
             else{
                     //res.json(req.body);//or return count for 1 & 0

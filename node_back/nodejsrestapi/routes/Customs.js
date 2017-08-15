@@ -477,7 +477,11 @@ var config = {
         console.log('update TourDetails set ClaimStatus=2 where TourId =' + req.body.tour_id);
         request.query('update TourDetails set ClaimStatus=2 where TourId =' + req.body.tour_id, function (err, recordset) {
             
-            if (err) console.log(err);
+            if (err) 
+                {
+                     sql.close();
+                    console.log(err);
+                }
 
             // send records as a response
             //var i=0;
@@ -560,7 +564,11 @@ var config = {
     // connect to your database
     sql.connect(config, function (err) {
     
-        if (err) console.log(err);
+        if (err) 
+        {
+             sql.close();
+            console.log(err);
+        }
 
         // create Request object
         var request = new sql.Request();
