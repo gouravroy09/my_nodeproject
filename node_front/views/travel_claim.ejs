@@ -212,7 +212,7 @@ function travel_claim_form(form){
           if(value.id.slice(11,12)==""){
             var no_of_days = 
             (Date.parse($('#travel_date_to').val()) - Date.parse($('#travel_date_from').val()))/(1000*60*60*24);
-            if(no_of_days<1){
+            if(no_of_days<0){
               //alert('Date Range not correct!!');
               //form.travel_date_to.focus();
               rv = false;
@@ -236,7 +236,7 @@ function travel_claim_form(form){
             var i =value.id.slice(11,12);
             var no_of_days = 
             (Date.parse($('#travel_date_to'+i+'').val()) - Date.parse($('#travel_date_from'+i+'').val()))/(1000*60*60*24);
-            if(no_of_days<1){
+            if(no_of_days<0){
               //alert('Date Range not correct!!');
               //$('#travel_date_to'+i+'').focus();
               rv = false;
