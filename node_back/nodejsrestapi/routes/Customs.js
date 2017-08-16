@@ -1510,6 +1510,10 @@ console.log(req.body);
         if(rows.length!=undefined){
             
         conf.cols=[{
+            caption:'tour_id',
+            type:'number',
+            width:50
+        },{
             caption:'reimbursement_amount',
             type:'number',
             width:50
@@ -1572,15 +1576,15 @@ console.log(req.body);
 // Apply each element to the Date function
 //var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
 //console.log(d);
-            a=[rows[i].reimbursement_amount,rows[i].time,rows[i].status,rows[i].bill_generated!=null?rows[i].bill_generated:"",
+            a=[rows[i].tour_id,rows[i].reimbursement_amount,rows[i].time,rows[i].status,rows[i].bill_generated!=null?rows[i].bill_generated:"",
                 rows[i].project_code,rows[i].fullname,rows[i].emp_no,rows[i].doj,rows[i].emp_grade_code,
                 rows[i].reimbursement_description,rows[i].emp_type_description];
             arr.push(a);
         }
-        conf.rows = arr;
+        //conf.rows = arr;
         console.log('asdsadsadsadasd');
         }
-        console.log(conf.rows);
+        //console.log(conf.rows);
         conf.name = "mysheet";
     var result = nodeExcel.execute(conf);
     res.setHeader('Content-Type', 'application/vnd.openxmlformats');
