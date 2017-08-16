@@ -190,6 +190,7 @@ app.post("/travel_claim", function (req, res) {
                                   if(err)
                                     res.end(err);
                                   sendMail(res,from,data[0].email_id,subject,text);
+                                  //sendMail(res,from,data[0].email_id,subject,text);
                     //return res.redirect(req.headers.referer);
                       var url = 'http://'+req.hostname+':5000/claims2';
                       sql.close();

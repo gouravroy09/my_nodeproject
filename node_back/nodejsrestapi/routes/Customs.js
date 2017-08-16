@@ -711,6 +711,40 @@ api.post('/approverreject',function(req,res,next){
   }
   else
   {
+        var config = {
+            user: 'emp_portal',
+            password: 'P0rt@l',
+            //server: '115.124.113.186', 
+            server: 'localhost',  
+            database: 'emp_portal_test' 
+        };
+    // connect to your database
+    sql.connect(config, function (err) {
+    
+        if (err) console.log(err);
+
+        // create Request object
+        var request = new sql.Request();
+
+           
+        // query to the database and get the records
+        console.log('update TourDetails set ClaimStatus=Null where TourId =' + req.body.tour_id);
+        request.query('update TourDetails set ClaimStatus=Null where TourId =' + req.body.tour_id, function (err, recordset) {
+            
+            if (err) 
+                {
+                     sql.close();
+                    console.log(err);
+                }
+
+            // send records as a response
+            //var i=0;
+            //addUser(sql,res,recordset);
+
+            console.log(recordset);
+
+
+
       var from = 'a_mtyagi@eesl.co.in';
                     var to = 'a_mtyagi@eesl.co.in';
                     var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
@@ -727,6 +761,8 @@ api.post('/approverreject',function(req,res,next){
         
                                      
                                 });
+                     });
+    });
 
   }
 });
@@ -760,6 +796,39 @@ api.post('/hrreject',function(req,res,next){
   }
   else
   {
+        var config = {
+            user: 'emp_portal',
+            password: 'P0rt@l',
+            //server: '115.124.113.186', 
+            server: 'localhost',  
+            database: 'emp_portal_test' 
+        };
+    // connect to your database
+    sql.connect(config, function (err) {
+    
+        if (err) console.log(err);
+
+        // create Request object
+        var request = new sql.Request();
+
+           
+        // query to the database and get the records
+        console.log('update TourDetails set ClaimStatus=Null where TourId =' + req.body.tour_id);
+        request.query('update TourDetails set ClaimStatus=Null where TourId =' + req.body.tour_id, function (err, recordset) {
+            
+            if (err) 
+                {
+                     sql.close();
+                    console.log(err);
+                }
+
+            // send records as a response
+            //var i=0;
+            //addUser(sql,res,recordset);
+
+            console.log(recordset);
+
+
       var from = 'a_mtyagi@eesl.co.in';
                     var to = 'a_mtyagi@eesl.co.in';
                     var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
@@ -776,6 +845,8 @@ api.post('/hrreject',function(req,res,next){
         
                                      
                                 });
+                    });
+    });
 
   }
 });
