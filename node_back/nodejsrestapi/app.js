@@ -187,14 +187,17 @@ app.post("/travel_claim", function (req, res) {
                     //console.log(to);
                     //to = result[0].email_id;
                     var subject = 'Travel Claim uploaded';
-                    var text= '***This is an auto generated mail, please do not reply to this mail.***';
+                    var text = "You have expense claim for your apporval.Kindly login into https://apps.eeslindia.org. Go to Approve Claim inide Claims/Reimbursements tab.";
+                     text=  text +'***This is an auto generated mail, please do not reply to this mail.***';
+                     var text2 = '***This is an auto generated mail, please do not reply to this mail.***';
                     //console.log(to);
                     db.query(
                                 'select email_id from users where id = ' +req.body.emp_id + ';',function(err,data){
                                   console.log('select email_id from users where id = ' +req.body.emp_id + ';');
                                   if(err)
                                     res.end(err);
-                                  sendMail(res,from,data[0].email_id,subject,text);
+                                  sendMail(res,from,data[0].email_id,subject,text2);
+                                  sendMail(res,from,req.body.approver_email,subject,text);
                                   //sendMail(res,from,data[0].email_id,subject,text);
                     //return res.redirect(req.headers.referer);
                       var url = 'http://'+req.hostname+':5000/claims2';
@@ -242,14 +245,17 @@ app.post("/travel_claim", function (req, res) {
                     var from = 'a_mtyagi@eesl.co.in';
                     var to = 'a_mtyagi@eesl.co.in';
                     var subject = 'Travel Claim uploaded';
-                    var text= '***This is an auto generated mail, please do not reply to this mail.***';
+                    var text = "You have expense claim for your apporval.Kindly login into https://apps.eeslindia.org. Go to Approve Claim inide Claims/Reimbursements tab.";
+                     text=  text +'***This is an auto generated mail, please do not reply to this mail.***';
+                     var text2 = '***This is an auto generated mail, please do not reply to this mail.***';
                     console.log(text);
                     db.query(
                                 'select email_id from users where id = ' +req.body.emp_id + ';',function(err,data){
                                   console.log('select email_id from users where id = ' +req.body.emp_id + ';');
                                   if(err)
                                     res.end(err);
-                                  sendMail(res,from,data[0].email_id,subject,text);
+                                  sendMail(res,from,data[0].email_id,subject,text2);
+                                  sendMail(res,from,req.body.approver_email,subject,text);
                     //return res.redirect(req.headers.referer);
                       var url = 'http://'+req.hostname+':5000/claims2';
                       sql.close();
