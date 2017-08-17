@@ -523,7 +523,7 @@ var config = {
                     var subject = 'Claim Status : Approver Approved';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     db.query(
-                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
+                                'select email_id from users u inner join employee_reimbursement_history_with_rejects rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
                                   //console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
                                   if(err)
                                     res.end(err);
@@ -620,7 +620,7 @@ var config = {
                     var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     db.query(
-                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
+                                'select email_id from users u inner join employee_reimbursement_history_with_rejects rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
                                   //console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
                                   if(err)
                                     res.end(err);
@@ -668,7 +668,7 @@ api.post('/hrapproveReimburse',function(req,res,next){
                     var subject = 'Claim Status: HR-Approved';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     db.query(
-                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
+                                'select email_id from users u inner join employee_reimbursement_history_with_rejects rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
                                   console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
                                   if(err)
                                     res.end(err);
@@ -752,7 +752,7 @@ api.post('/approverreject',function(req,res,next){
                     var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     db.query(
-                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
+                                'select email_id from users u inner join employee_reimbursement_history_with_rejects rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
                                   //console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
                                   if(err)
                                     res.end(err);
@@ -839,7 +839,7 @@ api.post('/hrreject',function(req,res,next){
                     var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     db.query(
-                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
+                                'select email_id from users u inner join employee_reimbursement_history_with_rejects rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
                                   //console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
                                   if(err)
                                     res.end(err);
@@ -927,7 +927,7 @@ api.post('/hrrejectReimburse/amt-Freq-Mismatch',function(req,res,next){
                     var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     db.query(
-                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
+                                'select email_id from users u inner join employee_reimbursement_history_with_rejects rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
                                   console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
                                   if(err)
                                     res.end(err);
@@ -965,7 +965,7 @@ api.post('/hrrejectReimburse/docMismatch',function(req,res,next){
                     var subject = 'Claim Status : HR Reject - Document Mismatch';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     db.query(
-                                'select email_id from users u inner join employee_reimbursement_history rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
+                                'select email_id from users u inner join employee_reimbursement_history_with_rejects rh on rh.emp_id = u.id where rh.id = ' +req.body.reimbursement_id + ';',function(err,data){
                                   console.log('select email_id from users where id = ' +req.body.reimbursement_id + ';');
                                   if(err)
                                     res.end(err);
