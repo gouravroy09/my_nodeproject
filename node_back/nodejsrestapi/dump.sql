@@ -293,6 +293,9 @@ FOR EACH ROW
 
 CREATE TRIGGER update_reimbursement_history_copy AFTER update ON employee_reimbursement_history 
 FOR EACH ROW
-  insert into employee_reimbursement_history_with_rejects(emp_id,tour_id,reimbursement_type,reimbursement_amount,time,filepath,project_code,multiplier,approver_email,reject_reason)
-  select emp_id,tour_id,reimbursement_type,reimbursement_amount,time,filepath,project_code,multiplier,approver_email,reject_reason from employee_reimbursement_history where id=NEW.id;
+  insert into employee_reimbursement_history_with_rejects(emp_id,tour_id,reimbursement_type,reimbursement_amount,time,filepath,project_code,multiplier,approver_email,reject_reason,status)
+  select emp_id,tour_id,reimbursement_type,reimbursement_amount,time,filepath,project_code,multiplier,approver_email,reject_reason,status from employee_reimbursement_history where id=NEW.id;
 
+
+
+alter table employee_reimbursement_history change column status status enum('pending','hr-approved','fin-approved','processed','hr-reject-amnt/freq-exceed','hr-reject-doc-nomatch','approve_ro','reject') default 'approve_ro';

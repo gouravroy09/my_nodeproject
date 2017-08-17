@@ -703,7 +703,7 @@ api.post('/approverreject',function(req,res,next){
             }
             query_param = query_param.slice(0,-1) + ')';
         }
-       var query =  "update employee_reimbursement_history set reject_reason='"+req.body.reject_reason + "',status='hr-reject-amnt/freq-exceed' where id in "+query_param+";";
+       var query =  "update employee_reimbursement_history set reject_reason='"+req.body.reject_reason + "',status='reject' where id in "+query_param+";";
           query =query +  "delete from  employee_reimbursement_history where id in "+query_param+";";
           console.log(query);
           db.query(query,function (err){
@@ -791,7 +791,7 @@ api.post('/hrreject',function(req,res,next){
             query_param = query_param.slice(0,-1) + ')';
         }
         
-        var query =  "update employee_reimbursement_history set reject_reason='"+req.body.reject_reason + "',status='hr-reject-amnt/freq-exceed' where id in "+query_param+";";
+        var query =  "update employee_reimbursement_history set reject_reason='"+req.body.reject_reason + "',status='reject' where id in "+query_param+";";
           query =query +  "delete from  employee_reimbursement_history where id in "+query_param+";";
           console.log(query);
           db.query(query,function (err){

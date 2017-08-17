@@ -111,13 +111,18 @@ app.post("/travel_claim", function (req, res) {
         //console.log('update TourDetails set ClaimStatus=1 where TourId =' + tourId);
         request.query('update TourDetails set ClaimStatus=1 where TourId =' + req.body.tour_id, function (err, recordset) {
             
-            if (err) console.log(err);
+            if (err) 
+            {
+              console.log(err);
+              sql.close();
+            }
 
             // send records as a response
             //var i=0;
             //addUser(sql,res,recordset);
 
             console.log(recordset);
+
             //for(i=0;i<recordset.length;i++){
                 /*if(i<recordset.length){
 
