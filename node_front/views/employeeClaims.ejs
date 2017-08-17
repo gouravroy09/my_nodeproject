@@ -274,6 +274,9 @@ function getReimbursementHistory(id){
           if(value.status==='processed'){
           statusCell = '</td><td><a class="btn btn-success">' + value.status  + '</a></td>' ;
           }
+          if(value.status==='pending'){
+          statusCell = '</td><td><a class="btn btn-success">' +(value.status=='pending'?'hr_approval_pending':value.status)  + '</a></td>' ;
+          }
           /*else if(value.status=='hr-approved'){
 
           }else if(value.status=='hr-approved'){
