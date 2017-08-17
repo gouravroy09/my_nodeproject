@@ -52,7 +52,7 @@ var Custom2 = {
 	},
 	getReimbursementHistoryByUserId:function(id,callback){
 
-	return db.query("select er.*,r.description from employee_reimbursement_history er inner join reimbursement r on er.reimbursement_type=r.id where emp_id=? order by time desc",[id],callback);
+	return db.query("select er.*,r.description from employee_reimbursement_history_with_rejects er inner join reimbursement r on er.reimbursement_type=r.id where emp_id=? order by time desc",[id],callback);
 	},
 	getReimbursementHistoryByApproverEmailId:function(email,callback){
 		db.query("select *,et.description as emp_type_description,r.description as reimbursement_description,rh.id as reimbursement_id from employee_reimbursement_history rh inner join users u on rh.emp_id =u.id inner join reimbursement r on rh.reimbursement_type = r.id inner join employee_type et on et.id=u.emp_type_id where rh.status ='approve_ro' and rh.approver_email=?",[email],callback);
@@ -104,9 +104,10 @@ var Custom2 = {
 
 	return db.query("update employee_reimbursement_history set status='hr-reject-amnt/freq-exceed' where id=?;",[id],callback);
 	},
-	rejectedByHr:function(queryParam,rejectReason,callback){
+	rejectedByHr:function(tourId,queryParam,rejectReason,callback){
 		//console.log(JSON.stringify(History));
-		var query = "update employee_reimbursement_history set status='hr-reject-amnt/freq-exceed' , reject_reason = '"+rejectReason+"' where id in "+ queryParam;
+		var query = "update employee_reimbursement_history set status='hr-reject-amnt/freq-exceed' , reject_reason = '"+rejectReason+"' where id in "+ queryParam +";";
+		query = query + "delete from employee_reimbursement_history where tour_id="+tourId + ";";
 		console.log(query);
 	return db.query(query,callback);
 	},

@@ -703,8 +703,10 @@ api.post('/approverreject',function(req,res,next){
             }
             query_param = query_param.slice(0,-1) + ')';
         }
-        
-        Custom2.rejectedByHr(query_param,req.body.reject_reason, function(err,count){
+       var query =  "update employee_reimbursement_history set reject_reason='"+req.body.reject_reason + "',status='hr-reject-amnt/freq-exceed' where id in "+query_param+";";
+          query =query +  "delete from  employee_reimbursement_history where id in "+query_param+";";
+          console.log(query);
+          db.query(query,function (err){
     if(err)
     {
       res.json(err);
@@ -789,7 +791,10 @@ api.post('/hrreject',function(req,res,next){
             query_param = query_param.slice(0,-1) + ')';
         }
         
-        Custom2.rejectedByHr(query_param,req.body.reject_reason, function(err,count){
+        var query =  "update employee_reimbursement_history set reject_reason='"+req.body.reject_reason + "',status='hr-reject-amnt/freq-exceed' where id in "+query_param+";";
+          query =query +  "delete from  employee_reimbursement_history where id in "+query_param+";";
+          console.log(query);
+          db.query(query,function (err){
     if(err)
     {
       res.json(err);
@@ -855,6 +860,57 @@ api.post('/hrreject',function(req,res,next){
   
 });
 });
+
+// api.post('/hrreject',function(req,res,next){
+//   //var cookieString = req.params.id2;
+//   checkSession(req,res);
+//   console.log(req.body);
+
+
+//   Custom2.claimIdsByTourId(req.body.tour_id,function(err,rows){
+
+//     if(err){
+//         res.json(err);
+//     }
+//     else{
+//         var query_param = '(';
+//         if(rows.length!=undefined){
+//             for(i=0;i<rows.length;i++){
+//                 query_param = query_param + rows[i].id+ ',';
+//             }
+//             query_param = query_param.slice(0,-1) + ')';
+//         }
+//         console.log('reject_reason ' + req.body.reject_reason);
+//          var query =  "update employee_reimbursement_history set reject_reason='"+req.body.reject_reason + "',status='hr-reject-amnt/freq-exceed' where id in "+query_param+";";
+//           query =query +  "delete from  employee_reimbursement_history where id in "+query_param+";";
+//           console.log(query);
+//           db.query(query,function (err){
+//             if(err)
+//             {
+//                 console.log(err);
+//             }
+//             else{
+//                 var url = 'http://'+req.hostname+':5000/hrClaims2';
+//                       res.redirect(307,url);
+//             }
+//           });
+        
+// //         Custom2.rejectedByHr(query_param,req.body.reject_reason, function(err,count){
+// //     if(err)
+// //     {
+// //       res.json(err);
+// //   }
+// //   else
+// //   {
+        
+
+// //   }
+// // });
+
+//     }
+  
+// });
+// });
 
 api.post('/hrrejectReimburse/amt-Freq-Mismatch',function(req,res,next){
   //var cookieString = req.params.id2;

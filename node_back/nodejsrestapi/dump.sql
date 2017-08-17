@@ -261,3 +261,38 @@ alter table employee_reimbursement_history drop column time;
 
 alter table employee_reimbursement_history ADD `time` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ;
 
+
+
+
+CREATE TABLE `employee_reimbursement_history_with_rejects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `reimbursement_type` int(11) NOT NULL,
+  `reimbursement_amount` int(11) DEFAULT NULL,
+  `filepath` varchar(2000) DEFAULT NULL,
+  `status` enum('pending','hr-approved','fin-approved','processed','hr-reject-amnt/freq-exceed','hr-reject-doc-nomatch','approve_ro') DEFAULT 'approve_ro',
+  `bill_generated` enum('yes','no') DEFAULT 'no',
+  `project_code` varchar(200) DEFAULT NULL,
+  `multiplier` int(11) DEFAULT '0',
+  `tour_id` int(11) DEFAULT '0',
+  `reject_reason` varchar(500) DEFAULT NULL,
+  `approver_email` varchar(500) DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+
+
+drop trigger create_reimbursement_history_copy;
+drop trigger update_reimbursement_history_copy;
+
+CREATE TRIGGER create_reimbursement_history_copy AFTER INSERT ON employee_reimbursement_history 
+FOR EACH ROW
+  insert into employee_reimbursement_history_with_rejects(emp_id,tour_id,reimbursement_type,reimbursement_amount,time,filepath,project_code,multiplier,approver_email,reject_reason)
+  select emp_id,tour_id,reimbursement_type,reimbursement_amount,time,filepath,project_code,multiplier,approver_email,reject_reason from employee_reimbursement_history where id=NEW.id;
+
+
+CREATE TRIGGER update_reimbursement_history_copy AFTER update ON employee_reimbursement_history 
+FOR EACH ROW
+  insert into employee_reimbursement_history_with_rejects(emp_id,tour_id,reimbursement_type,reimbursement_amount,time,filepath,project_code,multiplier,approver_email,reject_reason)
+  select emp_id,tour_id,reimbursement_type,reimbursement_amount,time,filepath,project_code,multiplier,approver_email,reject_reason from employee_reimbursement_history where id=NEW.id;
+
