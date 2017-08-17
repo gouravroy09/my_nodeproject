@@ -299,3 +299,23 @@ FOR EACH ROW
 
 
 alter table employee_reimbursement_history change column status status enum('pending','hr-approved','fin-approved','processed','hr-reject-amnt/freq-exceed','hr-reject-doc-nomatch','approve_ro','reject') default 'approve_ro';
+
+
+
+
+CREATE TABLE `employee_reimbursement_history_with_rejects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `reimbursement_type` int(11) NOT NULL,
+  `reimbursement_amount` int(11) DEFAULT NULL,
+  `filepath` varchar(2000) DEFAULT NULL,
+  `status` enum('pending','hr-approved','fin-approved','processed','hr-reject-amnt/freq-exceed','hr-reject-doc-nomatch','approve_ro','reject') DEFAULT 'approve_ro',
+  `bill_generated` enum('yes','no') DEFAULT 'no',
+  `project_code` varchar(200) DEFAULT NULL,
+  `multiplier` int(11) DEFAULT '0',
+  `tour_id` int(11) DEFAULT '0',
+  `reject_reason` varchar(500) DEFAULT NULL,
+  `approver_email` varchar(500) DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
