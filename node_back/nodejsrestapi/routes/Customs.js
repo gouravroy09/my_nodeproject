@@ -1545,8 +1545,8 @@ function sendMail(res,from,to,subject,text){
   var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'groy@eesl.co.in',
-    pass: '2012@roy@2012'
+    user: 'donotreply@eesl.co.in',
+    pass: 'Eesl@123'
   }
 });
 

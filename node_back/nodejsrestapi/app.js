@@ -97,7 +97,7 @@ app.post("/travel_claim", function (req, res) {
             password: 'P0rt@l',
             //server: '115.124.113.186', 
             server: 'localhost', 
-            database: 'emp_portal_test' 
+            database: 'emp_portal' 
         };
     // connect to your database
     sql.connect(config, function (err) {
@@ -286,8 +286,8 @@ function sendMail(res,from,to,subject,text){
   var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'groy@eesl.co.in',
-    pass: '2012@roy@2012'
+    user: 'donotreply@eesl.co.in',
+    pass: 'Eesl@123'
   }
 });
 
