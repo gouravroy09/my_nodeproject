@@ -189,7 +189,7 @@ api.get('/users',function(req,res,next){
 
            
         // query to the database and get the records
-        request.query('select  tblGrades.Grade,UserName,FullName,EmailID,EmpNo,Doj,GradeCode,EmpType from Users left join tblGrades on Users.GradeCode=tblGrades.Id', function (err, recordset) {
+        request.query('select  tblGrades.Grade,UserName,FullName,EmailID,EmpNo,Doj,GradeCode,EmpType, from Users left join tblGrades on Users.GradeCode=tblGrades.Id', function (err, recordset) {
             
             if (err) console.log(err);
 
@@ -1631,16 +1631,17 @@ console.log(req.body);
       res.json(err);
     }
     else
+        //console.log(rows);
     {
         var conf={};
         conf.rows = [];
         if(rows.length!=undefined){
             
-        conf.cols=[{
-            caption:'tour_id',
-            type:'number',
-            width:50
-        },{
+            conf.cols=[{
+                caption:'tour_id',
+                type:'number',
+                width:50
+            },{
             caption:'reimbursement_amount',
             type:'number',
             width:50
@@ -1708,8 +1709,8 @@ console.log(req.body);
                 rows[i].reimbursement_description,rows[i].emp_type_description];
             arr.push(a);
         }
-        //conf.rows = arr;
-        console.log('asdsadsadsadasd');
+        conf.rows = arr;
+        console.log(arr);
         }
         //console.log(conf.rows);
         conf.name = "mysheet";
