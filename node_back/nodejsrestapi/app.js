@@ -97,7 +97,7 @@ app.post("/travel_claim", function (req, res) {
             password: 'P0rt@l',
             //server: '115.124.113.186', 
             server: 'localhost', 
-            database: 'emp_portal' 
+            database: 'emp_portal_test' 
         };
     // connect to your database
     sql.connect(config, function (err) {
