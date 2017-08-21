@@ -518,7 +518,8 @@ var config = {
   }
   else
   {
-      var from = 'a_mtyagi@eesl.co.in';
+      //var from = 'a_mtyagi@eesl.co.in';
+      var from = 'donotreply@eesl.co.in';
                     var to = 'a_mtyagi@eesl.co.in';
                     var subject = 'Claim Status : Approver Approved';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
@@ -615,7 +616,8 @@ var config = {
   }
   else
   {
-      var from = 'a_mtyagi@eesl.co.in';
+      //var from = 'a_mtyagi@eesl.co.in';
+      var from = 'donotreply@eesl.co.in';
                     var to = 'a_mtyagi@eesl.co.in';
                     var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
@@ -663,7 +665,8 @@ api.post('/hrapproveReimburse',function(req,res,next){
   }
   else
   {
-      var from = 'groy@eesl.co.in';
+      //var from = 'groy@eesl.co.in';
+      var from = 'donotreply@eesl.co.in';
                     var to = 'groy@eesl.co.in';
                     var subject = 'Claim Status: HR-Approved';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
@@ -747,7 +750,8 @@ api.post('/approverreject',function(req,res,next){
 
 
 
-      var from = 'a_mtyagi@eesl.co.in';
+      //var from = 'a_mtyagi@eesl.co.in';
+      var from = 'donotreply@eesl.co.in';
                     var to = 'a_mtyagi@eesl.co.in';
                     var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
@@ -834,7 +838,8 @@ api.post('/hrreject',function(req,res,next){
             console.log(recordset);
 
 
-      var from = 'a_mtyagi@eesl.co.in';
+      //var from = 'a_mtyagi@eesl.co.in';
+      var from = 'donotreply@eesl.co.in';
                     var to = 'a_mtyagi@eesl.co.in';
                     var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
@@ -922,7 +927,8 @@ api.post('/hrrejectReimburse/amt-Freq-Mismatch',function(req,res,next){
   }
   else
   {
-      var from = 'a_mtyagi@eesl.co.in';
+      //var from = 'a_mtyagi@eesl.co.in';
+      var from = 'donotreply@eesl.co.in';
                     var to = 'a_mtyagi@eesl.co.in';
                     var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
@@ -960,7 +966,8 @@ api.post('/hrrejectReimburse/docMismatch',function(req,res,next){
   }
   else
   {
-      var from = 'groy@eesl.co.in';
+      //var from = 'groy@eesl.co.in';
+      var from = 'donotreply@eesl.co.in';
                     var to = 'groy@eesl.co.in';
                     var subject = 'Claim Status : HR Reject - Document Mismatch';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';

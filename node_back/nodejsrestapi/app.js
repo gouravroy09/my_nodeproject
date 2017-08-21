@@ -56,7 +56,8 @@ app.post("/api/Upload", function (req, res) {
             else{
                     //res.json(req.body);//or return count for 1 & 0
                     //return res.end("File uploaded sucessfully!.");
-                    var from = 'groy@eesl.co.in';
+                    //var from = 'groy@eesl.co.in';
+                    var from = 'donotreply@eesl.co.in';
                     var to = 'groy@eesl.co.in';
                     var subject = 'Non-Travel Claim uploaded';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
@@ -181,7 +182,8 @@ app.post("/travel_claim", function (req, res) {
             else{
                     //res.json(req.body);//or return count for 1 & 0
                     //return res.end("File uploaded sucessfully!.");
-                    var from = 'a_mtyagi@eesl.co.in';
+                    //var from = 'a_mtyagi@eesl.co.in';
+                    var from = 'donotreply@eesl.co.in';
                     var to = '';
                     
                     //console.log(to);
@@ -242,7 +244,7 @@ app.post("/travel_claim", function (req, res) {
                     //res.json(req.body);//or return count for 1 & 0
                     //return res.end("File uploaded sucessfully!.");
 
-                    var from = 'a_mtyagi@eesl.co.in';
+                    var from = 'donotreply@eesl.co.in';
                     var to = 'a_mtyagi@eesl.co.in';
                     var subject = 'Travel Claim uploaded';
                     var text = "You have expense claim for your apporval.Kindly login into https://apps.eeslindia.org. Go to Approve Claim inide Claims/Reimbursements tab.";
