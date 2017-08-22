@@ -739,7 +739,7 @@ api.post('/approverreject',function(req,res,next){
             password: 'P0rt@l',
             //server: '115.124.113.186', 
             server: 'localhost',  
-            database: 'emp_portal_test' 
+            database: 'emp_portal' 
         };
     // connect to your database
     sql.connect(config, function (err) {
@@ -828,7 +828,7 @@ api.post('/hrreject',function(req,res,next){
             password: 'P0rt@l',
             //server: '115.124.113.186', 
             server: 'localhost',  
-            database: 'emp_portal_test' 
+            database: 'emp_portal' 
         };
     // connect to your database
     sql.connect(config, function (err) {
