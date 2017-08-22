@@ -189,7 +189,7 @@ api.get('/users',function(req,res,next){
 
            
         // query to the database and get the records
-        request.query('select  tblGrades.Grade,UserName,FullName,EmailID,EmpNo,Doj,GradeCode,EmpType, from Users left join tblGrades on Users.GradeCode=tblGrades.Id', function (err, recordset) {
+        request.query('select  tblGrades.Grade,UserName,FullName,EmailID,EmpNo,Doj,GradeCode,EmpType from Users left join tblGrades on Users.GradeCode=tblGrades.Id', function (err, recordset) {
             
             if (err) console.log(err);
 
