@@ -1628,7 +1628,7 @@ api.post('/updateUser',function(req,res,next){
                 res.end(err);
             }
             else{
-                if(result.id!=undefined){
+                if(result[0].id!=undefined){
 
 
 
@@ -1638,7 +1638,7 @@ api.post('/updateUser',function(req,res,next){
        // console.log(recordset.recordset.length);
         //for(var i =0;i < recordset.recordset.length;i++){
             //var User = recordset.recordset[i];
-            query_string = query_string + "("+result.id+
+            query_string = query_string + "("+result[0].id+
             stringify(req.body.GradeName) + "," + stringify(req.body.UserName)+","+stringify(req.body.FullName)+","+
             stringify(req.body.EmailID)+","+stringify(req.body.EmpNo)+","+
             stringify(req.body.Doj)+","+zeroGrade(req.body.GradeCode)+","+zeroGrade(req.body.EmpType)+")";
