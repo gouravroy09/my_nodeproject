@@ -1571,7 +1571,7 @@ api.post('/addUser',function(req,res,next){
         console.log(req.body);
         //res.end('success');
     var query_string = "insert into users(emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) "+
-    "values(?,?,?,?,?,?,?)";
+    "values(?,?,?,?,?,?,?,?)";
         db.query(query_string,[req.body.GradeName,
             req.body.UserName,reqbody.FullName,req.body.EmailID,req.body.EmpNo,req.body.Doj,req.body.GradeCode,req.body.EmpType],function(err){
                 if(err)
@@ -1589,9 +1589,15 @@ api.post('/addUser',function(req,res,next){
 api.post('/updateUser',function(req,res,next){
          console.log(req.body);
         //res.end('success');
-    var query_string = "replace into users(id,emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) "+
-    "values(?,?,?,?,?,?,?,?)";
-        db.query(query_string,[req.body.Id,req.body.GradeName,
+        db.query('select id from users where emp_no="'+req.body.EmpNo+'"',function(err,result){
+            if(err){
+                res.end(err);
+            }
+            else{
+                if(result.id!=undefined){
+                    var query_string = "replace into users(id,emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) "+
+    "values(?,?,?,?,?,?,?,?,?)";
+        db.query(query_string,[result.id,req.body.GradeName,
             req.body.UserName,reqbody.FullName,req.body.EmailID,req.body.EmpNo,req.body.Doj,req.body.GradeCode,req.body.EmpType],function(err){
                 if(err)
                 {
@@ -1602,6 +1608,10 @@ api.post('/updateUser',function(req,res,next){
                     res.end('success'); 
                 }
             });
+                }
+            }
+        });
+    
     });
 
 
