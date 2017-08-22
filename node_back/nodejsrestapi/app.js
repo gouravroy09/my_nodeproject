@@ -287,7 +287,7 @@ function sendMail(res,from,to,subject,text){
   service: 'gmail',
   auth: {
     user: 'donotreply@eesl.co.in',
-    pass: 'Eesl@123'
+    pass: 'Eesl@1234'
   }
 });
 
