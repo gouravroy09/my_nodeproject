@@ -1588,10 +1588,26 @@ var mailOptions = {
 api.post('/addUser',function(req,res,next){
         console.log(req.body);
         //res.end('success');
-    var query_string = "insert into users(emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) "+
-    "values(?,?,?,?,?,?,?,?)";
-        db.query(query_string,[req.body.GradeName,
-            req.body.UserName,reqbody.FullName,req.body.EmailID,req.body.EmpNo,req.body.Doj,req.body.GradeCode,req.body.EmpType],function(err){
+
+
+//var query_string = "delete from users;ALTER TABLE users AUTO_INCREMENT = 1;"
+    var query_string =   "insert into users(emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) values";
+
+    //if(i<recordset.recordset.length){
+       // console.log(recordset.recordset.length);
+        //for(var i =0;i < recordset.recordset.length;i++){
+            //var User = recordset.recordset[i];
+            query_string = query_string + "("+
+            stringify(req.body.GradeName) + "," + stringify(req.body.UserName)+","+stringify(req.body.FullName)+","+
+            stringify(req.body.EmailID)+","+stringify(req.body.EmpNo)+","+
+            stringify(req.body.Doj)+","+zeroGrade(req.body.GradeCode)+","+zeroGrade(req.body.EmpType)+")";
+        //}
+        //query_string = query_string.slice(0,-1);
+       // query_string =query_string ;
+        console.log(query_string);
+
+    
+        db.query(query_string,function(err){
                 if(err)
                 {
                     res.end(error);
