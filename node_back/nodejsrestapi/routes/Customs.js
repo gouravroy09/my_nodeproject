@@ -44,8 +44,8 @@ api.get('/empTypes',function(req,res,next){
     var config = {
             user: 'emp_portal',
             password: 'P0rt@l',
-            server: '115.124.113.186', 
-            database: 'emp_portal_test' 
+            server: 'localhost', 
+            database: 'emp_portal' 
         };
     // connect to your database
     sql.connect(config, function (err) {
@@ -109,8 +109,8 @@ api.get('/grades',function(req,res,next){
     var config = {
             user: 'emp_portal',
             password: 'P0rt@l',
-            server: '115.124.113.186', 
-            database: 'emp_portal_test' 
+            server: 'localhost', 
+            database: 'emp_portal' 
         };
     // connect to your database
     sql.connect(config, function (err) {
@@ -233,7 +233,7 @@ function addUser(sql,res,recordset){
 
 
 
-    
+
 
     var query_string = "delete from users;ALTER TABLE users AUTO_INCREMENT = 1;"
     query_string = query_string + "insert into users(emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) values";
@@ -480,7 +480,7 @@ var config = {
             password: 'P0rt@l',
             //server: '115.124.113.186', 
             server: 'localhost',  
-            database: 'emp_portal_test' 
+            database: 'emp_portal' 
         };
     // connect to your database
     sql.connect(config, function (err) {
@@ -578,7 +578,7 @@ var config = {
             password: 'P0rt@l',
             //server: '115.124.113.186', 
             server: 'localhost',  
-            database: 'emp_portal_test' 
+            database: 'emp_portal' 
         };
     // connect to your database
     sql.connect(config, function (err) {
