@@ -176,8 +176,8 @@ api.get('/users',function(req,res,next){
     var config = {
             user: 'emp_portal',
             password: 'P0rt@l',
-            server: '115.124.113.186', 
-            database: 'emp_portal_test' 
+            server: 'localhost', 
+            database: 'emp_portal' 
         };
     // connect to your database
     sql.connect(config, function (err) {
@@ -195,7 +195,7 @@ api.get('/users',function(req,res,next){
 
             // send records as a response
             //var i=0;
-            //addUser(sql,res,recordset);
+            addUser(sql,res,recordset);
 
             console.log(recordset);
             //for(i=0;i<recordset.length;i++){
@@ -216,6 +216,24 @@ api.get('/users',function(req,res,next){
 
 
 function addUser(sql,res,recordset){
+
+    // var query_string = "insert into users(emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) "+
+    // "values(?,?,?,?,?,?,?,?)";
+    //     db.query(query_string,[req.body.GradeName,
+    //         req.body.UserName,reqbody.FullName,req.body.EmailID,req.body.EmpNo,req.body.Doj,req.body.GradeCode,req.body.EmpType],function(err){
+    //             if(err)
+    //             {
+    //                 res.end(error);
+    //             }
+    //             else
+    //             {
+    //                 res.end('success');
+    //             }
+    //         });
+
+
+
+    
 
     var query_string = "delete from users;ALTER TABLE users AUTO_INCREMENT = 1;"
     query_string = query_string + "insert into users(emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) values";
