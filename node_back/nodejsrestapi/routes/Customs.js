@@ -1494,7 +1494,8 @@ function saveInvoice(update_rows,link,callback){
     }
     update_query = update_query.slice(0,-1);
     update_query=update_query +');';
-    update_query = update_query +'insert into miscellaneous(param,value) values("invoice","'+link+'");';
+    
+    update_query = update_query +'insert into miscellaneous2(param,value) values("invoice","'+link+'");';
     //update_query = update_query + 'commit;';
     console.log(update_query);
     return db.query(update_query,callback);

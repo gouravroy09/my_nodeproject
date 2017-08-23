@@ -319,3 +319,13 @@ CREATE TABLE `employee_reimbursement_history_with_rejects` (
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
+
+
+
+
+
+
+CREATE TABLE `miscellaneous2` (
+  `param` varchar(2000) DEFAULT NULL,
+  `value` varchar(2000) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
