@@ -230,7 +230,7 @@ function travel_claim_form(form){
                 $('#travel_claim_form').children('.travel_date_to').remove();
                 return true;
             }*/
-            $('#multiplier').val(no_of_days);
+            $('#multiplier').val(no_of_days+1);
             /*$('#travel_claim_form').append($("<input />").attr('type', 'hidden').attr('name', "multiplier").attr('value',no_of_days));*/
           } else {
             var i =value.id.slice(11,12);
@@ -254,7 +254,7 @@ function travel_claim_form(form){
                 $('#travel_claim_form').children('.travel_date_to').remove();
                 return true;
             }*/
-            $('#multiplier'+i+'').val(no_of_days);
+            $('#multiplier'+i+'').val(no_of_days+1);
             //alert($('#multiplier'+i+'').val());
             /*$('#travel_claim_form').append($("<input />").attr('type', 'hidden').attr('name', "multiplier").attr('value',no_of_days));*/
           }
