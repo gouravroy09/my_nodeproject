@@ -201,7 +201,7 @@ app.post("/travel_claim", function (req, res) {
                     //console.log(to);
                     //to = result[0].email_id;
                     var subject = 'Travel Claim uploaded';
-                    var text = "You have expense claim for your apporval.Kindly login into https://apps.eeslindia.org. Go to Approve Claim inide Claims/Reimbursements tab.";
+                    var text = "You have expense claim for your apporval.Kindly login into https://apps.eeslindia.org. Go to Approve Claim inside UPL tab.";
                      text=  text +'***This is an auto generated mail, please do not reply to this mail.***';
                      var text2 = '***This is an auto generated mail, please do not reply to this mail.***';
                     //console.log(to);
