@@ -85,6 +85,7 @@ app.post("/api/Upload", function (req, res) {
 });
 
 app.post("/travel_claim", function (req, res) {
+  
     upload(req, res, function (err) {
         if (err) {
           ///this error comes mostly when Images foler is not present
@@ -92,7 +93,18 @@ app.post("/travel_claim", function (req, res) {
         }
         //updateTourDetails(req.body.tour_id);
 
-        var config = {
+        db.query("select count(*) as count from employee_reimbursement_history where tour_id="+ req.body.tour_id,function(err,result){
+    if(err){
+      res.json(err);
+
+    }else if(parseInt(result[0].count)>=1){
+      //if{
+        res.json("Claim for tour_id : " + req.body.tour_id + " already exist!!");
+      //}
+      
+      
+    } else{
+      var config = {
             user: 'emp_portal',
             password: 'P0rt@l',
             //server: '115.124.113.186', 
@@ -274,7 +286,10 @@ app.post("/travel_claim", function (req, res) {
             
         });
     });
+    }
   
+        
+  });
     });
 });
 
