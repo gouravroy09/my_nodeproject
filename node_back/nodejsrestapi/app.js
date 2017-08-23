@@ -517,7 +517,7 @@ app.post('/claims/verify', function(req, res){
                                   {
                                     console.log('insert into miscellaneous(param,value) values("'+req.body.sessionId+'",'+JSON.stringify(new Date())+');');
                                      var update_query='delete from miscellaneous where date(value)<curdate();';
-                                    db.query(update_query + 'insert into miscellaneous(param,value) values("'+req.body.sessionId+'",'+JSON.stringify(new Date())+');',function(err){
+                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'",'+JSON.stringify(new Date())+');',function(err){
                                       if (err)
                                       {
                                         console.log(err);
