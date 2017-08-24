@@ -329,3 +329,7 @@ CREATE TABLE `miscellaneous2` (
   `param` varchar(2000) DEFAULT NULL,
   `value` varchar(2000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+ALTER TABLE miscellaneous MODIFY value datetime default now();

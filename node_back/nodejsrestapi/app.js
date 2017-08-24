@@ -515,9 +515,9 @@ app.post('/claims/verify', function(req, res){
                                     //res.redirect()
                                   } else
                                   {
-                                    console.log('insert into miscellaneous(param,value) values("'+req.body.sessionId+'",'+JSON.stringify(new Date())+');');
+                                    console.log('insert into miscellaneous(param) values("'+req.body.sessionId+'");');
                                      var update_query='delete from miscellaneous where date(value)<curdate();';
-                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'",'+JSON.stringify(new Date())+');',function(err){
+                                    db.query(update_query + 'insert into miscellaneous(param) values("'+req.body.sessionId+'");',function(err){
                                       if (err)
                                       {
                                         console.log(err);
@@ -583,7 +583,7 @@ app.post('/hr/claims/verify', function(req, res){
                                     //res.redirect()
                                   } else
                                   {
-                                    db.query('insert into miscellaneous(param,value) values("'+req.body.sessionId+'",'+JSON.stringify(new Date())+');',function(err){
+                                    db.query('insert into miscellaneous(param) values("'+req.body.sessionId+'");',function(err){
                                       if (err)
                                       {
                                         console.log(err);
