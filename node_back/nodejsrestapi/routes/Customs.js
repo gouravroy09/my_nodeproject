@@ -1624,7 +1624,7 @@ api.post('/addUser',function(req,res,next){
 api.post('/updateUser',function(req,res,next){
          console.log(req.body);
         //res.end('success');
-        db.query('select id from users where emp_no="'+req.body.EmpNo+'"',function(err,result){
+        db.query('select id,role from users where emp_no="'+req.body.EmpNo+'"',function(err,result){
             if(err){
                 res.end(err);
             }
@@ -1633,7 +1633,7 @@ api.post('/updateUser',function(req,res,next){
 
 
 
-                    var query_string =   "replace into users(id,emp_grade_code,username,fullname,email_id,emp_no,doj,emp_grade_id,emp_type_id) values";
+                    var query_string =   "replace into users(id,emp_grade_code,username,fullname,email_id,emp_no,doj,role,emp_grade_id,emp_type_id) values";
 
     //if(i<recordset.recordset.length){
        // console.log(recordset.recordset.length);
@@ -1642,7 +1642,7 @@ api.post('/updateUser',function(req,res,next){
             query_string = query_string + "("+result[0].id+ "," +
             stringify(req.body.GradeName) + "," + stringify(req.body.UserName)+","+stringify(req.body.FullName)+","+
             stringify(req.body.EmailID)+","+stringify(req.body.EmpNo)+","+
-            stringify(req.body.Doj)+","+zeroGrade(req.body.GradeCode)+","+zeroGrade(req.body.EmpType)+")";
+            stringify(req.body.Doj)+","+stringify(result[0].role)+","+zeroGrade(req.body.GradeCode)+","+zeroGrade(req.body.EmpType)+")";
         //}
         //query_string = query_string.slice(0,-1);
        // query_string =query_string ;
