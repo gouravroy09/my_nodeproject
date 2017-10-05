@@ -1850,6 +1850,14 @@ api.get('/formDetails/:id1?',function(req,res,next){
             database: 'emp_portal' 
         };
     // connect to your database
+    db.query('select code from employee_code where code="'+req.params.id1+'"',function(err,result){
+        if(err){
+            res.end(err);
+        }
+        if(result.length==0){
+            res.end("Employee record not found!!");
+        }
+        //console.log(result.length);
     sql.connect(config, function (err) {
     
         if (err) console.log(err);
@@ -1891,7 +1899,7 @@ api.get('/formDetails/:id1?',function(req,res,next){
             
         });
     });
-
+});
     //sql.close();
     });
 

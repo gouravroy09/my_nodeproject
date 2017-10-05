@@ -333,3 +333,11 @@ CREATE TABLE `miscellaneous2` (
 
 
 ALTER TABLE miscellaneous MODIFY value datetime default now();
+
+
+
+
+
+
+/*5th october 2017*/
+CREATE TABLE `employee_code` (   `code` varchar(200) DEFAULT NULL ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
