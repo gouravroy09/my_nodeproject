@@ -1841,4 +1841,59 @@ function  updateTourDetails(tourId) {
 }
 
 
+
+api.get('/formDetails/:id1?',function(req,res,next){
+    var config = {
+            user: 'emp_portal',
+            password: 'P0rt@l',
+            server: 'localhost', 
+            database: 'emp_portal' 
+        };
+    // connect to your database
+    sql.connect(config, function (err) {
+    
+        if (err) console.log(err);
+
+        // create Request object
+        var request = new sql.Request();
+
+           
+        // query to the database and get the records
+        request.query("select  tblDept.Name as Dept,Post, tblGrades.Grade,UserName,FullName,EmailID,EmpNo,Doj,GradeCode,tblEmpType.EmpType EmpType from Users left join tblGrades on Users.GradeCode=tblGrades.Id left join tblDept on tblDept.Id = Users.DeptId left join tblEmpType on tblEmpType.Id=Users.EmpType where Users.EmpNo='"+req.params.id1+"' ", function (err, recordset) {
+            
+            if (err) console.log(err);
+            console.log(recordset);
+            var User = recordset.recordset[0];
+            // send records as a response
+            //var i=0;
+            //addUser(sql,res,recordset);
+        //     for(var i =0;i < recordset.recordset.length;i++){
+        //     var User = recordset.recordset[i];
+        //     query_string = query_string + "("+
+        //     stringify(User.Grade) + "," + stringify(User.UserName)+","+stringify(User.FullName)+","+
+        //     stringify(User.EmailID)+","+stringify(User.EmpNo)+","+
+        //     stringify(User.Doj)+","+zeroGrade(User.GradeCode)+","+zeroGrade(User.EmpType)+"),";
+        // }
+        sql.close();
+            var form_prefilled_url ="https://docs.google.com/forms/d/e/1FAIpQLSckoQMs3f4sGJW4xc2Rbln6w34ixiBdkxl8ejGUqZ9QoJYsbg/viewform?usp=pp_url&entry.1663611951="+User.FullName+
+            "&entry.298139035="+User.EmpNo+"&entry.1709444462="+User.Dept
+            +"&entry.851106813="+User.Post+"&entry.1162594645="+User.EmpType + "&entry.1418799842=" + User.EmailID;
+            res.redirect(form_prefilled_url);
+            //for(i=0;i<recordset.length;i++){
+                /*if(i<recordset.length){
+
+                Custom2.addUser(recordset[i],function(err,count){
+
+                });
+                }*/
+            //}
+            //res.end(JSON.stringify (recordset));
+            
+        });
+    });
+
+    //sql.close();
+    });
+
+
 module.exports = api
