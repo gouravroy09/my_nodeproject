@@ -1857,7 +1857,8 @@ api.get('/formDetails/:id1?',function(req,res,next){
         if(result.length==0){
             res.end("Employee record not found!!");
         }
-        //console.log(result.length);
+        else{
+                //console.log(result.length);
     sql.connect(config, function (err) {
     
         if (err) console.log(err);
@@ -1899,6 +1900,9 @@ api.get('/formDetails/:id1?',function(req,res,next){
             
         });
     });
+
+        }
+    
 });
     //sql.close();
     });
