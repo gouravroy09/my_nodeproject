@@ -1840,8 +1840,7 @@ function  updateTourDetails(tourId) {
     return;
 }
 
-
-
+var form_counter =1;
 api.get('/formDetails/:id1?',function(req,res,next){
     var config = {
             user: 'emp_portal',
@@ -1884,10 +1883,24 @@ api.get('/formDetails/:id1?',function(req,res,next){
         //     stringify(User.Doj)+","+zeroGrade(User.GradeCode)+","+zeroGrade(User.EmpType)+"),";
         // }
         sql.close();
+        ++form_counter;
+        console.log("counter value : " + form_counter);
+        if(form_counter%2==1){
             var form_prefilled_url ="https://docs.google.com/forms/d/e/1FAIpQLSckoQMs3f4sGJW4xc2Rbln6w34ixiBdkxl8ejGUqZ9QoJYsbg/viewform?usp=pp_url&entry.1663611951="+User.FullName+
             "&entry.298139035="+User.EmpNo+"&entry.1709444462="+User.Dept
             +"&entry.851106813="+User.Post+"&entry.1162594645="+User.EmpType + "&entry.1418799842=" + User.EmailID;
             res.redirect(form_prefilled_url);
+        }else{
+            var form_prefilled_url2 ="https://docs.google.com/forms/d/e/1FAIpQLSdNShQNSTq1QLKFSMg6Mo2eBBPTr1NuKgnlcC2raqUBmN7dvA/viewform?usp=pp_url&entry.1663611951="+User.FullName+
+            "&entry.298139035="+User.EmpNo+"&entry.1709444462="+User.Dept
+            +"&entry.851106813="+User.Post+"&entry.1162594645="+User.EmpType + "&entry.1418799842=" + User.EmailID;
+            res.redirect(form_prefilled_url2);
+        }
+            
+
+            
+            
+
             //for(i=0;i<recordset.length;i++){
                 /*if(i<recordset.length){
 
