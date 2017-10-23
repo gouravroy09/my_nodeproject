@@ -1885,16 +1885,21 @@ api.get('/formDetails/:id1?',function(req,res,next){
         sql.close();
         ++form_counter;
         console.log("counter value : " + form_counter);
-        if(form_counter%2==1){
+        if(form_counter%3==1){
             var form_prefilled_url ="https://docs.google.com/forms/d/e/1FAIpQLSckoQMs3f4sGJW4xc2Rbln6w34ixiBdkxl8ejGUqZ9QoJYsbg/viewform?usp=pp_url&entry.1663611951="+User.FullName+
             "&entry.298139035="+User.EmpNo+"&entry.1709444462="+User.Dept
             +"&entry.851106813="+User.Post+"&entry.1162594645="+User.EmpType + "&entry.1418799842=" + User.EmailID;
             res.redirect(form_prefilled_url);
-        }else{
+        }else if(form_counter%3==2){
             var form_prefilled_url2 ="https://docs.google.com/forms/d/e/1FAIpQLSdNShQNSTq1QLKFSMg6Mo2eBBPTr1NuKgnlcC2raqUBmN7dvA/viewform?usp=pp_url&entry.1663611951="+User.FullName+
             "&entry.298139035="+User.EmpNo+"&entry.1709444462="+User.Dept
             +"&entry.851106813="+User.Post+"&entry.1162594645="+User.EmpType + "&entry.1418799842=" + User.EmailID;
             res.redirect(form_prefilled_url2);
+        } else {
+            var form_prefilled_url3 ="https://docs.google.com/forms/d/e/1FAIpQLSc-AZOkqlmioFG8tnzaZFop2780fVfUNTzRy71xAZQG8kgmyg/viewform?usp=pp_url&entry.1663611951="+User.FullName+
+            "&entry.298139035="+User.EmpNo+"&entry.1709444462="+User.Dept
+            +"&entry.851106813="+User.Post+"&entry.1162594645="+User.EmpType + "&entry.1418799842=" + User.EmailID;
+            res.redirect(form_prefilled_url3);
         }
             
 
