@@ -1796,6 +1796,151 @@ console.log(req.body);
 });
 });
 
+
+
+
+api.get('/report2',function(req,res){
+    //import xlsx from 'node-xlsx';
+// Or var xlsx = require('node-xlsx').default; 
+
+// Parse a buffer
+
+// const data = [[1, 2, 3], [true, false, null, 'sheetjs'], ['foo', 'bar', new Date('2014-02-19T14:30Z'), '0.3'], ['baz', null, 'qux']];
+// var buffer = xlsx.build([{name: "mySheetName", data: data}]);
+// res.send(buffer);
+
+/*excelParser.worksheets({
+  inFile: './Report.xlsx'
+}, function(err, worksheets){
+  if(err) console.error(err);
+  console.log(worksheets);
+});*/
+    //var status ='pending';
+    var config = {
+            user: 'emp_portal',
+            password: 'P0rt@l',
+            server: 'localhost', 
+            database: 'emp_portal' 
+        };
+    // connect to your database
+    sql.connect(config, function (err) {
+    
+        if (err) console.log(err);
+
+        // create Request object
+        var request = new sql.Request();
+           
+        // query to the database and get the records
+        
+        request.query('select u.FullName,u.EmpNo,u.Post,u.PostedAt,t.ToAddress,t.PeriodFrom,t.PeriodTo,t.Purpose from TourDetails t inner join Users u on t.UserId = u.Id', function (err, rows){
+    if(err)
+    {
+      res.json(err);
+    }
+    else
+        
+    {
+        console.log(rows);
+        var conf={};
+        conf.rows = [];
+        if(rows.length!=undefined){
+            
+            conf.cols=[{
+                caption:'FullName',
+                type:'number',
+                width:50
+            },{
+            caption:'EmpNo',
+            type:'string',
+            width:50
+        },
+        {
+            caption:'Post',
+            type:'string',
+            width:50
+        },
+        {
+            caption:'PostedAt',
+            type:'string',
+            width:50
+        },
+        {
+            caption:'ToAddress',
+            type:'string',
+            width:15
+        },
+        {
+            caption:'PeriodFrom',
+            type:'string',
+            width:15
+        },
+        {
+            caption:'PeriodTo',
+            type:'string',
+            width:15
+        },
+        {
+            caption:'Purpose',
+            type:'string',
+            width:15
+        }
+        // ,
+        // {
+        //     caption:'doj',
+        //     type:'string',
+        //     width:15
+        // },
+        // {
+        //     caption:'emp_grade_code',
+        //     type:'string',
+        //     width:15
+        // },
+        // {
+        //     caption:'reimbursement_description',
+        //     type:'string',
+        //     width:15
+        // },
+        // {
+        //     caption:'emp_type_description',
+        //     type:'string',
+        //     width:15
+        // }
+        ];
+        var arr =[];
+        for(i=0;i<rows.length;i++){
+  //          var t = rows[i].time.toString.split(/[- :]/);
+
+// Apply each element to the Date function
+//var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
+//console.log(d);
+            a=[rows[i].FullName,rows[i].EmpNo,rows[i].Post,rows[i].PostedAt,rows[i].ToAddress!=null?rows[i].bill_generated:"",
+                rows[i].PeriodFrom,rows[i].PeriodTo,rows[i].Purpose
+                // ,rows[i].doj,rows[i].emp_grade_code,
+                // rows[i].reimbursement_description,rows[i].emp_type_description
+                ];
+            arr.push(a);
+        }
+        conf.rows = arr;
+        console.log(arr);
+        }
+        //console.log(conf.rows);
+        conf.name = "mysheet";
+    var result = nodeExcel.execute(conf);
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+    res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
+    res.end(result, 'binary');
+        //console.log(rows);
+         //var buffer = xlsx.build([{name: "mySheetName", data: rows}]);
+         //res.send(buffer);
+    }
+});
+    });
+
+    sql.close();
+  
+});
+
+
 function  updateTourDetails(tourId) {
   var config = {
             user: 'emp_portal',
