@@ -121,9 +121,6 @@
                 <li>
                   <a class="page-scroll" href="#report">Report</a>
                 </li>
-                <li>
-                  <a class="page-scroll" href="#report2">Report</a>
-                </li>
               </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -397,55 +394,6 @@
 <script type="text/javascript">
   //function report_form(){
     var link = 'http://'+location.hostname +':3000/custom/report';
-    $('#reportExcel').attr('method','POST');
-    $('#reportExcel').attr('action',link);
-      
-    //var data = {};
-      //data.reimbursement_id = id;
-      //data.sessionId = document.cookie.split("=").slice(-1).pop();
-      //data.roleName = 'claim_manager';
-    //   var f = document.createElement("form");
-    //   var from = document.createElement("input"); 
-    // var to = document.createElement("input");
-    // //var reimbursement_id = document.createElement("input");
-    // from.value=$('#report_from_date').val();
-    // from.name='from';
-    // f.appendChild(from);  
-    // to.value=$('#report_to_date').val();
-    // to.name='to';
-    // f.appendChild(to);  
-    // //reimbursement_id.value=id;
-    // //reimbursement_id.name="reimbursement_id";
-    // //f.appendChild(reimbursement_id);    
-    //   f.setAttribute('method',"post");
-    //   f.setAttribute('action',link);
-     
-    //   document.body.appendChild(f);
-
-    // f.submit();
-  //}
-</script>
-
-
-</div>
-</div>
-</div>
-</section>
-
-
-<section id="report2" class="contact-section">
-              <div class="container">
-                <div class="row">
-                  <div class="col-lg-12">
-                    <h1>Claims Report</h1>
-                    <form id='reportExcel' >
-                      <input type="date" id="report_from_date" name="from" required="">
-                      <input type="date" id="report_to_date" name="to"  required="">
-                      <input type="submit" name="submit" value='Get'>
-                    </form>
-<script type="text/javascript">
-  //function report_form(){
-    var link = 'http://'+location.hostname +':3000/custom/report2';
     $('#reportExcel').attr('method','POST');
     $('#reportExcel').attr('action',link);
       
