@@ -1799,7 +1799,7 @@ console.log(req.body);
 
 
 
-api.post('/report2',function(req,res){
+api.get('/report2',function(req,res){
     //import xlsx from 'node-xlsx';
 // Or var xlsx = require('node-xlsx').default; 
 
@@ -1819,7 +1819,7 @@ api.post('/report2',function(req,res){
     var config = {
             user: 'emp_portal',
             password: 'P0rt@l',
-            server: 'localhost', 
+            server: '115.124.113.186', 
             database: 'emp_portal' 
         };
     // connect to your database
@@ -1832,7 +1832,7 @@ api.post('/report2',function(req,res){
            
         // query to the database and get the records
         
-        request.query('select u.FullName,u.EmpNo,u.Post,u.PostedAt,t.ToAddress,t.PeriodFrom,t.PeriodTo,t.Purpose from TourDetails t inner join Users u on t.UserId = u.Id', function (err, rows){
+        request.query('select top 1 * from TourDetails t inner join Users u on t.UserId = u.Id', function (err, rows){
     if(err)
     {
       res.json(err);
@@ -2067,6 +2067,70 @@ api.get('/formDetails/:id1?',function(req,res,next){
         }
     
 });
+    //sql.close();
+    });
+
+
+
+api.get('/formDetails2/:id1?',function(req,res,next){
+    var config = {
+            user: 'emp_portal',
+            password: 'P0rt@l',
+            server: 'localhost', 
+            database: 'emp_portal' 
+        };
+    // connect to your database
+    //db.query('select code from employee_code where code="'+req.params.id1+'"',function(err,result){
+        // if(err){
+        //     res.end(err);
+        // }
+        // if(result.length==0){
+        //     res.end("Employee record not found!!");
+        // }
+        // else{
+                //console.log(result.length);
+    sql.connect(config, function (err) {
+    
+        if (err) console.log(err);
+
+        // create Request object
+        var request = new sql.Request();
+
+           
+        // query to the database and get the records
+        request.query("select  tblDept.Name as Dept,Post, tblGrades.Grade,UserName,FullName,EmailID,EmpNo,Doj,GradeCode,tblEmpType.EmpType EmpType from Users left join tblGrades on Users.GradeCode=tblGrades.Id left join tblDept on tblDept.Id = Users.DeptId left join tblEmpType on tblEmpType.Id=Users.EmpType where Users.EmpNo='"+req.params.id1+"' ", function (err, recordset) {
+            
+            if (err) console.log(err);
+            console.log(recordset);
+            var User = recordset.recordset[0];
+            
+        sql.close();
+        //++form_counter;
+        //console.log("counter value : " + form_counter);
+        //if(form_counter%3==1){
+            var form_prefilled_url ="https://docs.google.com/forms/d/e/1FAIpQLScInmyc-jMOhF3Uku92atMtHjH6Hf3BiGZTszAqQGg627Hk6g/viewform?usp=pp_url&entry.1564158472="+User.FullName+
+            "&entry.964875694="+User.Post+"&entry.2076287349="+User.EmpNo
+            +"&entry.1864424525="+User.GradeCode+"&entry.406599046="+User.Dept;
+            res.redirect(form_prefilled_url);
+        //}else if(form_counter%3==2){
+            // var form_prefilled_url2 ="https://docs.google.com/forms/d/e/1FAIpQLSdNShQNSTq1QLKFSMg6Mo2eBBPTr1NuKgnlcC2raqUBmN7dvA/viewform?usp=pp_url&entry.1663611951="+User.FullName+
+            // "&entry.298139035="+User.EmpNo+"&entry.1709444462="+User.Dept
+            // +"&entry.851106813="+User.Post+"&entry.1162594645="+User.EmpType + "&entry.1418799842=" + User.EmailID;
+            // res.redirect(form_prefilled_url2);
+        //} else {
+            // var form_prefilled_url3 ="https://docs.google.com/forms/d/e/1FAIpQLSc-AZOkqlmioFG8tnzaZFop2780fVfUNTzRy71xAZQG8kgmyg/viewform?usp=pp_url&entry.1663611951="+User.FullName+
+            // "&entry.298139035="+User.EmpNo+"&entry.1709444462="+User.Dept
+            // +"&entry.851106813="+User.Post+"&entry.1162594645="+User.EmpType + "&entry.1418799842=" + User.EmailID;
+            // res.redirect(form_prefilled_url3);
+        //}
+            
+            
+        });
+    });
+
+        //}
+    
+//});
     //sql.close();
     });
 
