@@ -2098,7 +2098,7 @@ api.get('/formDetails2/:id1?',function(req,res,next){
 
            
         // query to the database and get the records
-        request.query("select  tblDept.Name as Dept,Post, tblGrades.Grade,UserName,FullName,EmailID,EmpNo,Doj,GradeCode,tblEmpType.EmpType EmpType from Users left join tblGrades on Users.GradeCode=tblGrades.Id left join tblDept on tblDept.Id = Users.DeptId left join tblEmpType on tblEmpType.Id=Users.EmpType where Users.EmpNo='"+req.params.id1+"' ", function (err, recordset) {
+        request.query("select  tblDept.Name as Dept,Post,MobileNo, tblGrades.Grade,UserName,FullName,EmailID,EmpNo,Doj,GradeCode,tblEmpType.EmpType EmpType from Users left join tblGrades on Users.GradeCode=tblGrades.Id left join tblDept on tblDept.Id = Users.DeptId left join tblEmpType on tblEmpType.Id=Users.EmpType where Users.EmpNo='"+req.params.id1+"' ", function (err, recordset) {
             
             if (err) console.log(err);
             console.log(recordset);
@@ -2110,7 +2110,7 @@ api.get('/formDetails2/:id1?',function(req,res,next){
         //if(form_counter%3==1){
             var form_prefilled_url ="https://docs.google.com/forms/d/e/1FAIpQLScInmyc-jMOhF3Uku92atMtHjH6Hf3BiGZTszAqQGg627Hk6g/viewform?usp=pp_url&entry.1564158472="+User.FullName+
             "&entry.964875694="+User.Post+"&entry.2076287349="+User.EmpNo
-            +"&entry.1864424525="+User.GradeCode+"&entry.406599046="+User.Dept;
+            +"&entry.1864424525="+User.GradeCode+"&entry.325595893="+User.MobileNo;
             res.redirect(form_prefilled_url);
         //}else if(form_counter%3==2){
             // var form_prefilled_url2 ="https://docs.google.com/forms/d/e/1FAIpQLSdNShQNSTq1QLKFSMg6Mo2eBBPTr1NuKgnlcC2raqUBmN7dvA/viewform?usp=pp_url&entry.1663611951="+User.FullName+
