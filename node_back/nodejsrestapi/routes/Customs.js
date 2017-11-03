@@ -1819,7 +1819,7 @@ api.get('/report2',function(req,res){
     var config = {
             user: 'emp_portal',
             password: 'P0rt@l',
-            server: '115.124.113.186', 
+            server: 'localhost', 
             database: 'emp_portal' 
         };
     // connect to your database
