@@ -434,6 +434,16 @@ app.get('/fileDownload/:file(*)', function(req, res, next){
 
   res.download(path);
 });
+
+
+app.get('/quick_report', function(req, res, next){
+    console.log(req.params.file);
+  var file = req.params.file
+    , path = __dirname + '/Images/quickReport.xlsx';
+
+  res.download(path);
+});
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 //app.set('port', process.env.PORT || 8080);
