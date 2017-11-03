@@ -1832,7 +1832,7 @@ api.get('/report2',function(req,res){
            
         // query to the database and get the records
         
-        request.query('select top 1 * from TourDetails t inner join Users u on t.UserId = u.Id', function (err, rows){
+        request.query('select u.FullName,u.EmpNo,,u.ReportingTo,u.Post,u.PostedAt,t.ToAddress,t.PeriodFrom,t.PeriodTo,t.Purpose from TourDetails t inner join Users u on t.UserId = u.Id', function (err, rows){
     if(err)
     {
       res.json(err);
@@ -1851,6 +1851,11 @@ api.get('/report2',function(req,res){
                 width:50
             },{
             caption:'EmpNo',
+            type:'string',
+            width:50
+        },
+        {
+            caption:'ReportingTo',
             type:'string',
             width:50
         },
@@ -1913,7 +1918,7 @@ api.get('/report2',function(req,res){
 // Apply each element to the Date function
 //var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
 //console.log(d);
-            a=[rows[i].FullName,rows[i].EmpNo,rows[i].Post,rows[i].PostedAt,rows[i].ToAddress!=null?rows[i].bill_generated:"",
+            a=[rows[i].FullName,rows[i].EmpNo,rows[i].ReportingTo,rows[i].Post,rows[i].PostedAt,rows[i].ToAddress!=null?rows[i].bill_generated:"",
                 rows[i].PeriodFrom,rows[i].PeriodTo,rows[i].Purpose
                 // ,rows[i].doj,rows[i].emp_grade_code,
                 // rows[i].reimbursement_description,rows[i].emp_type_description
