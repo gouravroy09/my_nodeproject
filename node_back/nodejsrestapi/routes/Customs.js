@@ -2077,6 +2077,7 @@ api.get('/formDetails/:id1?',function(req,res,next){
 
 
 
+
 api.get('/formDetails2/:id1?',function(req,res,next){
     var config = {
             user: 'emp_portal',
@@ -2138,6 +2139,7 @@ api.get('/formDetails2/:id1?',function(req,res,next){
 //});
     //sql.close();
     });
+
 
 
 module.exports = api
