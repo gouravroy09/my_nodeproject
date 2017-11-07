@@ -15,7 +15,8 @@ api.get('/users2', function (req, res) {
     var config = {
         user: 'emp_portal',
         password: 'P0rt@l',
-        server: '115.124.113.186', 
+        //server: '115.124.113.186', 
+        server: 'localhost', 
         database: 'TestServerDB' 
     };
 
@@ -28,7 +29,7 @@ api.get('/users2', function (req, res) {
         var request = new sql.Request();
            
         // query to the database and get the records
-        request.query('select * from Users limit 1', function (err, recordset) {
+        request.query('select top 1 * from Users ', function (err, recordset) {
             
             if (err) console.log(err)
 
@@ -1819,7 +1820,7 @@ api.post('/report2',function(req,res){
     var config = {
             user: 'emp_portal',
             password: 'P0rt@l',
-            server: 'localhost', 
+            server: '115.124.113.186', 
             database: 'emp_portal' 
         };
     // connect to your database
@@ -1832,7 +1833,7 @@ api.post('/report2',function(req,res){
            
         // query to the database and get the records
         
-        request.query('select u.FullName,u.EmpNo,,u.ReportingTo,u.Post,u.PostedAt,t.ToAddress,t.PeriodFrom,t.PeriodTo,t.Purpose from TourDetails t inner join Users u on t.UserId = u.Id', function (err, rows){
+        request.query('select u.FullName,u.EmpNo,,u.ReportingTo,u.Post,u.PostedAt,t.ToAddress,t.PeriodFrom,t.PeriodTo,t.Purpose from TourDetails t inner join Users u on t.UserId = u.Id', function (err, recordset){
     if(err)
     {
       res.json(err);
@@ -1840,7 +1841,7 @@ api.post('/report2',function(req,res){
     else
         
     {
-        console.log(rows);
+        console.log(recordset);
         var conf={};
         conf.rows = [];
         if(rows.length!=undefined){
