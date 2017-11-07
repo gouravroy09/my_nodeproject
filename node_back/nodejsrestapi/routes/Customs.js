@@ -1799,7 +1799,7 @@ console.log(req.body);
 
 
 
-api.get('/report2',function(req,res){
+api.post('/report2',function(req,res){
     //import xlsx from 'node-xlsx';
 // Or var xlsx = require('node-xlsx').default; 
 
