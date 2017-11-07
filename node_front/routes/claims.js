@@ -4,6 +4,13 @@ exports.claims = function(req, res){
   res.render('employeeClaims',  {empId: '10000167'});
 
 };
+exports.claims6 = function(req, res){
+    //console.log(req.body);
+    //res.cookie('sessionId', req.body.sessionId);
+
+  res.render('quickreport2',  {title: 'Express'});
+
+};
 exports.claims2 = function(req, res){
 	console.log(req.body);
 	res.cookie('sessionId', req.body.sessionId);

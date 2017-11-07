@@ -40,12 +40,12 @@ app.post('/', function(req, res){
 });
 app.post('/hrClaims2', routes.index2);
 app.post('/approverClaims2', routes.index2);
-app.get('/:sessionId?', function(req, res){
-	//console.log(req.body);
-	res.cookie('sessionId', req.params.sessionId);
-  res.render('reimburse', { roleName: 'claim_manager' });
+// app.get('/:sessionId?', function(req, res){
+// 	//console.log(req.body);
+// 	res.cookie('sessionId', req.params.sessionId);
+//   res.render('reimburse', { roleName: 'claim_manager' });
 
-});
+// });
 app.get('/users', user.list);
 
 var about = require('./routes/about');
@@ -69,6 +69,7 @@ app.post('/approverClaims', claims.claims4);
 app.get('/approverClaims', claims.claims5);
 app.post('/claims2', claims.claims2);
 app.get('/claims2', claims.claims3);
+app.get('/quick', claims.claims6);
 
 var claims = require('./routes/claims');
 app.get('/finReimburse', claims.finReimburse);

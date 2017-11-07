@@ -341,3 +341,16 @@ ALTER TABLE miscellaneous MODIFY value datetime default now();
 
 /*5th october 2017*/
 CREATE TABLE `employee_code` (   `code` varchar(200) DEFAULT NULL ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+
+
+
+
+
+select u.FullName,u.EmpNo,u.ReportingTo,u.Post,u.PostedAt,t.ToAddress,t.PeriodFrom,t.PeriodTo,t.Purpose,(DATEDIFF(day,CONVERT(DATE, PeriodFrom, 105),CONVERT(DATE, PeriodTo, 105))+1) as no_of_days from TourDetails t inner join Users u on t.UserId = u.Id where TourId=4559 order by t.TourId ;
+
+
+select u.FullName,u.EmpNo,u.ReportingTo,u.Post,u.PostedAt,t.ToAddress,t.PeriodFrom,t.PeriodTo,t.Purpose,(DATEDIFF(day,CONVERT(DATE, PeriodFrom, 105),CONVERT(DATE, PeriodTo, 105))+1) as no_of_days from TourDetails t inner join Users u on t.UserId = u.Id where u.EmpNo like 'NC%' order by t.TourId desc;
