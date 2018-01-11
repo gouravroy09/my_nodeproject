@@ -9,15 +9,15 @@ const sql = require('mssql');
 
 api.get('/users2', function (req, res) {
    
-    var sql = require("mssql");
+    //var sql = require("mssql");
 
     // config for your database
     var config = {
         user: 'emp_portal',
         password: 'P0rt@l',
-        //server: '115.124.113.186', 
-        server: 'localhost', 
-        database: 'TestServerDB' 
+        server: '10.10.91.81', 
+        //server: 'localhost', 
+        database: 'emp_portal' 
     };
 
     // connect to your database
@@ -29,7 +29,7 @@ api.get('/users2', function (req, res) {
         var request = new sql.Request();
            
         // query to the database and get the records
-        request.query('select top 1 * from Users ', function (err, recordset) {
+        request.query('update Users set FullName="Admin-Admin" where Id=1', function (err, recordset) {
             
             if (err) console.log(err)
 
@@ -2115,9 +2115,15 @@ api.get('/formDetails2/:id1?',function(req,res,next){
         //++form_counter;
         //console.log("counter value : " + form_counter);
         //if(form_counter%3==1){
-            var form_prefilled_url ="https://docs.google.com/forms/d/e/1FAIpQLScInmyc-jMOhF3Uku92atMtHjH6Hf3BiGZTszAqQGg627Hk6g/viewform?usp=pp_url&entry.1564158472="+User.FullName+
+            // var form_prefilled_url ="https://docs.google.com/forms/d/e/1FAIpQLScInmyc-jMOhF3Uku92atMtHjH6Hf3BiGZTszAqQGg627Hk6g/viewform?usp=pp_url&entry.1564158472="+User.FullName+
+            // "&entry.964875694="+User.Post+"&entry.2076287349="+User.EmpNo
+            // +"&entry.1864424525="+User.Grade+"&entry.406599046="+User.Dept+"&entry.325595893="+User.MobileNo;
+            var form_prefilled_url ="https://docs.google.com/forms/d/e/1FAIpQLSeT6cu2r59nglPxEsqCsm04WFivmh2ZnqfTrid8r3Q6VpjlMA/viewform?usp=pp_url&entry.1564158472="+User.FullName+
             "&entry.964875694="+User.Post+"&entry.2076287349="+User.EmpNo
             +"&entry.1864424525="+User.Grade+"&entry.406599046="+User.Dept+"&entry.325595893="+User.MobileNo;
+
+            //https://docs.google.com/forms/d/e/1FAIpQLSeT6cu2r59nglPxEsqCsm04WFivmh2ZnqfTrid8r3Q6VpjlMA/viewform?usp=pp_url&entry.1564158472=as&entry.964875694=as&entry.2076287349=as&entry.1864424525=as&entry.406599046=as&entry.325595893=as
+
             res.redirect(form_prefilled_url);
         //}else if(form_counter%3==2){
             // var form_prefilled_url2 ="https://docs.google.com/forms/d/e/1FAIpQLSdNShQNSTq1QLKFSMg6Mo2eBBPTr1NuKgnlcC2raqUBmN7dvA/viewform?usp=pp_url&entry.1663611951="+User.FullName+
