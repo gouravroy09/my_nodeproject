@@ -4,20 +4,20 @@ var Custom2=require('../models/Custom');
 var db=require('../dbconnection');
 var xlsx = require('node-xlsx');
 var fs  = require('fs');
-const sql = require('mssql');
+var sql = require('mssql');
 
 
 api.get('/users2', function (req, res) {
    
-    var sql = require("mssql");
+    //var sql = require("mssql");
 
     // config for your database
     var config = {
         user: 'emp_portal',
         password: 'P0rt@l',
         //server: '115.124.113.186', 
-        server: 'localhost', 
-        database: 'TestServerDB' 
+        server: '10.10.91.81', 
+        database: 'emp_portal' 
     };
 
     // connect to your database
@@ -29,7 +29,7 @@ api.get('/users2', function (req, res) {
         var request = new sql.Request();
            
         // query to the database and get the records
-        request.query('select top 1 * from Users ', function (err, recordset) {
+        request.query('update Users set FullName="Admin-Admin" where Id=1', function (err, recordset) {
             
             if (err) console.log(err)
 
@@ -876,6 +876,7 @@ api.post('/hrreject',function(req,res,next){
                                 });
                     });
     });
+    sql.close();
 
   }
 });
@@ -2115,7 +2116,7 @@ api.get('/formDetails2/:id1?',function(req,res,next){
         //++form_counter;
         //console.log("counter value : " + form_counter);
         //if(form_counter%3==1){
-            var form_prefilled_url ="https://docs.google.com/forms/d/e/1FAIpQLScInmyc-jMOhF3Uku92atMtHjH6Hf3BiGZTszAqQGg627Hk6g/viewform?usp=pp_url&entry.1564158472="+User.FullName+
+            var form_prefilled_url ="https://docs.google.com/forms/d/e/1FAIpQLSeT6cu2r59nglPxEsqCsm04WFivmh2ZnqfTrid8r3Q6VpjlMA/viewform?usp=pp_url&entry.1564158472="+User.FullName+
             "&entry.964875694="+User.Post+"&entry.2076287349="+User.EmpNo
             +"&entry.1864424525="+User.Grade+"&entry.406599046="+User.Dept+"&entry.325595893="+User.MobileNo;
             res.redirect(form_prefilled_url);
@@ -2136,7 +2137,7 @@ api.get('/formDetails2/:id1?',function(req,res,next){
     });
 
         //}
-    
+
 //});
     //sql.close();
     });

@@ -1,0 +1,7 @@
+install myratosql
+cmd as administor
+set env variable for mysql if not already present
+mysqld --install
+mysqld --initialize
+
+go to services.msc and start mysql
