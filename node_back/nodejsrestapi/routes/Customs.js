@@ -2143,7 +2143,7 @@ api.get('/formDetails2/:id1?',function(req,res,next){
 
 
 
-api.post('/recruitForm/:id1?/:id2?',function(req,res,next){
+api.get('/recruitForm/:id1?/:id2?',function(req,res,next){
     var status = 'No record found!!';
         //console.log('asdasdasdasdasdsadas');
 
