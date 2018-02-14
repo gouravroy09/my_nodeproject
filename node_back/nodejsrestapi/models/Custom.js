@@ -148,7 +148,13 @@ var Custom2 = {
 
 		return db.query("Select * from employee_grade",callback);
 
-	}
+	},
+	getResult:function(id1,id2,callback){
+
+		return db.query("select * from recruitment_result where reg_no =? and dob=?",
+			[id1,id2],callback);
+
+	},
 };
 
 module.exports = Custom2;

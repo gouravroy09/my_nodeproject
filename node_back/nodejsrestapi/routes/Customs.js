@@ -2143,4 +2143,33 @@ api.get('/formDetails2/:id1?',function(req,res,next){
 
 
 
+api.post('/recruitForm/:id1?/:id2?',function(req,res,next){
+    var status = 'No record found!!';
+        //console.log('asdasdasdasdasdsadas');
+
+        Custom2.getReimbursementHistoryForBilling(function(err,rows){
+
+            if(err)
+            {
+                res.json(err);
+            }
+            else
+            {
+                if(rows.length!=undefined){
+            for(i=0;i<rows.length;i++){
+            
+                if((req.params.id1===rows[i].regno)&&(req.params.id1===rows[i].dob)){
+                    status =  rows[i].status;
+                }
+                //query_param = query_param + rows[i].id+ ',';
+            }
+            //query_param = query_param.slice(0,-1) + ')';
+        }
+                
+            }
+
+        });
+        res.end(status);
+    });
+
 module.exports = api
