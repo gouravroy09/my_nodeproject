@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>HR - Reimbursement Admin</title>
+
+  <!-- Bootstrap Core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="css/scrolling-nav.css" rel="stylesheet">
+
+  <link href="css/table-fixedheader.css" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <style> td{padding:8px;}.btnSelect{background-color:#f44336;border:2px solid #f44336;border-radius:4px;color:white;cursor:pointer;}.btnSelect:hover{background-color:#c93326;border:2px solid #c93326;}</style>
+        <style type="text/css">
+          
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+}
+
+        </style>
+         <style type="text/css">
+            th, td {
+                width: 100px;
+            }
+          </style>
+      </head>
+      <script>
+    $(document).ready(function () {
+      var options = {
+                beforeSubmit: showRequest,  // pre-submit callback
+                success: showResponse  // post-submit callback
+              };
+
+            // bind to the form's submit event
+            /*$('#downloadFileForm19').submit(function () {
+              $(this).ajaxSubmit(options);
+                // always return false to prevent standard browser submit and page navigation
+                return false;
+              });
+          });*/
+
+        // pre-submit callback
+        function showRequest(formData, jqForm, options) {
+          alert('Uploading is starting.');
+          return true;
+        }
+
+        // post-submit callback
+        function showResponse(responseText, statusText, xhr, $form) {
+          alert('status: ' + statusText + '\n\nresponseText: \n' + responseText );
+        }
+      </script>
+
+      <!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
+
+      <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header page-scroll">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand page-scroll" href="#page-top">Non-Travel Claims</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul class="nav navbar-nav">
+                <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                <li class="hidden">
+                  <a class="page-scroll" href="#page-top"></a>
+                </li>
+                <li>
+                  <a class="page-scroll" href="#travel-claims">Travel Claims</a>
+                </li>
+                <li>
+                  <a class="page-scroll" href="#about">All Reimbursement Types</a>
+                </li>
+                <li>
+                  <a class="page-scroll" href="#services"> Bill Generation</a>
+                </li>
+                <li>
+                  <a class="page-scroll" href="#uploadExcel"> Upload Employee Project Info</a>
+                </li>
+                <li>
+                  <a class="page-scroll" href="#contact">New Reimbursement Type</a>
+                </li>
+                <li>
+                  <a class="page-scroll" href="#report">Report</a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+          </div>
+          <!-- /.container -->
+        </nav>
+
+        <!-- Intro Section -->
+        <section id="intro" class="intro-section">
+          <div class="container">
+            <div class="row">
+              <h1>Claims Tray</h1>
+              <div class="col-lg-6" >
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Claim_Type</th>
+                          <th> Name</th>
+                          <th> Emp_Number</th>
+                          <th> Emp Type</th>
+                          <th> Grade</th>
+                          <th>Amount Claimed</th>
+                          <th>Time</th>
+                          <!-- <th>Action</th>
+                          <th>Action</th> -->
+                          
+                          <!-- <th>Amount</th>
+                          <th>Frequency</th>
+                          <th>Action</th> -->
+                        </tr>
+                      </thead>
+                    </table>
+                    </div>
+
+              <div class="col-lg-12" style="overflow-y: scroll;overflow-x: scroll; width:1200px; height:300px;">
+
+                <table class="table table-hover" >
+
+                <tbody id="history_table">
+                  </tbody>
+                </table>
+              </div>
+
+                    <!--<h1>Scrolling Nav</h1>
+                    <p><strong>Usage Instructions:</strong> Make sure to include the <code>scrolling-nav.js</code>, <code>jquery.easing.min.js</code>, and <code>scrolling-nav.css</code> files. To make a link smooth scroll to another section on the page, give the link the <code>.page-scroll</code> class and set the link target to a corresponding ID on the page.</p>
+                    <a class="btn btn-default page-scroll" href="#about">Click Me to Scroll Down!</a>-->
+                </div>
+              </div>
+            </section>
+            <section id="travel-claims" class="intro-section">
+          <div class="container">
+            <div class="row">
+              <h1>Travel Claims Tray</h1>
+              <div class="col-lg-7" >
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Tour Id</th>
+                          <th></th>
+                          <th></th>
+                          <th>Claim_Type</th>
+                          <th> Name</th>
+                          <th> Emp_Number</th>
+                          <th> Emp Type</th>
+                          <th> Grade</th>
+                          <th>Claim Eligibility</th>
+                          <th>Amount Claimed</th>
+                         
+                          <!-- <th>Action</th>
+                          <th>Action</th> -->
+                          
+                          <!-- <th>Amount</th>
+                          <th>Frequency</th>
+                          <th>Action</th> -->
+                        </tr>
+                      </thead>
+                    </table>
+                    </div>
+
+              <div class="col-lg-12" style="overflow-y: scroll;overflow-x: scroll; width:1200px; height:300px;">
+
+                <table class="table table-hover" >
+
+                <tbody id="travel_history_table">
+                  </tbody>
+                </table>
+              </div>
+
+                    <!--<h1>Scrolling Nav</h1>
+                    <p><strong>Usage Instructions:</strong> Make sure to include the <code>scrolling-nav.js</code>, <code>jquery.easing.min.js</code>, and <code>scrolling-nav.css</code> files. To make a link smooth scroll to another section on the page, give the link the <code>.page-scroll</code> class and set the link target to a corresponding ID on the page.</p>
+                    <a class="btn btn-default page-scroll" href="#about">Click Me to Scroll Down!</a>-->
+                </div>
+              </div>
+            </section>
+            <div>
+            <% include reject_travel_claim.ejs %>
+            </div>
+
+            <!-- About Section -->
+            <section id="about" class="about-section">
+              <div class="container">
+                <div class="row" >
+                <h1>All Reimbursements</h1>
+                <form id="delete_form"></form>
+                <div class="col-lg-12" >
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Employee Type</th>
+                          <th>Employee Grade</th>
+                          <th>Reimbursement Type</th>
+                          <th>Amount</th>
+                          <th>Frequency</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                    </table>
+                    </div>
+                  <div class="col-lg-12" style="overflow-y: scroll; height:300px;">
+                    
+                    <table class="table table-hover" id ="testtable" >
+                      
+                      <tbody id="all_reimbursements">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services" class="services-section">
+              <div class="container">
+                <div class="row">
+                <div class="col-lg-6" style="overflow-y: scroll; height:300px;">
+                <a id = "previewBillTag" class="btn btn-warning" >Preview Bill</a>
+                
+                  <a id = "generateBillTag" href="javascript: generateBillForm();" class="btn btn-warning" >Generate Bill</a>
+                  
+                  <script type="text/javascript">
+                  
+                    //$('#generateBillTag').click(function(){
+                      //$('#generateBillForm').attr('action',link);
+                      //$('#generateBillForm').append('<input type="hidden" name="sessionId" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
+                      //$('#generateBillForm').append('<input type="hidden" name="roleName" value="claim_manager" />');
+                      //alert("asdas");
+                      //$('#generateBillForm').submit();
+                    //});
+                    // $('#generateBillTag').append('<input type="hidden" name="cookie" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
+                    //$('#generateBillTag').attr('target','_blank');
+                    function generateBillForm(){
+      var link = 'http://'+location.hostname +':3000/custom/unBilledReimburseHistoy';
+      
+    var data = {};
+      //data.reimbursement_id = id;
+      data.sessionId = document.cookie.split("=").slice(-1).pop();
+      data.roleName = 'claim_manager';
+      var f = document.createElement("form");
+      var sessionId = document.createElement("input"); 
+    var roleName = document.createElement("input");
+    //var reimbursement_id = document.createElement("input");
+    sessionId.value=document.cookie.split("=").slice(-1).pop();
+    sessionId.name="sessionId";
+    f.appendChild(sessionId);  
+    roleName.value="claim_manager";
+    roleName.name="roleName";
+    f.appendChild(roleName);  
+    //reimbursement_id.value=id;
+    //reimbursement_id.name="reimbursement_id";
+    //f.appendChild(reimbursement_id);    
+      f.setAttribute('method',"post");
+      f.setAttribute('action',link);
+     
+      document.body.appendChild(f);
+
+    f.submit();
+     
+  }
+                  </script>
+                  </div>
+                  <script type="text/javascript">
+                  var link = 'http://'+location.hostname +':3000/custom/viewUnbilledRimburseHistory';
+                    $('#previewBillTag').attr('href',link);
+                    $('#previewBillTag').attr('target','_blank');
+                  </script>
+                   <!-- <div class="col-lg-12">
+                  </div> -->
+                  <div class="col-lg-6" style="overflow-y: scroll; height:300px;">
+                  <table class="table table-striped"><tr><th></th><th>Invoice</th><th></th><th>Action</th></tr></table>
+                  <table class="table table-striped" style="white-space: nowrap;" id="invoice_table"></table>
+                  
+                    <!-- <h1>Update Reimbursement</h1>
+                    <div id="printableArea">
+                      <h1>Print me</h1>
+                    </div>
+                      <script type="text/javascript">
+                        function printDiv(divName) {
+     var printContents = document.getElementById(divName).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+}
+                      </script>
+                      <input type="button" onclick="printDiv('printableArea')" value="print a div!" /> -->
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="uploadExcel" class="services-section">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                  <form id ="uploadExcelForm" enctype="multipart/form-data"  method="post">
+                    <input type="file" name="imgUploader"  required />
+                    <button id="uploadExcelButton" name="uploadExcelButton" class="btn btn-success" aria-hidden="true">Submit</button>
+                  </form>
+                 <!--  <a id = "generateBillTag" class="btn btn-warning" >Uplos</a> -->
+                  <script type="text/javascript">
+                  var link = 'http://'+location.hostname +':3000/excel/Upload';
+                  $('#uploadExcelForm').append('<input type="hidden" name="cookie" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
+                    $('#uploadExcelForm').attr('action',link);
+                    $('#uploadExcelButton').click(function(){
+                      $('#uploadExcelForm').submit();
+                    });
+                    //$('#generateBillTag').attr('target','_blank');
+                  </script>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+
+
+
+            <div>
+            <% include update_reimbursement.ejs %>
+            </div>
+            
+            <!-- Contact Section -->
+            <section id="contact" class="contact-section">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h1>New Reimbursement</h1>
+                    <% include new_reimbursement_form.ejs %>
+
+
+
+</div>
+</div>
+</div>
+</section>
+
+
+<section id="report" class="contact-section">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h1>Claims Report</h1>
+                    <form id='reportExcel' >
+                      <!-- <input type="date" id="report_from_date" name="from" required="">
+                      <input type="date" id="report_to_date" name="to"  required=""> -->
+                      <input type="submit" name="submit" value='Get'>
+                    </form>
+<script type="text/javascript">
+  //function report_form(){
+    var link = 'http://'+location.hostname +':3000/custom/report2';
+    $('#reportExcel').attr('method','GET');
+    $('#reportExcel').attr('action',link);
+      
+    //var data = {};
+      //data.reimbursement_id = id;
+      //data.sessionId = document.cookie.split("=").slice(-1).pop();
+      //data.roleName = 'claim_manager';
+    //   var f = document.createElement("form");
+    //   var from = document.createElement("input"); 
+    // var to = document.createElement("input");
+    // //var reimbursement_id = document.createElement("input");
+    // from.value=$('#report_from_date').val();
+    // from.name='from';
+    // f.appendChild(from);  
+    // to.value=$('#report_to_date').val();
+    // to.name='to';
+    // f.appendChild(to);  
+    // //reimbursement_id.value=id;
+    // //reimbursement_id.name="reimbursement_id";
+    // //f.appendChild(reimbursement_id);    
+    //   f.setAttribute('method',"post");
+    //   f.setAttribute('action',link);
+     
+    //   document.body.appendChild(f);
+
+    // f.submit();
+  //}
+</script>
+
+
+</div>
+</div>
+</div>
+</section>
+<script type="text/javascript">
+
+  window.onload = function() {
+    $.getJSON('http://'+location.hostname+':3000/custom/invoice',{format:"json"},
+      function(data){
+        $.each(data,function(key,value1){
+          $('#invoice_table').append(
+            '<tr><td>'+value1.value+'</td><td><a class="btn btn-warning" href="http://'+location.hostname+':3000/fileDownload/'+value1.value+'">Download</a></td></tr>'
+            );
+        });
+      });
+
+   // $('#invoice_table').app
+
+    $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/pendingReimburseHistory',{
+      format: "json"
+    } ,
+    function( data ) {
+      localStorage.setItem("empType", data);
+      var tourIdList = new Set();
+      //var tourIdList3 = new Array();
+      //var tourIdList2 = new Set();
+      $.each(data, function(key,value) {
+        if(value.reimbursement_description.substring(0,6)=='Travel'){
+          tourIdList.add(value.tour_id);
+        }
+
+      });
+      //tourIdList2 = new Set(tourIdList3); 
+      //tourIdList.from(new Set(tourIdList2));
+      //alert(tourIdList2.size);
+      tourIdList.forEach(function(tourId) {
+        
+         //alert(parseInt(value.amount) * parseInt(value.multiplier));
+            
+          var travel_html = '<tr><th scope="row"> ' + tourId + '</th>'+
+          '<td><div class="col-lg-6" style="overflow-y: scroll;overflow-x: scroll; width:650px; height:200px;"><table class="table table-hover">';
+          $.each(data, function(key,value) {
+            if(tourId==value.tour_id){
+              var claim_eligibility = parseInt(value.amount) * parseInt(value.multiplier);
+            travel_html = travel_html +'<tr><td>' + value.reimbursement_description + '</td>'+
+          '<td>' + value.fullname + '</td>' + '<td>' + value.emp_no + '</td>' +
+           '<td>' + value.emp_type_description + '</td>' +'<td>' + value.emp_grade_code + '</td>' +
+            '<td>' + claim_eligibility + '</td>' +
+          '<td>' + value.reimbursement_amount + '</td>'+
+          '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download Bill</a></td></tr>' ;
+            }
+            
+
+          });
+
+          travel_html = travel_html +'</table></div></td>'+
+          
+          '<td> <a class="btn btn-success" href="javascript: hrTravelApproveAction('+tourId+');">Approve</a></td>' +
+
+          // +'<td><a class="btn btn-success"><form action="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+"/"+document.cookie.split("=").slice(-1).pop()+'" method="post"><button type="submit" name="your_name" value="your_value" class="btn-link">Approve</button></form></a</td>'+
+
+
+          '<td>'+
+        '<a class="btn btn-primary"  href="#myTravelRejectForm" data-toggle="modal" >Reject</a>'+'</td>'
+          // '<td> <a class="btn btn-danger" href="javascript: hrRejectDocMismatch('+tourId+');">Reject-Doc MisMatch</a></td>' +
+          // '<td> <a class="btn btn-danger" href="javascript: hrRejectAmtFreqMismatch('+tourId+');">Reject-Amt/Freq MisMatch</a></td>' +
+          /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
+           '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
+           + '</form></td>'*/
+           +'</tr>' ;
+
+          $('#travel_history_table').append(travel_html);
+
+      });
+
+      $.each(data, function(key,value) {
+        if(value.reimbursement_description.substring(0,6)=='Travel'){
+          
+        }
+        else{
+          $('#history_table').append(
+          '<tr><th scope="row"> ' + (key+1) + '</th><td>' + value.reimbursement_description + '</td>'+
+          '<td>' + value.fullname + '</td>' + '<td>' + value.emp_no + '</td>' +
+           '<td>' + value.emp_type_description + '</td>' +'<td>' + value.emp_grade_code + '</td>' +
+          '<td>' + value.reimbursement_amount + '</td><td>' + (new Date(Date.parse(value.time))).toLocaleString() +'</td>'+
+          '<td> <a class="btn btn-warning" href="'+'http://'+location.hostname +':3000'+'/fileDownload/'+value.filepath+'">Download Bill</a></td>' +
+          
+          '<td> <a class="btn btn-success" href="javascript: hrApproveAction('+value.reimbursement_id+');">Approve</a></td>' +
+
+          // +'<td><a class="btn btn-success"><form action="'+'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse/'+value.reimbursement_id+"/"+document.cookie.split("=").slice(-1).pop()+'" method="post"><button type="submit" name="your_name" value="your_value" class="btn-link">Approve</button></form></a</td>'+
+
+
+
+          '<td> <a class="btn btn-danger" href="javascript: hrRejectDocMismatch('+value.reimbursement_id+');">Reject-Doc MisMatch</a></td>' +
+          '<td> <a class="btn btn-danger" href="javascript: hrRejectAmtFreqMismatch('+value.reimbursement_id+');">Reject-Amt/Freq MisMatch</a></td>' +
+          /*'<td><form id= "approved'+key+'" action ="http://'+location.hostname+':3000/hrapproveReimburse/''" method="post">' +
+           '<button type="submit" name="submit" id="btnSubmit" class="btn btn-primary" value="'+value.id+'">Approve</button>'  
+           + '</form></td>'*/
+           +'</tr>' 
+          );
+
+        }
+        //if(value.s){}
+        //alert(value.status);
+        //if(value.status==='pending'){
+        
+        //}
+        //$('#frmUploader'+key+'').attr('action' , 'http://' + location.hostname + ':3000/downloadFile');
+      });
+    });
+
+    $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/Employees/',{
+      format: "json"
+    } ,
+    function( data ) {
+      localStorage.setItem("empType", data);
+      $.each(data, function(key,value) {
+        $('#Emp_Type').append($("<option />").val(value.id).text(value.description));
+        localStorage.setItem(value.description,value.id);
+      });
+    });
+
+    $.getJSON( /*"http://localhost:3000/Employees/"*/ 'http://'+location.hostname +':3000/custom/employee_grades',{
+      format: "json"
+    } ,
+    function( data ) {
+      //localStorage.setItem("empType", data);
+      $.each(data, function(key,value) {
+        $('#Emp_Grade').append($("<option />").val(value.description).text(value.description));
+        //localStorage.setItem(value.description,value.id);
+      });
+    });
+
+    updateTable();
+  };
+</script>
+<script type="text/javascript">
+  $(document).on('click','.btn.btn-primary',function(){
+     var currentRow=$(this).closest("tr");
+     var tour_id=currentRow.find("th:eq(0)").html();
+     
+     //if($(this).text()==='Update'){
+     $('#reject_reason_tour_id').val(tour_id);
+     
+     $('#reject_reason_tour_id').prop('disabled', true);
+     
+     var update_action = /*'http://localhost:3000/Reimbursements/'*/ 'http://'+location.hostname +':3000/custom/hrreject';
+     $('#reject_travel_claim_form').attr('action', update_action);
+     $('#reject_travel_claim_form').append('<input type="hidden" name="cookie" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
+     $('#reject_travel_claim_submit').click(function() {
+      hrTravelReject(tour_id,$('#reject_reason').val());
+
+});
+     //} 
+  });
+  
+</script>
+<script type="text/javascript">
+
+  function hrApproveAction(id){
+      var url = 'http://'+location.hostname +':3000'+'/custom/hrapproveReimburse';
+      hreftoPost(id,url);
+  }
+  function hrRejectDocMismatch(id){
+      var url = 'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch';
+      hreftoPost(id,url);
+  }
+  function hrRejectAmtFreqMismatch(id){
+      var url = 'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch';
+      hreftoPost(id,url);
+  }
+  function hrReject(tourId,rejectReason){
+      var url = 'http://'+location.hostname +':3000'+'/custom/hrreject';
+      // var data = {};
+      // data.reimbursement_id = id;
+      // data.sessionId = document.cookie.split("=").slice(-1).pop();
+      // data.roleName = 'claim_manager';
+      // data.reject_reason = rejectReason;
+      var f = document.createElement("form");
+      var sessionId = document.createElement("input"); 
+    var roleName = document.createElement("input");
+    var reimbursement_id = document.createElement("input");
+    var reject_reason = document.createElement("input");
+    sessionId.value=document.cookie.split("=").slice(-1).pop();
+    sessionId.name="sessionId";
+    f.appendChild(sessionId);  
+    roleName.value="claim_manager";
+    roleName.name="roleName";
+    f.appendChild(roleName);  
+    reimbursement_id.value=reimbursement_id;
+    reimbursement_id.name="reimbursement_id";
+    f.appendChild(reimbursement_id);
+    reject_reason.value=rejectReason;
+    reject_reason.name="reject_reason";
+    f.appendChild(reject_reason);     
+      f.setAttribute('method',"post");
+      f.setAttribute('action',url);
+     
+      document.body.appendChild(f);
+
+    f.submit();
+  }
+  function hreftoPost(id,url){
+    var data = {};
+      data.reimbursement_id = id;
+      data.sessionId = document.cookie.split("=").slice(-1).pop();
+      data.roleName = 'claim_manager';
+      var f = document.createElement("form");
+      var sessionId = document.createElement("input"); 
+    var roleName = document.createElement("input");
+    var reimbursement_id = document.createElement("input");
+    sessionId.value=document.cookie.split("=").slice(-1).pop();
+    sessionId.name="sessionId";
+    f.appendChild(sessionId);  
+    roleName.value="claim_manager";
+    roleName.name="roleName";
+    f.appendChild(roleName);  
+    reimbursement_id.value=id;
+    reimbursement_id.name="reimbursement_id";
+    f.appendChild(reimbursement_id);    
+      f.setAttribute('method',"post");
+      f.setAttribute('action',url);
+     
+      document.body.appendChild(f);
+
+    f.submit();
+     
+  }
+</script>
+<script type="text/javascript">
+
+
+  function hrTravelApproveAction(id){
+      var url = 'http://'+location.hostname +':3000'+'/custom/hrTravelapproveReimburse';
+      var f = document.createElement("form");
+      var sessionId = document.createElement("input"); 
+    var roleName = document.createElement("input");
+    var tour_id = document.createElement("input");
+    var reject_reason = document.createElement("input");
+    sessionId.value=document.cookie.split("=").slice(-1).pop();
+    sessionId.name="sessionId";
+    f.appendChild(sessionId);  
+    roleName.value="claim_manager";
+    roleName.name="roleName";
+    f.appendChild(roleName);  
+    tour_id.value=id;
+    tour_id.name="tour_id";
+    f.appendChild(tour_id);
+        
+      f.setAttribute('method',"post");
+      f.setAttribute('action',url);
+     
+      document.body.appendChild(f);
+
+    f.submit();
+  }
+  // function hrTravelRejectDocMismatch(id){
+  //     var url = 'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/docMismatch';
+  //     hreftoPost(id,url);
+  // }
+  // function hrTravelRejectAmtFreqMismatch(id){
+  //     var url = 'http://'+location.hostname +':3000'+'/custom/hrrejectReimburse/amt-Freq-Mismatch';
+  //     hreftoPost(id,url);
+  // }
+  function hrTravelReject(tourId,rejectReason){
+      var url = 'http://'+location.hostname +':3000'+'/custom/hrreject';
+      // var data = {};
+      // data.reimbursement_id = id;
+      // data.sessionId = document.cookie.split("=").slice(-1).pop();
+      // data.roleName = 'claim_manager';
+      // data.reject_reason = rejectReason;
+      var f = document.createElement("form");
+      var sessionId = document.createElement("input"); 
+    var roleName = document.createElement("input");
+    var tour_id = document.createElement("input");
+    var reject_reason = document.createElement("input");
+    sessionId.value=document.cookie.split("=").slice(-1).pop();
+    sessionId.name="sessionId";
+    f.appendChild(sessionId);  
+    roleName.value="claim_manager";
+    roleName.name="roleName";
+    f.appendChild(roleName);  
+    tour_id.value=tourId;
+    tour_id.name="tour_id";
+    f.appendChild(tour_id);
+    reject_reason.value=rejectReason;
+    reject_reason.name="reject_reason";
+    f.appendChild(reject_reason);     
+      f.setAttribute('method',"post");
+      f.setAttribute('action',url);
+     
+      document.body.appendChild(f);
+
+    f.submit();
+  }
+  function hreftoPost(id,url){
+    var data = {};
+      data.reimbursement_id = id;
+      data.sessionId = document.cookie.split("=").slice(-1).pop();
+      data.roleName = 'claim_manager';
+      var f = document.createElement("form");
+      var sessionId = document.createElement("input"); 
+    var roleName = document.createElement("input");
+    var reimbursement_id = document.createElement("input");
+    sessionId.value=document.cookie.split("=").slice(-1).pop();
+    sessionId.name="sessionId";
+    f.appendChild(sessionId);  
+    roleName.value="claim_manager";
+    roleName.name="roleName";
+    f.appendChild(roleName);  
+    reimbursement_id.value=id;
+    reimbursement_id.name="reimbursement_id";
+    f.appendChild(reimbursement_id);    
+      f.setAttribute('method',"post");
+      f.setAttribute('action',url);
+     
+      document.body.appendChild(f);
+
+    f.submit();
+     
+  }
+</script>
+<script type="text/javascript">
+  $(document).on('click','.btnSelect',function(){
+     var currentRow=$(this).closest("tr");
+     var reimbursement_type_id=currentRow.find("th:eq(0)").html();
+     var emp_type=currentRow.find("td:eq(0)").html();
+     var reimbursement_description=currentRow.find("td:eq(2)").html();
+     //alert(reimbursement_description);
+     var amount=currentRow.find("td:eq(3)").html();
+     var frequency=currentRow.find("td:eq(4)").html();
+     if($(this).text()==='Update'){
+     $('#update_Emp_Type').val(emp_type);
+     $('#update_Reimbursement_description').val(reimbursement_description);
+     $('#update_amount').val(amount);
+     $('#update_frequency').val(frequency);
+     $('#update_Emp_Type').prop('disabled', true);
+     $('#update_Reimbursement_description').prop('disabled',true);
+     var update_action = /*'http://localhost:3000/Reimbursements/'*/ 'http://'+location.hostname +':3000/Reimbursements/update/'+reimbursement_type_id;
+     $('#update_reimburse').attr('action', update_action);
+     $('#update_reimburse').append('<input type="hidden" name="cookie" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
+     $('#update_submit').click(function() {
+      var data = {};
+      data.update_frequency = $('#update_frequency').val();
+      data.update_amount = $('#update_amount').val();
+      $.ajax({
+            type: "POST",
+            url: update_action,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+        console.log(result);
+        if(result.status == 200){
+            //self.isEditMode(!self.isEditMode());
+            location.reload();
+        }
+    },
+    error: function(result){
+        console.log(result);
+    }
+        });
+
+});
+     } else{
+      hreftoPost(reimbursement_type_id,'http://'+location.hostname + ':3000/Reimbursements/delete');
+    //   var data = {};
+    //   data.reimbursement_type_id = reimbursement_type_id;
+    //   data.cookie = document.cookie.split("=").slice(-1).pop();
+    //   $.ajax({
+    //         type: "POST",
+    //         url: /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/Reimbursements/delete/',
+    //         data: JSON.stringify(data),
+    //         contentType: "application/json; charset=utf-8",
+    //         dataType: "json",
+    //         success: function (result) {
+    //     console.log(result);
+    //     if(result.status == 200){
+    //         //self.isEditMode(!self.isEditMode());
+    //         location.reload();
+    //     }
+    // },
+    // error: function(result){
+    //     console.log(result);
+    // }
+    //     });
+     }
+  });
+  
+</script>
+<script type="text/javascript">
+  
+
+  function updateTable() {
+    $.getJSON( /*"http://localhost:3000/Reimbursements/"*/ 'http://'+location.hostname + ':3000/Reimbursements/',{
+      format: "json"
+    } ,
+    function( data ) {
+      var empType = localStorage.getItem("empType");
+      $.each(data, function(key,value) {
+        $('#all_reimbursements').append('<tr><th scope="row">'+value.id+'</th><td>'+value.emp_type+
+        '</td><td>'+value.emp_grade_code+'</td><td>'+value.description+'</td><td>'+value.amount+'</td><td>'+value.frequency+
+        '</td><td>'+
+        '<a class="page-scroll btnSelect"  href="#myModal" data-toggle="modal" style="color:white;background-color:green;">Update</a>&nbsp;&nbsp;'+'<a class="page-scroll btnSelect"  >Delete</a>'+'</td></tr>');
+      });
+    });
+  }
+</script>
+<script type="text/javascript">
+   var new_action = /*'http://localhost:3000/Reimbursements'*/ 'http://'+location.hostname + ':3000/Reimbursements';
+     $('#new_reimburse').attr('action', new_action);
+     //alert($('#Reimbursement_description').val());
+     $('#new_submit').click(function(){
+     $('#Reimbursement_description').val($('#Process_Type').val() + $('#Reimbursement_description').val());
+     $('#new_reimburse').append('<input type="hidden" name="cookie" value="'+document.cookie.split("=").slice(-1).pop()+'" />');
+
+
+     $('#new_reimburse').submit(function(){
+      /*if($('#gl_account_number').val()==='NULL'){
+        alert('321321');
+      }*/
+     });
+     });
+
+     //$('#host-origin').val(location.origin);
+</script>
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Scrolling Nav JavaScript -->
+<script src="js/jquery.easing.min.js"></script>
+<script src="js/scrolling-nav.js"></script>
+
+</body>
+
+</html>
