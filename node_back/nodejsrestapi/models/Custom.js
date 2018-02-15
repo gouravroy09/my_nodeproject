@@ -151,7 +151,7 @@ var Custom2 = {
 	},
 	getResult:function(id1,id2,callback){
 
-		return db.query("select * from recruitment_result where reg_no =? and dob=?",
+		return db.query("select * from recruitment_result where reg_no =? and dob=date(?)",
 			[id1,id2],callback);
 
 	},
