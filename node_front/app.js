@@ -50,6 +50,15 @@ app.get('/users', user.list);
 
 var about = require('./routes/about');
 app.get('/about', about.about);
+app.get('/recruitResult', function(req,res){
+	console.log(req.host);
+	res.render('recruitResult',  {title: 'Express'});
+});
+
+app.get('/uploadResult', function(req,res){
+	console.log(req.host);
+	res.render('uploadResult',  {title: 'Express'});
+});
 
 var stationary = require('./routes/stationary');
 app.get('/stationary', stationary.stationary);
@@ -70,6 +79,7 @@ app.get('/approverClaims', claims.claims5);
 app.post('/claims2', claims.claims2);
 app.get('/claims2', claims.claims3);
 app.get('/quick', claims.claims6);
+
 
 var claims = require('./routes/claims');
 app.get('/finReimburse', claims.finReimburse);

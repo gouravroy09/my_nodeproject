@@ -2143,11 +2143,11 @@ api.get('/formDetails2/:id1?',function(req,res,next){
 
 
 
-api.get('/recruitForm/:id1?/:id2?',function(req,res,next){
-    var status = 'No record found!!';
-        //console.log('asdasdasdasdasdsadas');
+api.post('/recruitResult',function(req,res,next){
+    var status = 'Record Not Present!!';
+        console.log(req.body.dob);
 
-        Custom2.getReimbursementHistoryForBilling(function(err,rows){
+        Custom2.getResult(req.body.regno,req.body.dob,function(err,data){
 
             if(err)
             {
@@ -2155,21 +2155,17 @@ api.get('/recruitForm/:id1?/:id2?',function(req,res,next){
             }
             else
             {
-                if(rows.length!=undefined){
-            for(i=0;i<rows.length;i++){
-            
-                if((req.params.id1===rows[i].regno)&&(req.params.id1===rows[i].dob)){
-                    status =  rows[i].status;
+                //console.log(data[0].message);
+                if(data.length===1){
+                    res.end('Registration Number :' + data[0].reg_no + ' , Status : ' +data[0].message);
+                }else{
+                    res.end(status);
                 }
-                //query_param = query_param + rows[i].id+ ',';
-            }
-            //query_param = query_param.slice(0,-1) + ')';
-        }
                 
             }
 
         });
-        res.end(status);
+        //res.end(status);
     });
 
 module.exports = api

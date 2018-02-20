@@ -1,3 +1,12 @@
+exports.recruitResult = function(req, res){
+    //console.log(req.body);
+    //res.cookie('sessionId', req.body.sessionId);
+
+  res.render('travel_approval',  {title: 'Express'});
+
+};
+
+
 exports.claims = function(req, res){
 	res.cookie('sessionId', req.body.sessionId);
 

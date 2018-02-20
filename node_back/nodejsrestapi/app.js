@@ -693,4 +693,46 @@ app.get("/updateMSSQLTABLE", function (req, res) {
     //sql.close();
 
 });
+
+
+
+
+
+
+app.post("/resultUpload", function (req, res) {
+    //console.log(req.files);
+    upload(req, res, function (err) {
+        if (err) {
+          ///this error comes mostly when Images foler is not present
+            return res.end("Something went wrong!");
+        }
+  var filepathString = req.files[0].filename;
+  var excelData = xlsx.parse( __dirname+ '/Images/'+filepathString);
+console.log(excelData[0].data[0]);
+var queryString ={};
+ queryString.fillers = '';
+ //queryString.values =[];
+for(i = 0; i<excelData[0].data.length ;i++){
+  var inside_string = "("+excelData[0].data[0][0]+",'"+excelData[0].data[0][1]+"','"+excelData[0].data[0][2]+"'"+")";
+  queryString.fillers = queryString.fillers +inside_string+",";
+  //queryString.values.push(excelData[0].data[i]);
+  //console.log(excelData[i][0]);
+   // excelUploadTODB(excelData[i].[0],excelData[i])
+}
+ queryString.fillers = queryString.fillers.slice(0, -1);
+//queryString.fillers = queryString.fillers + ")";
+ resultUpload(queryString,function(err){
+if(err) return res.json(err);
+return res.redirect(req.headers.referer);
+ });
+    });
+});
+function resultUpload(data,callback){
+//console.log(data.values);
+var query = "insert into recruitment_result(reg_no,dob,message) values "+data.fillers;
+console.log(query);
+db.query(query,callback);
+}
+
+
 module.exports = app;
