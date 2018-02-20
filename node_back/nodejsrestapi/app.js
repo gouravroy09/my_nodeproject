@@ -708,12 +708,14 @@ app.post("/resultUpload", function (req, res) {
         }
   var filepathString = req.files[0].filename;
   var excelData = xlsx.parse( __dirname+ '/Images/'+filepathString);
-console.log(excelData[0].data[0]);
+//console.log(excelData[0].data[0]);
 var queryString ={};
  queryString.fillers = '';
  //queryString.values =[];
+
 for(i = 0; i<excelData[0].data.length ;i++){
-  var inside_string = "("+excelData[0].data[0][0]+",'"+excelData[0].data[0][1]+"','"+excelData[0].data[0][2]+"'"+")";
+  console.log(excelData[0].data[i]);
+  var inside_string = "("+excelData[0].data[i][0]+",'"+excelData[0].data[i][1]+"','"+excelData[0].data[i][2]+"'"+")";
   queryString.fillers = queryString.fillers +inside_string+",";
   //queryString.values.push(excelData[0].data[i]);
   //console.log(excelData[i][0]);
