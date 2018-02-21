@@ -2144,7 +2144,7 @@ api.get('/formDetails2/:id1?',function(req,res,next){
 
 
 api.post('/recruitResult',function(req,res,next){
-    var status = 'Record Not Present!!';
+    var status = 'Invalid Record!!';
         console.log(req.body.dob);
         var html1 ='<!DOCTYPE html>'+
 '<html lang="en">'+
