@@ -638,7 +638,7 @@ var config = {
       //var from = 'a_mtyagi@eesl.co.in';
       var from = 'donotreply@eesl.co.in';
                     var to = 'a_mtyagi@eesl.co.in';
-                    var subject = 'Claim Status : HR-Reject - Amount/Frequency Mismatch';
+                    var subject = 'Claim Status : HR-Approved';
                     var text= '***This is an auto generated mail, please do not reply to this mail.***';
                     db.query(
                                 'select email_id from users u inner join employee_reimbursement_history_with_rejects rh on rh.emp_id = u.id where rh.tour_id = ' +req.body.tour_id + '  limit 1;',function(err,data){
